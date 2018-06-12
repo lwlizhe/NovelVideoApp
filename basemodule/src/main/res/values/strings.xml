@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">baseModule</string>
+
+    <!--日期转换相关-->
+    <string name="label_month_one">一月</string>
+    <string name="label_now">刚刚</string>
+    <string name="label_minites_before">分钟前</string>
+    <string name="label_hours_before">小时前</string>
+    <string name="label_day_before">天前</string>
+    <string name="label_month_before">月前</string>
+    <string name="label_year_before">年前</string>
+    <string name="label_beijing_time">(北京)</string>
+</resources>

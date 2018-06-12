@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    </FrameLayout>
+
+    <!--<com.lwlizhe.novelvideoapp.widget.ExpandTextView-->
+        <!--android:id="@+id/expand_text_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</com.lwlizhe.novelvideoapp.widget.ExpandTextView>-->
+
+
+    <!--<RelativeLayout-->
+        <!--android:background="@color/alpha_gray"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/img_test"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="200dp" />-->
+    <!--</RelativeLayout>-->
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_test"-->
+            <!--android:text="test"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+
+    <!--</RelativeLayout>-->
+
+</LinearLayout>
