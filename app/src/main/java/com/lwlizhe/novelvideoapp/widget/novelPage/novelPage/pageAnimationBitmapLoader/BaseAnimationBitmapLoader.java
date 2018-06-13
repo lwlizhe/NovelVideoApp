@@ -40,8 +40,16 @@ public abstract class BaseAnimationBitmapLoader {
     protected int mScreenWidth;
     protected int mScreenHeight;
 
-    protected boolean isNextEnable=false;
-    protected boolean isPreEnable=false;
+//    protected boolean isNextEnable=false;
+//    protected boolean isPreEnable=false;
+
+    protected static final String STATE_LOADING="state_loading";
+    protected static final String STATE_NO_MORE="state_no_more";
+    protected static final String STATE_NO_PRE="state_no_pre";
+    protected static final String STATE_NORMAL="state_normal";
+
+    protected String mCurrentState=STATE_LOADING;
+
 
     public BaseAnimationBitmapLoader(View targetView) {
         this.mScroller = new Scroller(targetView.getContext());
@@ -63,23 +71,22 @@ public abstract class BaseAnimationBitmapLoader {
         mStateObserver.addListener(new NovelPageStateListener() {
             @Override
             public void onNextDisable() {
-                isNextEnable=false;
+                mCurrentState=STATE_NO_MORE;
             }
 
             @Override
             public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
-
+                mCurrentState=STATE_LOADING;
             }
 
             @Override
             public void onPreDisable() {
-                isPreEnable=false;
+                mCurrentState=STATE_NO_PRE;
             }
 
             @Override
             public void onNormal() {
-                isNextEnable=true;
-                isPreEnable=true;
+                mCurrentState=STATE_NORMAL;
             }
         });
 

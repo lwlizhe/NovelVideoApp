@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.lwlizhe.basemodule.base.ActivityManager;
@@ -25,6 +26,7 @@ import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonActivity;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
 import com.lwlizhe.novelvideoapp.common.listener.AppBarStateChangeListener;
+import com.lwlizhe.novelvideoapp.novel.api.entity.NovelChapterEntity;
 import com.lwlizhe.novelvideoapp.novel.api.entity.NovelDetailEntity;
 import com.lwlizhe.novelvideoapp.novel.di.component.DaggerNovelChapterComponent;
 import com.lwlizhe.novelvideoapp.novel.di.module.NovelChapterModule;
@@ -34,10 +36,12 @@ import com.lwlizhe.novelvideoapp.novel.mvp.ui.fragment.NovelDetailChapterFragmen
 import com.lwlizhe.novelvideoapp.widget.ExpandTextView;
 import com.orhanobut.logger.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_ID;
+import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_LIST;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_ID;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_VOLUME_ID;
 
@@ -65,6 +69,8 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
     private FloatingActionButton mFabRead;
 
     private ViewPager mViewPager;
+
+    private NovelDetailChapterFragment mChapterFragment;
 
     private long novelId;
 
@@ -134,7 +140,8 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
         mTvwLastUpdateTime.setText(CustomDateUtils.transformTimeStampToData(data.getLast_update_time()));
 
         List<Fragment> mFragmentList=new ArrayList<>();
-        NovelDetailChapterFragment mChapterFragment=new NovelDetailChapterFragment();
+
+        mChapterFragment = new NovelDetailChapterFragment();
         mChapterFragment.setNovelId(novelId);
 
         mFragmentList.add(mChapterFragment);
@@ -166,10 +173,18 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
             @Override
             public void onClick(View view) {
 
+                List<NovelChapterEntity> chapterList = mChapterFragment.getChapterList();
+
+                if(chapterList==null||chapterList.size()==0){
+                    Toast.makeText(NovelChapterActivity.this,"章节未加载完成,请稍后再试",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent intent=new Intent(NovelChapterActivity.this,NovelReadActivity.class);
                 intent.putExtra(NOVEL_ID,novelId);
-                intent.putExtra(NOVEL_CHAPTER_ID,(long) 2);
-                intent.putExtra(NOVEL_VOLUME_ID,(long)3);
+                intent.putExtra(NOVEL_CHAPTER_ID,(long)chapterList.get(0).getChapters().get(0).getChapter_id());
+                intent.putExtra(NOVEL_VOLUME_ID,(long)chapterList.get(0).getVolume_id());
+                intent.putExtra(NOVEL_CHAPTER_LIST, (Serializable) chapterList);
 
                 launchActivity(intent);
             }

@@ -2,6 +2,7 @@ package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.text.Html;
 import android.view.MotionEvent;
 
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
@@ -15,6 +16,7 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelP
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.text.Html.FROM_HTML_MODE_COMPACT;
 import static com.lwlizhe.basemodule.utils.StringUtils.getTwoSpaces;
 
 /**
@@ -67,12 +69,19 @@ public abstract class BaseNovelLoader implements IPageLoader {
     @Override
     public void loadNovel(long bookId,long volumeId,long chapterId,String content) {
 
-        Pattern p_space = Pattern.compile("&nbsp;|<br/>|<br />", Pattern.CASE_INSENSITIVE);
-        Matcher m_space = p_space.matcher(content);
-        content = m_space.replaceAll("\u3000");
-        Pattern p_enter = Pattern.compile("\\r\\n\\r\\n", Pattern.CASE_INSENSITIVE);
-        Matcher m_enter = p_enter.matcher(content);
-        content = m_enter.replaceAll("\r\n\r\n" + getTwoSpaces());
+//        Pattern p_space = Pattern.compile("&nbsp;|<br/>|<br />", Pattern.CASE_INSENSITIVE);
+//        Matcher m_space = p_space.matcher(content);
+//        content = m_space.replaceAll("\u3000");
+//
+//        Pattern p_enter1 = Pattern.compile("\\r\\n\\r\\n", Pattern.CASE_INSENSITIVE);
+//        Matcher m_enter1 = p_enter1.matcher(content);
+//        content = m_enter1.replaceAll("\r\n\r\n" + getTwoSpaces());
+//
+//        Pattern p_enter2 = Pattern.compile("\\n", Pattern.CASE_INSENSITIVE);
+//        Matcher m_enter2 = p_enter2.matcher(content);
+//        content = m_enter2.replaceAll("\r\n\r\n" + getTwoSpaces());
+
+        content= Html.fromHtml(content).toString();
 
         mContentManager.setContent(bookId, volumeId, chapterId, content);
 

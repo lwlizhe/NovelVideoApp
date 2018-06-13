@@ -198,8 +198,11 @@ public class NovelPageBitmapManager {
             return -1;
         }
 
-        if(pageNum >= mCurChapterList.size()){
+        if(pageNum > mCurChapterList.size()-1){
             mContentManager.skipNextChapter();
+            return 1;
+        }else if(pageNum<0){
+            mContentManager.skipPreChapter();
             return 1;
         }
 
@@ -242,6 +245,7 @@ public class NovelPageBitmapManager {
 
         switch (result){
             case 1:
+                resetPos();
                 break;
             case 0:
                 mCurrentPagePos++;
@@ -254,13 +258,15 @@ public class NovelPageBitmapManager {
 
     }
 
+    /**
+     * 重置指针
+     */
+    private void resetPos() {
+        mCurrentPagePos=0;
+    }
+
 
     public void drawPre() {
-
-        if(mCurrentPagePos<=0){
-            mStateObserver.setNovelPageState(-1);
-            return;
-        }
 
         changePage();
         drawBg(mNextPageBitmap);
@@ -269,6 +275,7 @@ public class NovelPageBitmapManager {
 
         switch (result){
             case 1:
+                resetPos();
                 break;
             case 0:
                 mCurrentPagePos--;

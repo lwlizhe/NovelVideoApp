@@ -160,7 +160,7 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         }
 
         // 同理寻找章的初始位置
-        List<NovelChapterEntity.ChaptersBean> chapters = mChapterList.get((int) mCurrentVolumePos).getChapters();
+        List<NovelChapterEntity.ChaptersBean> chapters = mChapterList.get( mCurrentVolumePos).getChapters();
         for (NovelChapterEntity.ChaptersBean entity : chapters) {
 
             if (entity.getChapter_id() == chapterId) {

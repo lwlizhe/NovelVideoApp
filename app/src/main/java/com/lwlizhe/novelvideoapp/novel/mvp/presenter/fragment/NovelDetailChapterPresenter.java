@@ -113,6 +113,9 @@ public class NovelDetailChapterPresenter extends BasePresenter<NovelDetailChapte
                     }
                 });
 
+    }
 
+    public List<NovelChapterEntity> getChapterList(){
+        return mSrcNovelChapterList;
     }
 }

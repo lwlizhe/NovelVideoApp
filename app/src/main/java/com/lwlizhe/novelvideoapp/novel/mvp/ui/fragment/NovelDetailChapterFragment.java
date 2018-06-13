@@ -13,10 +13,13 @@ import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonFragment;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
+import com.lwlizhe.novelvideoapp.novel.api.entity.NovelChapterEntity;
 import com.lwlizhe.novelvideoapp.novel.di.component.DaggerNovelDetailChapterComponent;
 import com.lwlizhe.novelvideoapp.novel.di.module.NovelDetailChapterModule;
 import com.lwlizhe.novelvideoapp.novel.mvp.contract.fragment.NovelDetailChapterContract;
 import com.lwlizhe.novelvideoapp.novel.mvp.presenter.fragment.NovelDetailChapterPresenter;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/4 0004.
@@ -95,5 +98,9 @@ public class NovelDetailChapterFragment extends CommonFragment<NovelDetailChapte
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
+    }
+
+    public List<NovelChapterEntity> getChapterList(){
+        return mPresenter.getChapterList();
     }
 }

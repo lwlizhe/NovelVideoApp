@@ -574,7 +574,11 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     public void onPageTouch(MotionEvent event) {
 
-        if(event.getX() > mScreenWidth / 2&&!isNextEnable){
+        if(mCurrentState.equals(STATE_LOADING)){
+            return;
+        }
+
+        if(event.getX() > mScreenWidth / 2&&mCurrentState.equals(STATE_NO_MORE)){
 
             if(event.getAction()== MotionEvent.ACTION_DOWN){
                 Toast.makeText(mContext, "没有下一页了", Toast.LENGTH_SHORT).show();
@@ -583,7 +587,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
             return;
         }
 
-        if(event.getX() < mScreenWidth / 2&&!isPreEnable){
+        if(event.getX() < mScreenWidth / 2&&mCurrentState.equals(STATE_NO_PRE)){
 
             if(event.getAction()== MotionEvent.ACTION_DOWN){
                 Toast.makeText(mContext, "没有上一页了", Toast.LENGTH_SHORT).show();
