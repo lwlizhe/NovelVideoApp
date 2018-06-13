@@ -372,7 +372,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
                 dy = (int) (1 - mTouch.y); // 防止mTouch.y最终变为0
             }
 
-            mScroller.startScroll((int)mTouch.x, (int)mTouch.y, dx, dy, 700);
+            mScroller.startScroll((int)mTouch.x, (int)mTouch.y, dx, dy, 300);
             isAnimationRunning = true;
             mTargetView.postInvalidate();
 

@@ -217,6 +217,9 @@ public class NovelContentManager {
 
 
     public void onDestroy() {
-        mInstance = null;
+        if(mInstance!=null){
+            mInstance = null;
+        }
+
     }
 }

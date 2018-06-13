@@ -181,7 +181,11 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         mPage.setPageStateListener(new NovelPage.OnPageStateChangedListener() {
             @Override
             public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
-                mPresenter.getChapter(mNovelId, requestVolumeId, requestChapterId);
+
+                if(mPresenter!=null){
+                    mPresenter.getChapter(mNovelId, requestVolumeId, requestChapterId);
+                }
+
             }
 
             @Override

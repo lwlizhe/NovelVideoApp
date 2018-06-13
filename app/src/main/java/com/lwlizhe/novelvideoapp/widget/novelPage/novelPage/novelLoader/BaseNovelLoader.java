@@ -10,6 +10,7 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelContent
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelPageBitmapManager;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.BaseAnimationBitmapLoader;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.PageAnimationBitmapLoaderFactory;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,8 @@ public abstract class BaseNovelLoader implements IPageLoader {
 
     protected NovelPageBitmapManager mBitmapManager;
     protected NovelContentManager mContentManager;
+    protected NovelPageStateObserver mStateObserver;
+
 
     protected PageAnimationBitmapLoaderFactory mAnimationFactory;
 
@@ -48,6 +51,7 @@ public abstract class BaseNovelLoader implements IPageLoader {
 
         mBitmapManager = NovelPageBitmapManager.instance(mContext);
         mContentManager = NovelContentManager.instance(mContext);
+        mStateObserver= NovelPageStateObserver.getInstance();
 
         mAnimationFactory = new PageAnimationBitmapLoaderFactory(targetPageView);
 
@@ -155,5 +159,6 @@ public abstract class BaseNovelLoader implements IPageLoader {
     public void onDetachedFromWindow() {
         mContentManager.onDestroy();
         mBitmapManager.onDestroy();
+        mStateObserver.onDestroy();
     }
 }

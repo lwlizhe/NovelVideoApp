@@ -1,5 +1,6 @@
 package com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity;
 
+import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelReadContract;
@@ -15,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Administrator on 2018/5/9 0009.
  */
-
+@ActivityScope
 public class NovelReadPresenter extends BasePresenter<NovelReadContract.Model,NovelReadContract.View> {
 
     private long mBookId;

@@ -311,7 +311,9 @@ public class NovelPageBitmapManager {
         mCurrentPageBitmap = null;
         mNextPageBitmap = null;
 
-        mInstance = null;
+        if(mInstance!=null) {
+            mInstance = null;
+        }
     }
 
 }

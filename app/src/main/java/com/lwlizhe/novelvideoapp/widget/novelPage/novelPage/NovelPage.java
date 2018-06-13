@@ -47,6 +47,30 @@ public class NovelPage extends View {
         init(context);
     }
 
+    private NovelPageStateListener mStateListener= new NovelPageStateListener() {
+        @Override
+        public void onNextDisable() {
+
+        }
+
+        @Override
+        public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
+            if(mListener!=null){
+                mListener.onRequestNewChapter(requestVolumeId, requestChapterId);
+            }
+        }
+
+        @Override
+        public void onPreDisable() {
+
+        }
+
+        @Override
+        public void onNormal() {
+
+        }
+    };
+
     /**
      * 初始化
      */
@@ -55,29 +79,7 @@ public class NovelPage extends View {
         this.mContext = mContext;
 
         mStateObserver= NovelPageStateObserver.getInstance();
-        mStateObserver.addListener(new NovelPageStateListener() {
-            @Override
-            public void onNextDisable() {
-
-            }
-
-            @Override
-            public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
-                if(mListener!=null){
-                    mListener.onRequestNewChapter(requestVolumeId, requestChapterId);
-                }
-            }
-
-            @Override
-            public void onPreDisable() {
-
-            }
-
-            @Override
-            public void onNormal() {
-
-            }
-        });
+        mStateObserver.addListener(mStateListener);
 
         initPageLoader();
 

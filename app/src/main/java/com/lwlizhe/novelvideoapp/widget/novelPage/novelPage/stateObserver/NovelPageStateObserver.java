@@ -30,6 +30,11 @@ public class NovelPageStateObserver {
         mObservers.add(observer);
 
     }
+    public void removeListener(NovelPageStateListener observer) {
+
+        mObservers.remove(observer);
+
+    }
 
     public void setNovelPageState(int state,Object... args) {
         switch (state) {
@@ -58,4 +63,9 @@ public class NovelPageStateObserver {
         }
     }
 
+    public void onDestroy(){
+        if(mInstance!=null){
+            mInstance=null;
+        }
+    }
 }
