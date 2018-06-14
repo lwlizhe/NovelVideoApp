@@ -13,10 +13,13 @@ import android.view.MotionEvent;
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.entity.NovelPageEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver.STATE_NO_PRE;
 
 /**
  * 提供绘制完成的currentBitmap和nextBitmap，所有bitmap的操作都走这里
@@ -47,9 +50,10 @@ public class NovelPageBitmapManager {
     private NovelPageStateObserver mStateObserver;
 
     public int mCurrentPagePos = 0;
-    private int mTempPagePos = 0;
+    private int mMaxPageCount=0;
 
-    private int mCurrentState = 0;//-1没有上一页，1没有下一页，0正常
+    private boolean isOpenNewChapter=false;
+    private boolean isCurrrentOperateNext=false;
 
     private static NovelPageBitmapManager mInstance;
 
@@ -73,6 +77,38 @@ public class NovelPageBitmapManager {
 
         mContentManager = NovelContentManager.instance(mContext);
         mStateObserver = NovelPageStateObserver.getInstance();
+
+        mStateObserver.addListener(new NovelPageStateListener() {
+            @Override
+            public void onNextDisable() {
+
+            }
+
+            @Override
+            public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
+
+            }
+
+            @Override
+            public void onPreDisable() {
+
+            }
+
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onLoadingFinish() {
+
+            }
+
+            @Override
+            public void onNormal() {
+
+            }
+        });
 
         initColor(mContext);
         initPaint();
@@ -188,7 +224,7 @@ public class NovelPageBitmapManager {
 
     }
 
-    private int drawContent(Bitmap mTargetBitmap, int pageNum) {
+    private int drawContent(Bitmap mTargetBitmap, int pageNum,boolean isCurrent) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
@@ -198,15 +234,26 @@ public class NovelPageBitmapManager {
             return -1;
         }
 
-        if(pageNum > mCurChapterList.size()-1){
-            mContentManager.skipNextChapter();
-            return 1;
-        }else if(pageNum<0){
-            mContentManager.skipPreChapter();
-            return 1;
+        if(!isCurrent){
+            if(pageNum > mCurChapterList.size()-1){
+                isOpenNewChapter=true;
+                mContentManager.skipNextChapter();
+                return 1;
+            }else if(pageNum<0){
+                isOpenNewChapter=true;
+                mContentManager.skipPreChapter();
+                return 1;
+            }
         }
 
-        NovelPageEntity novelPageEntity = mCurChapterList.get(pageNum);
+        mMaxPageCount=mCurChapterList.size();
+        NovelPageEntity novelPageEntity;
+        if(isOpenNewChapter&&!isCurrrentOperateNext){
+            novelPageEntity = mCurChapterList.get(mMaxPageCount-1);
+            mCurrentPagePos=mMaxPageCount-1;
+        }else{
+            novelPageEntity = mCurChapterList.get(pageNum);
+        }
 
         List<String> lines = novelPageEntity.getLines();
         int curTextHeight = 0;
@@ -230,59 +277,55 @@ public class NovelPageBitmapManager {
         }
 
         drawBg(mNextPageBitmap);
-//        drawBg(mNextPageBitmap);
-        drawContent(mNextPageBitmap, mCurrentPagePos);
-//        drawContent(mNextPageBitmap);
 
-//        mNextPageBitmap = mCurrentPageBitmap;
+        drawContent(mNextPageBitmap, mCurrentPagePos,true);
+
     }
 
     public void drawNext() {
+        isCurrrentOperateNext=true;
 
         changePage();
         drawBg(mNextPageBitmap);
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos+1);
+        int result = drawContent(mNextPageBitmap, mCurrentPagePos+1,false);
 
         switch (result){
             case 1:
-                resetPos();
+                mCurrentPagePos=0;
+
                 break;
             case 0:
+                isOpenNewChapter=false;
                 mCurrentPagePos++;
-                mStateObserver.setNovelPageState(0);
+                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
                 break;
             case -1:
-                mStateObserver.setNovelPageState(1);
+                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NO_NEXT);
                 break;
         }
 
     }
 
-    /**
-     * 重置指针
-     */
-    private void resetPos() {
-        mCurrentPagePos=0;
-    }
-
-
     public void drawPre() {
+        isCurrrentOperateNext=false;
 
         changePage();
         drawBg(mNextPageBitmap);
 
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos-1);
+        int result = drawContent(mNextPageBitmap, mCurrentPagePos-1,false);
 
         switch (result){
             case 1:
-                resetPos();
+                mCurrentPagePos=0;
+
                 break;
             case 0:
+                isOpenNewChapter=false;
                 mCurrentPagePos--;
-                mStateObserver.setNovelPageState(0);
+                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
                 break;
             case -1:
-                mStateObserver.setNovelPageState(-1);
+                mStateObserver.setNovelPageState(STATE_NO_PRE);
                 break;
         }
     }
@@ -305,7 +348,7 @@ public class NovelPageBitmapManager {
 
         HashMap<String, Object> result = new HashMap<>();
 
-        result.put("result", mCurrentState);
+        result.put("result", 0);
         result.put("bitmap", mNextPageBitmap);
 
         return result;

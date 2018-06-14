@@ -85,6 +85,16 @@ public abstract class BaseAnimationBitmapLoader {
             }
 
             @Override
+            public void onLoading() {
+                mCurrentState=STATE_LOADING;
+            }
+
+            @Override
+            public void onLoadingFinish() {
+
+            }
+
+            @Override
             public void onNormal() {
                 mCurrentState=STATE_NORMAL;
             }

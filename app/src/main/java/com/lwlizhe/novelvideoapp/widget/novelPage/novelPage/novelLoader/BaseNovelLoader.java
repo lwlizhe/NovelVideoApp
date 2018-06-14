@@ -11,6 +11,7 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelContent
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelPageBitmapManager;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.BaseAnimationBitmapLoader;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.PageAnimationBitmapLoaderFactory;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
 
 import java.util.regex.Matcher;
@@ -55,6 +56,41 @@ public abstract class BaseNovelLoader implements IPageLoader {
         mContentManager = NovelContentManager.instance(mContext);
         mStateObserver= NovelPageStateObserver.getInstance();
 
+        mStateObserver.addListener(new NovelPageStateListener() {
+            @Override
+            public void onNextDisable() {
+
+            }
+
+            @Override
+            public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
+
+            }
+
+            @Override
+            public void onPreDisable() {
+
+            }
+
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onLoadingFinish() {
+                if(mTargetPageView!=null){
+                    mBitmapManager.drawCurrent();
+                    mTargetPageView.postInvalidate();
+                }
+            }
+
+            @Override
+            public void onNormal() {
+
+            }
+        });
+
         mAnimationFactory = new PageAnimationBitmapLoaderFactory(targetPageView);
 
         initPageAnimation();
@@ -85,34 +121,11 @@ public abstract class BaseNovelLoader implements IPageLoader {
 
         mContentManager.setContent(bookId, volumeId, chapterId, content);
 
-        mBitmapManager.drawCurrent();
-
-        mTargetPageView.postInvalidate();
+//        mBitmapManager.drawCurrent();
+//
+//        mTargetPageView.postInvalidate();
     }
 
-
-    public void loadNextChapter(String content) {
-
-        Pattern p_space = Pattern.compile("&nbsp;|<br/>|<br />", Pattern.CASE_INSENSITIVE);
-        Matcher m_space = p_space.matcher(content);
-        content = m_space.replaceAll("\u3000");
-        Pattern p_enter = Pattern.compile("\\r\\n\\r\\n", Pattern.CASE_INSENSITIVE);
-        Matcher m_enter = p_enter.matcher(content);
-        content = m_enter.replaceAll("\r\n\r\n" + getTwoSpaces());
-
-        mContentManager.setNextContent(1, 1, 3, content);
-    }
-
-    public void loadPreChapter(String content) {
-        Pattern p_space = Pattern.compile("&nbsp;|<br/>|<br />", Pattern.CASE_INSENSITIVE);
-        Matcher m_space = p_space.matcher(content);
-        content = m_space.replaceAll("\u3000");
-        Pattern p_enter = Pattern.compile("\\r\\n\\r\\n", Pattern.CASE_INSENSITIVE);
-        Matcher m_enter = p_enter.matcher(content);
-        content = m_enter.replaceAll("\r\n\r\n" + getTwoSpaces());
-
-        mContentManager.setPreContent(1, 1, 1, content);
-    }
 
     @Override
     public void loadChapter(NovelContentCatalogueEntity catalogueEntity) {

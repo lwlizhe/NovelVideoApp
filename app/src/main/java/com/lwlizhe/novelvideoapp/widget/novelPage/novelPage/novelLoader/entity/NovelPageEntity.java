@@ -8,16 +8,26 @@ import java.util.List;
 
 public class NovelPageEntity {
 
-    int chapterid;
+    private long chapterId;
+
+    private long volumeId;
 
     List<String> lines;
 
-    public int getChapterid() {
-        return chapterid;
+    public long getVolumeId() {
+        return volumeId;
     }
 
-    public void setChapterid(int chapterid) {
-        this.chapterid = chapterid;
+    public void setVolumeId(long volumeId) {
+        this.volumeId = volumeId;
+    }
+
+    public long getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(long chapterId) {
+        this.chapterId = chapterId;
     }
 
     public List<String> getLines() {

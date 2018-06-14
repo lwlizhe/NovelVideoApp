@@ -12,6 +12,19 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelP
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver.STATE_LOADING;
+import static com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver.STATE_LOADING_FINISH;
+import static com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver.STATE_NO_PRE;
+import static com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver.STATE_REQUEST_CHAPTER;
+
 /**
  * 小说文字处理，负责读取、存储、分割计算
  * Created by Administrator on 2018/5/21 0021.
@@ -37,10 +50,12 @@ public class NovelContentManager {
 
     private Context mContext;
 
+    private Disposable mPreLoadDisp;
+
     private String mContent;
 
-    private int mCurrentVolumePos = 0;
-    private int mCurrentChapterPos = 0;
+    private int mCurrentVolumePos = -1;
+    private int mCurrentChapterPos = -1;
 
     private long currentRequestVolumeId;
     private long currentRequestChapterId;
@@ -79,79 +94,81 @@ public class NovelContentManager {
 
     public void skipNextChapter() {
 
-        mPreChapterList.clear();
-        mPreChapterList.addAll(mCurChapterList);
-
-        mCurChapterList.clear();
-
         if (mNextChapterList != null && mNextChapterList.size() != 0) {
+
+            mPreChapterList.clear();
+            mPreChapterList.addAll(mCurChapterList);
+
+            mCurChapterList.clear();
             mCurChapterList.addAll(mNextChapterList);
 
             mNextChapterList.clear();
+
+            mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
             List<NovelContentCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
-            if (mCurrentVolumePos >= volumeList.size() - 1&& mCurrentChapterPos >= volumeList.get(mCurrentVolumePos).getChapterList().size() - 1) {
-                mStateObserver.setNovelPageState(1);
-            } else {
 
-                if (mCurrentChapterPos >= volumeList.size() - 1) {
+            int chapterSize = volumeList.get(mCurrentVolumePos).getChapterList().size();
+
+            if (mCurrentVolumePos >= volumeList.size() - 1 && mCurrentChapterPos >= chapterSize - 1) {
+                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NO_NEXT);
+            } else {
+                mCurChapterList.clear();
+
+                if (mCurrentChapterPos >= chapterSize - 1) {
                     mCurrentChapterPos = 0;
                     mCurrentVolumePos += 1;
 
-                    currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(0).getChapterId();
                 } else {
+                    mCurrentChapterPos += 1;
 
-                    currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos + 1).getChapterId();
                 }
+
+                currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                 currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
 
-                mStateObserver.setNovelPageState(2, currentRequestVolumeId, currentRequestChapterId);
+                mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
 
             }
         }
     }
 
     public void skipPreChapter() {
-        mNextChapterList.clear();
-        mNextChapterList.addAll(mCurChapterList);
-
-        mCurChapterList.clear();
 
         if (mPreChapterList != null && mPreChapterList.size() != 0) {
+
+            mNextChapterList.clear();
+            mNextChapterList.addAll(mCurChapterList);
+
+            mCurChapterList.clear();
+
             mCurChapterList.addAll(mPreChapterList);
 
             mPreChapterList.clear();
+
+            mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
-//            List<NovelContentCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
-//            if (mCurrentVolumePos >= volumeList.size() - 1 || mCurrentChapterPos >= volumeList.get(mCurrentVolumePos).getChapterList().size() - 1) {
-//                mStateObserver.setNovelPageState(1);
-//            } else {
-//
-//                currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
-//                currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos + 1).getChapterId();
-//
-//                mStateObserver.setNovelPageState(2, currentRequestVolumeId, currentRequestChapterId);
-//
-//            }
 
             if (mCurrentVolumePos == 0 && mCurrentChapterPos == 0) {
-                mStateObserver.setNovelPageState(-1);
+                mStateObserver.setNovelPageState(STATE_NO_PRE);
             } else {
+
+                mCurChapterList.clear();
+
                 List<NovelContentCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
 
                 if (mCurrentChapterPos == 0) {
                     mCurrentVolumePos -= 1;
                     mCurrentChapterPos = volumeList.get(mCurrentVolumePos).getChapterList().size() - 1;
 
-                    currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                 } else {
-                    currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos - 1).getChapterId();
-                }
+                    mCurrentChapterPos -= 1;
 
+                }
+                currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                 currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
 
-
-                mStateObserver.setNovelPageState(2, currentRequestVolumeId, currentRequestChapterId);
+                mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
             }
 
         }
@@ -162,54 +179,73 @@ public class NovelContentManager {
      *
      * @return
      */
-    private List<NovelPageEntity> transformCurrentContent(List<NovelPageEntity> targetList, String srcContent) {
+    private void transformCurrentContent(List<NovelPageEntity> targetList, final String srcContent) {
+
+        mStateObserver.setNovelPageState(STATE_LOADING);
 
         if (!TextUtils.isEmpty(srcContent) && mContentPaint != null && mPageHeight > 0 && mPageWidth > 0) {
 
-            String[] paragraphs = srcContent.split("\n");
-//            String[] paragraphs = srcContent.split("\r\n");
+            //调用异步进行加载
+            Single.create(new SingleOnSubscribe<List<NovelPageEntity>>() {
+                @Override
+                public void subscribe(SingleEmitter<List<NovelPageEntity>> e) throws Exception {
+                    e.onSuccess(calPageContent(srcContent));
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<List<NovelPageEntity>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            mPreLoadDisp = d;
+                        }
 
-            calPageContent(paragraphs, targetList);
+                        @Override
+                        public void onSuccess(List<NovelPageEntity> pages) {
+                            mCurChapterList = pages;
+                            mStateObserver.setNovelPageState(STATE_LOADING_FINISH);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            //无视错误
+                        }
+                    });
+
+//            targetList.clear();
+//            targetList.addAll(calPageContent(srcContent));
+
         }
 
-        return targetList;
+
     }
 
     public void setContent(long bookId, long volumeId, long chapterId, String content) {
         this.mContent = content;
 
-        mCurrentVolumePos = 0;
-        mCurrentChapterPos = 0;
-
-        for (NovelContentCatalogueEntity.NovelContentVolumeEntity volumeEntity : mCatalogue.getVolumeList()) {
-            if (volumeEntity.getVolumeId() == volumeId) {
-                break;
+        if (mCurrentVolumePos == -1) {
+            mCurrentVolumePos = 0;
+            for (NovelContentCatalogueEntity.NovelContentVolumeEntity volumeEntity : mCatalogue.getVolumeList()) {
+                if (volumeEntity.getVolumeId() == volumeId) {
+                    break;
+                }
+                mCurrentVolumePos++;
             }
-            mCurrentVolumePos++;
         }
 
-        List<NovelContentCatalogueEntity.NovelContentChapterEntity> chapters = mCatalogue.getVolumeList().get((int) mCurrentVolumePos).getChapterList();
-        for (NovelContentCatalogueEntity.NovelContentChapterEntity entity : chapters) {
+        if (mCurrentChapterPos == -1) {
+            mCurrentChapterPos = 0;
+            List<NovelContentCatalogueEntity.NovelContentChapterEntity> chapters = mCatalogue.getVolumeList().get((int) mCurrentVolumePos).getChapterList();
+            for (NovelContentCatalogueEntity.NovelContentChapterEntity entity : chapters) {
 
-            if (entity.getChapterId() == chapterId) {
-                break;
+                if (entity.getChapterId() == chapterId) {
+                    break;
+                }
+
+                mCurrentChapterPos++;
             }
-
-            mCurrentChapterPos++;
         }
 
         transformCurrentContent(mCurChapterList, mContent);
-    }
-
-    public void setPreContent(long bookId, long volumeId, long chapterId, String content) {
-
-        transformCurrentContent(mPreChapterList, content);
-
-    }
-
-    public void setNextContent(long bookId, long volumeId, long chapterId, String content) {
-
-        transformCurrentContent(mNextChapterList, content);
     }
 
     public void setCatalogue(NovelContentCatalogueEntity catalogue) {
@@ -221,14 +257,17 @@ public class NovelContentManager {
         return mCurChapterList;
     }
 
-    private void calPageContent(String[] sourceContent, List<NovelPageEntity> targetList) {
+    private List<NovelPageEntity> calPageContent(String srcContent) {
 
         int curTextHeight = 0;
 
+        String[] paragraphs = srcContent.split("\n");
+
+        List<NovelPageEntity> result = new ArrayList<>();
         List<String> chapterLines = new ArrayList<>();
 
         //遍历段落并计算分行
-        for (String paragraph : sourceContent) {
+        for (String paragraph : paragraphs) {
             if (TextUtils.isEmpty(paragraph)) continue;
 
             while (paragraph.length() > 0) {
@@ -239,7 +278,7 @@ public class NovelContentManager {
 
                     singleEntity.setLines(new ArrayList<String>(chapterLines));
 
-                    targetList.add(singleEntity);
+                    result.add(singleEntity);
                     chapterLines.clear();
 
                     curTextHeight = 0;
@@ -267,10 +306,11 @@ public class NovelContentManager {
 
             singleEntity.setLines(new ArrayList<String>(chapterLines));
 
-            targetList.add(singleEntity);
+            result.add(singleEntity);
             chapterLines.clear();
         }
 
+        return result;
     }
 
 

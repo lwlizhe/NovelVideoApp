@@ -12,5 +12,9 @@ public interface NovelPageStateListener {
 
     void onPreDisable();
 
+    void onLoading();
+
+    void onLoadingFinish();
+
     void onNormal();
 }

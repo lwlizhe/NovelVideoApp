@@ -66,6 +66,16 @@ public class NovelPage extends View {
         }
 
         @Override
+        public void onLoading() {
+
+        }
+
+        @Override
+        public void onLoadingFinish() {
+
+        }
+
+        @Override
         public void onNormal() {
 
         }

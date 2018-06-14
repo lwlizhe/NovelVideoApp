@@ -13,6 +13,13 @@ public class NovelPageStateObserver {
 
     private List<NovelPageStateListener> mObservers = new ArrayList<>();
 
+    public static final String STATE_LOADING="state_loading";
+    public static final String STATE_LOADING_FINISH="state_loading_finish";
+    public static final String STATE_NORMAL="state_normal";
+    public static final String STATE_NO_PRE="state_no_pre";
+    public static final String STATE_NO_NEXT="state_no_next";
+    public static final String STATE_REQUEST_CHAPTER="state_request_chapter";
+
     public static NovelPageStateObserver getInstance() {
         if (mInstance == null) {
             synchronized (NovelPageStateObserver.class) {
@@ -36,25 +43,36 @@ public class NovelPageStateObserver {
 
     }
 
-    public void setNovelPageState(int state,Object... args) {
+    public void setNovelPageState(String state,Object... args) {
         switch (state) {
 
-            case 2:
+            case STATE_REQUEST_CHAPTER:
                 for (NovelPageStateListener observer : mObservers) {
                     observer.onRequestNewChapter((long)args[0],(long)args[1]);
                 }
                 break;
-            case -1:
+            case STATE_NO_PRE:
                 for (NovelPageStateListener observer : mObservers) {
                     observer.onPreDisable();
                 }
                 break;
-            case 1:
+            case STATE_NO_NEXT:
                 for (NovelPageStateListener observer : mObservers) {
                     observer.onNextDisable();
                 }
                 break;
-            case 0:
+
+            case STATE_LOADING:
+                for (NovelPageStateListener observer : mObservers) {
+                    observer.onLoading();
+                }
+                break;
+            case STATE_LOADING_FINISH:
+                for (NovelPageStateListener observer : mObservers) {
+                    observer.onLoadingFinish();
+                }
+                break;
+            case STATE_NORMAL:
             default:
                 for (NovelPageStateListener observer : mObservers) {
                     observer.onNormal();
