@@ -81,6 +81,12 @@ public class NovelContentManager {
 
     }
 
+    /**
+     * 设置改变后的页面规格
+     *
+     * @param w 页面宽
+     * @param h 页面高
+     */
     public void setPageSize(int w, int h) {
         mPageWidth = w;
         mPageHeight = h;
@@ -92,6 +98,9 @@ public class NovelContentManager {
         mContentPaint = mTextContentPaint;
     }
 
+    /**
+     * 跳转到下一章
+     */
     public void skipNextChapter() {
 
         if (mNextChapterList != null && mNextChapterList.size() != 0) {
@@ -133,8 +142,12 @@ public class NovelContentManager {
         }
     }
 
+    /**
+     * 跳转到上一章
+     */
     public void skipPreChapter() {
 
+        //如果上一章已经缓存
         if (mPreChapterList != null && mPreChapterList.size() != 0) {
 
             mNextChapterList.clear();
@@ -148,7 +161,7 @@ public class NovelContentManager {
 
             mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
-
+            //判断章节是否是0，也就是是不是开头
             if (mCurrentVolumePos == 0 && mCurrentChapterPos == 0) {
                 mStateObserver.setNovelPageState(STATE_NO_PRE);
             } else {
@@ -157,6 +170,7 @@ public class NovelContentManager {
 
                 List<NovelContentCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
 
+                //判断是不是需要跳转到上一卷的最后一章
                 if (mCurrentChapterPos == 0) {
                     mCurrentVolumePos -= 1;
                     mCurrentChapterPos = volumeList.get(mCurrentVolumePos).getChapterList().size() - 1;
@@ -167,7 +181,7 @@ public class NovelContentManager {
                 }
                 currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                 currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
-
+                //获取请求的卷id和章节id，发送请求
                 mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
             }
 
@@ -176,8 +190,6 @@ public class NovelContentManager {
 
     /**
      * 计算加载目标章节的内容
-     *
-     * @return
      */
     private void transformCurrentContent(List<NovelPageEntity> targetList, final String srcContent) {
 
@@ -219,6 +231,14 @@ public class NovelContentManager {
 
     }
 
+    /**
+     * 设置目标章节的内容.
+     *
+     * @param bookId    书籍id
+     * @param volumeId  卷id
+     * @param chapterId 章节id
+     * @param content   章节内容
+     */
     public void setContent(long bookId, long volumeId, long chapterId, String content) {
         this.mContent = content;
 
@@ -248,6 +268,11 @@ public class NovelContentManager {
         transformCurrentContent(mCurChapterList, mContent);
     }
 
+    /**
+     * 设置目录
+     *
+     * @param catalogue 目录实体类
+     */
     public void setCatalogue(NovelContentCatalogueEntity catalogue) {
         mCatalogue = catalogue;
     }
@@ -257,6 +282,12 @@ public class NovelContentManager {
         return mCurChapterList;
     }
 
+    /**
+     * 分割单个章节的内容并计算每页的内容.
+     *
+     * @param srcContent 目标内容
+     * @return 每页的内容列表
+     */
     private List<NovelPageEntity> calPageContent(String srcContent) {
 
         int curTextHeight = 0;

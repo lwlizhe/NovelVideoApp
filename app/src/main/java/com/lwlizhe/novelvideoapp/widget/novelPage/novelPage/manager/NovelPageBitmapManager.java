@@ -36,8 +36,7 @@ public class NovelPageBitmapManager {
     private int mViewWidth;
     private int mViewHeight;
 
-    private int mContentTextSize;
-    private int mContentTextColor;
+
 
     private Paint mContentPaint;
     private Paint mTitlePaint;
@@ -46,14 +45,21 @@ public class NovelPageBitmapManager {
     // 绘制背景颜色的画笔(用来擦除需要重绘的部分)
     private Paint mBgPaint;
 
+    //-----------------------------------配置相关-------------------------------------------
+    private int mContentTextSize;
+    private int mContentTextColor;
+
+    private int mTitleTextSize;
+    private int mTitleTextColor;
+
     private NovelContentManager mContentManager;
     private NovelPageStateObserver mStateObserver;
 
     public int mCurrentPagePos = 0;
-    private int mMaxPageCount=0;
+    private int mMaxPageCount = 0;
 
-    private boolean isOpenNewChapter=false;
-    private boolean isCurrrentOperateNext=false;
+    private boolean isOpenNewChapter = false;
+    private boolean isCurrentOperateNext = false;
 
     private static NovelPageBitmapManager mInstance;
 
@@ -111,9 +117,18 @@ public class NovelPageBitmapManager {
         });
 
         initColor(mContext);
+        initTextSize();
         initPaint();
     }
 
+
+
+    /**
+     * 重置页面大小
+     *
+     * @param w 页面宽
+     * @param h 页面高
+     */
     public void setPageSize(int w, int h) {
         mViewWidth = w;
         mViewHeight = h;
@@ -131,10 +146,19 @@ public class NovelPageBitmapManager {
         mContentManager.setPageSize(w, h);
     }
 
+    /**
+     * 绘制颜色
+     *
+     * @param mContext
+     */
     private void initColor(Context mContext) {
 
         mContentTextColor = ContextCompat.getColor(mContext, R.color.chapter_title_night);
+        mTitleTextColor = ContextCompat.getColor(mContext, R.color.chapter_title_night);
 
+    }
+
+    private void initTextSize() {
     }
 
     /**
@@ -158,8 +182,8 @@ public class NovelPageBitmapManager {
 
         // 绘制标题的画笔
         mTitlePaint = new TextPaint();
-//        mTitlePaint.setColor(mTitleTextColor);
-//        mTitlePaint.setTextSize(mTitleTextSize);
+        mTitlePaint.setColor(mTitleTextColor);
+        mTitlePaint.setTextSize(mTitleTextSize);
         mTitlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mTitlePaint.setTypeface(Typeface.DEFAULT_BOLD);
         mTitlePaint.setAntiAlias(true);
@@ -176,8 +200,12 @@ public class NovelPageBitmapManager {
         mContentManager.setContentPaint(mContentPaint);
     }
 
+    /**
+     * bitmap的点击事件，用来通知处理bitmap的相关部分（绘制上一页、下一页、交换位置并重置等）
+     *
+     * @param event 点击事件
+     */
     public void onTouch(MotionEvent event) {
-
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -187,7 +215,6 @@ public class NovelPageBitmapManager {
                 } else if (event.getX() < mViewWidth / 2) {
                     drawPre();
                 }
-
 
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -210,13 +237,18 @@ public class NovelPageBitmapManager {
     /**
      * 创建当前页
      *
-     * @return
+     * @return 当前展示的页面
      */
     public Bitmap getCurrentPageBitmap() {
 
         return mCurrentPageBitmap;
     }
 
+    /**
+     * 填充背景，默认白色
+     *
+     * @param mTargetBitmap 目标bitmap
+     */
     private void drawBg(Bitmap mTargetBitmap) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
@@ -224,52 +256,66 @@ public class NovelPageBitmapManager {
 
     }
 
-    private int drawContent(Bitmap mTargetBitmap, int pageNum,boolean isCurrent) {
+    /**
+     * 绘制内容页
+     *
+     * @param mTargetBitmap 目标bitmap
+     * @param pageNum       绘制的章节页码
+     * @param isCurrent     是否是绘制当前页
+     * @return 绘制结果：1表示跳转到下一页，-1表示操作失败，0成功
+     */
+    private int drawContent(Bitmap mTargetBitmap, int pageNum, boolean isCurrent) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
         List<NovelPageEntity> mCurChapterList = mContentManager.getCurChapterList();
-
-        if (mCurChapterList == null || mCurChapterList.size() == 0 ) {
+        // 判断是否还有上一页或者下一页
+        if (mCurChapterList == null || mCurChapterList.size() == 0) {
             return -1;
         }
 
-        if(!isCurrent){
-            if(pageNum > mCurChapterList.size()-1){
-                isOpenNewChapter=true;
+        // 是不是绘制当前页，如果不是，那再判断是不是跳转章节的操作
+        if (!isCurrent) {
+            if (pageNum > mCurChapterList.size() - 1) {
+                isOpenNewChapter = true;
                 mContentManager.skipNextChapter();
                 return 1;
-            }else if(pageNum<0){
-                isOpenNewChapter=true;
+            } else if (pageNum < 0) {
+                isOpenNewChapter = true;
                 mContentManager.skipPreChapter();
                 return 1;
             }
         }
 
-        mMaxPageCount=mCurChapterList.size();
+        mMaxPageCount = mCurChapterList.size();
         NovelPageEntity novelPageEntity;
-        if(isOpenNewChapter&&!isCurrrentOperateNext){
-            novelPageEntity = mCurChapterList.get(mMaxPageCount-1);
-            mCurrentPagePos=mMaxPageCount-1;
-        }else{
+        //如果是跳转到不同章节，那么重置页面的位置指针
+        if (isOpenNewChapter && !isCurrentOperateNext) {
+            novelPageEntity = mCurChapterList.get(mMaxPageCount - 1);
+            mCurrentPagePos = mMaxPageCount - 1;
+        } else {
             novelPageEntity = mCurChapterList.get(pageNum);
         }
 
         List<String> lines = novelPageEntity.getLines();
         int curTextHeight = 0;
 
+        // 一行行的画文字(暂定规则：一段后加3dp)
         for (String line : lines) {
 
-            mCanvas.drawText(line, UiUtils.dp2px(12), UiUtils.dp2px(12) + curTextHeight, mContentPaint);
+            mCanvas.drawText(line, mContentPaint.getTextSize(), mContentPaint.getTextSize()+UiUtils.dp2px(10) + curTextHeight, mContentPaint);
             curTextHeight += mContentPaint.getTextSize();
-            if (line.endsWith("\n")) {
+            if (line.length()<22) {
                 curTextHeight += UiUtils.dp2px(3);
             }
         }
-
+        isOpenNewChapter = false;
         return 0;
     }
 
+    /**
+     * 绘制当前的静态页面的bitmap
+     */
     public void drawCurrent() {
 
         if (mNextPageBitmap == null || mCurrentPageBitmap == null) {
@@ -278,24 +324,27 @@ public class NovelPageBitmapManager {
 
         drawBg(mNextPageBitmap);
 
-        drawContent(mNextPageBitmap, mCurrentPagePos,true);
+        drawContent(mNextPageBitmap, mCurrentPagePos, true);
 
     }
 
+    /**
+     * 绘制下一页的bitmap
+     */
     public void drawNext() {
-        isCurrrentOperateNext=true;
+        isCurrentOperateNext = true;
 
         changePage();
         drawBg(mNextPageBitmap);
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos+1,false);
+        int result = drawContent(mNextPageBitmap, mCurrentPagePos + 1, false);
 
-        switch (result){
+        switch (result) {
             case 1:
-                mCurrentPagePos=0;
+                mCurrentPagePos = 0;
 
                 break;
             case 0:
-                isOpenNewChapter=false;
+                isOpenNewChapter = false;
                 mCurrentPagePos++;
                 mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
                 break;
@@ -306,21 +355,24 @@ public class NovelPageBitmapManager {
 
     }
 
+    /**
+     * 绘制上一页的bitmap
+     */
     public void drawPre() {
-        isCurrrentOperateNext=false;
+        isCurrentOperateNext = false;
 
         changePage();
         drawBg(mNextPageBitmap);
 
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos-1,false);
+        int result = drawContent(mNextPageBitmap, mCurrentPagePos - 1, false);
 
-        switch (result){
+        switch (result) {
             case 1:
-                mCurrentPagePos=0;
+                mCurrentPagePos = 0;
 
                 break;
             case 0:
-                isOpenNewChapter=false;
+                isOpenNewChapter = false;
                 mCurrentPagePos--;
                 mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
                 break;
@@ -330,10 +382,11 @@ public class NovelPageBitmapManager {
         }
     }
 
+    /**
+     * 交换bitmap
+     */
     private void changePage() {
-        /**
-         * 两个bitmap轮流使用，节省一下资源，另外省的recycle的时候漏了
-         */
+
         Bitmap temp = mCurrentPageBitmap;
         mCurrentPageBitmap = mNextPageBitmap;
         mNextPageBitmap = temp;
@@ -354,6 +407,9 @@ public class NovelPageBitmapManager {
         return result;
     }
 
+    /**
+     * 回收
+     */
     public void onDestroy() {
 
         mCurrentPageBitmap.recycle();
@@ -361,7 +417,7 @@ public class NovelPageBitmapManager {
         mCurrentPageBitmap = null;
         mNextPageBitmap = null;
 
-        if(mInstance!=null) {
+        if (mInstance != null) {
             mInstance = null;
         }
     }
