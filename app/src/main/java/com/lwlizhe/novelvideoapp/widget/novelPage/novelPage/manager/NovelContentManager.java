@@ -45,6 +45,12 @@ public class NovelContentManager {
     private int mPageWidth;
     private int mPageHeight;
 
+    private int mContentTextSize;
+    private int mTitleTextSize;
+
+    private int mParagraphMargin;
+    private int mContentPadding;
+
     private static NovelContentManager mInstance;
     protected NovelPageStateObserver mStateObserver;
 
@@ -79,6 +85,7 @@ public class NovelContentManager {
         this.mContext = context;
         mStateObserver = NovelPageStateObserver.getInstance();
 
+        mContentPadding=UiUtils.dp2px(10);
     }
 
     /**
@@ -92,6 +99,22 @@ public class NovelContentManager {
         mPageHeight = h;
 
         transformCurrentContent(mCurChapterList, mContent);
+    }
+
+    public void setContentTextSize(int contentTextSize) {
+
+        mContentTextSize = contentTextSize;
+
+    }
+
+    public void setTitleTextSize(int titleTextSize) {
+
+        mTitleTextSize = titleTextSize;
+
+    }
+
+    public void setParagraphMargin(int margin) {
+        mParagraphMargin = margin;
     }
 
     public void setContentPaint(Paint mTextContentPaint) {
@@ -291,6 +314,7 @@ public class NovelContentManager {
     private List<NovelPageEntity> calPageContent(String srcContent) {
 
         int curTextHeight = 0;
+        int validContentPageHeight = mPageHeight - mTitleTextSize - 2 * mParagraphMargin;
 
         String[] paragraphs = srcContent.split("\n");
 
@@ -304,7 +328,7 @@ public class NovelContentManager {
             while (paragraph.length() > 0) {
 
                 // 如果超过一页，那么新建一页，并添加进集合
-                if (curTextHeight > mPageHeight - 2 * UiUtils.dp2px(10)) {
+                if (curTextHeight > validContentPageHeight) {
                     NovelPageEntity singleEntity = new NovelPageEntity();
 
                     singleEntity.setLines(new ArrayList<String>(chapterLines));
@@ -313,14 +337,14 @@ public class NovelContentManager {
                     chapterLines.clear();
 
                     curTextHeight = 0;
-                    curTextHeight += UiUtils.dp2px(3);
+                    curTextHeight += mParagraphMargin;
                     continue;
                 } else {
                     //如果没超过一页，那么继续往下加
                     curTextHeight += mContentPaint.getTextSize();
                 }
                 //计算单行多少个字
-                int singleLineWordCount = mContentPaint.breakText(paragraph, true, mPageWidth - 2 * UiUtils.dp2px(10), null);
+                int singleLineWordCount = mContentPaint.breakText(paragraph, true, mPageWidth - 2 * mContentPadding, null);
 
                 // 添加行并重置段落
                 String line = paragraph.substring(0, singleLineWordCount);
@@ -328,12 +352,11 @@ public class NovelContentManager {
                 paragraph = paragraph.substring(singleLineWordCount);
 
             }
-            curTextHeight += UiUtils.dp2px(3);
+            curTextHeight += mParagraphMargin;
         }
         // 遍历完成，把最后一页的加上
         if (chapterLines.size() != 0) {
             NovelPageEntity singleEntity = new NovelPageEntity();
-
 
             singleEntity.setLines(new ArrayList<String>(chapterLines));
 

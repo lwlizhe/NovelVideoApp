@@ -133,11 +133,13 @@ public class NovelPageBitmapManager {
         mViewWidth = w;
         mViewHeight = h;
 
+        // 创建currentPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mCurrentPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
             drawBg(mCurrentPageBitmap);
         }
 
+        // 创建nextPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mNextPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
             drawBg(mNextPageBitmap);
@@ -159,6 +161,11 @@ public class NovelPageBitmapManager {
     }
 
     private void initTextSize() {
+        mContentTextSize=UiUtils.sp2px(15);
+        mTitleTextSize=UiUtils.sp2px(15);
+
+        mContentManager.setContentTextSize(mContentTextSize);
+        mContentManager.setTitleTextSize(mTitleTextSize);
     }
 
     /**
@@ -176,7 +183,7 @@ public class NovelPageBitmapManager {
 
         // 绘制页面内容的画笔
         mContentPaint = new TextPaint();
-        mContentPaint.setTextSize(UiUtils.sp2px(15));
+        mContentPaint.setTextSize(mContentTextSize);
         mContentPaint.setColor(mContentTextColor);
         mContentPaint.setAntiAlias(true);
 
