@@ -268,41 +268,56 @@ public class NovelPageBitmapManager {
      * 绘制内容页
      *
      * @param mTargetBitmap 目标bitmap
-     * @param pageNum       绘制的章节页码
      * @param isCurrent     是否是绘制当前页
      * @return 绘制结果：1表示跳转到下一页，-1表示操作失败，0成功
      */
-    private int drawContent(Bitmap mTargetBitmap, int pageNum, boolean isCurrent) {
+    private int drawContent(Bitmap mTargetBitmap, boolean isNext, boolean isCurrent) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
-        List<NovelPageEntity> mCurChapterList = mContentManager.getCurChapterList();
-        // 判断是否还有上一页或者下一页
-        if (mCurChapterList == null || mCurChapterList.size() == 0) {
-            return -1;
-        }
-        mMaxPageCount = mCurChapterList.size();
+//        List<NovelPageEntity> mCurChapterList = mContentManager.getCurChapterList();
+//        // 判断是否还有上一页或者下一页
+//        if (mCurChapterList == null || mCurChapterList.size() == 0) {
+//            return -1;
+//        }
+//        mMaxPageCount = mCurChapterList.size();
+//
+//        // 是不是绘制当前页，如果不是，那再判断是不是跳转章节的操作
+//        if (!isCurrent) {
+//            if (pageNum > mMaxPageCount - 1) {
+//                isOpenNewChapter = true;
+//                mContentManager.skipNextChapter();
+//                return 1;
+//            } else if (pageNum < 0) {
+//                isOpenNewChapter = true;
+//                mContentManager.skipPreChapter();
+//                return 1;
+//            }
+//        }
+//
+//        NovelPageEntity novelPageEntity;
+//        //如果是跳转到不同章节，那么重置页面的位置指针
+//        if (isOpenNewChapter && !isCurrentOperateNext) {
+//            novelPageEntity = mCurChapterList.get(mMaxPageCount - 1);
+//            mCurrentPagePos = mMaxPageCount - 1;
+//        } else {
+//            novelPageEntity = mCurChapterList.get(pageNum);
+//        }
 
-        // 是不是绘制当前页，如果不是，那再判断是不是跳转章节的操作
-        if (!isCurrent) {
-            if (pageNum > mMaxPageCount - 1) {
-                isOpenNewChapter = true;
-                mContentManager.skipNextChapter();
-                return 1;
-            } else if (pageNum < 0) {
-                isOpenNewChapter = true;
-                mContentManager.skipPreChapter();
-                return 1;
+        NovelPageEntity novelPageEntity;
+
+        if(isCurrent){
+            novelPageEntity= mContentManager.getCurrentPage();
+        }else{
+            if(isNext){
+                novelPageEntity= mContentManager.getNextPage();
+            }else{
+                novelPageEntity= mContentManager.getPrePage();
             }
         }
 
-        NovelPageEntity novelPageEntity;
-        //如果是跳转到不同章节，那么重置页面的位置指针
-        if (isOpenNewChapter && !isCurrentOperateNext) {
-            novelPageEntity = mCurChapterList.get(mMaxPageCount - 1);
-            mCurrentPagePos = mMaxPageCount - 1;
-        } else {
-            novelPageEntity = mCurChapterList.get(pageNum);
+        if(novelPageEntity==null){
+            return -1;
         }
 
         List<String> lines = novelPageEntity.getLines();
@@ -332,7 +347,8 @@ public class NovelPageBitmapManager {
 
         drawBg(mNextPageBitmap);
 
-        drawContent(mNextPageBitmap, mCurrentPagePos, true);
+//        drawContent(mNextPageBitmap, mCurrentPagePos, true);
+        drawContent(mNextPageBitmap, false, true);
 
     }
 
@@ -344,7 +360,8 @@ public class NovelPageBitmapManager {
 
         changePage();
         drawBg(mNextPageBitmap);
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos + 1, false);
+        int result = drawContent(mNextPageBitmap, true, false);
+//        int result = drawContent(mNextPageBitmap, mCurrentPagePos + 1, false);
 
         switch (result) {
             case 1:
@@ -372,7 +389,8 @@ public class NovelPageBitmapManager {
         changePage();
         drawBg(mNextPageBitmap);
 
-        int result = drawContent(mNextPageBitmap, mCurrentPagePos - 1, false);
+        int result = drawContent(mNextPageBitmap, false, false);
+//        int result = drawContent(mNextPageBitmap, mCurrentPagePos - 1, false);
 
         switch (result) {
             case 1:

@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
@@ -47,7 +48,7 @@ public class NovelPage extends View {
         init(context);
     }
 
-    private NovelPageStateListener mStateListener= new NovelPageStateListener() {
+    private NovelPageStateListener mStateListener = new NovelPageStateListener() {
         @Override
         public void onNextDisable() {
 
@@ -55,7 +56,7 @@ public class NovelPage extends View {
 
         @Override
         public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
-            if(mListener!=null){
+            if (mListener != null) {
                 mListener.onRequestNewChapter(requestVolumeId, requestChapterId);
             }
         }
@@ -88,7 +89,7 @@ public class NovelPage extends View {
 
         this.mContext = mContext;
 
-        mStateObserver= NovelPageStateObserver.getInstance();
+        mStateObserver = NovelPageStateObserver.getInstance();
         mStateObserver.addListener(mStateListener);
 
         initPageLoader();
@@ -113,34 +114,36 @@ public class NovelPage extends View {
      * @param chapterId 当前章节id
      * @param content   章节内容
      */
-    public void setContent(long bookId, long volumeId,long chapterId, String content) {
+    public void setContent(long bookId, long volumeId, long chapterId, String content) {
 
-        mPageLoader.loadNovel(bookId,volumeId,chapterId,content);
+        mPageLoader.loadNovel(bookId, volumeId, chapterId, content);
 
     }
 
     /**
      * 设置目录
+     *
      * @param catalogueEntity 目录
      */
-    public void setCatalogue(NovelCatalogueEntity catalogueEntity){
+    public void setCatalogue(NovelCatalogueEntity catalogueEntity) {
 
         mPageLoader.setCatalogue(catalogueEntity);
 
     }
 
-    public void loadLastRead(long bookId){
+    public void loadLastRead(long bookId) {
 
         mPageLoader.loadLastRead(bookId);
     }
 
-    public void skipToTargetChapter(long novelId,long volumeId,long chapterId){
+    public void skipToTargetChapter(long novelId, long volumeId, long chapterId) {
 
+        mPageLoader.skipToTargetChapter(novelId, volumeId, chapterId);
     }
 
-    public void setPageStateListener(OnPageStateChangedListener listener){
+    public void setPageStateListener(OnPageStateChangedListener listener) {
 
-        this.mListener=listener;
+        this.mListener = listener;
 
     }
 
@@ -178,11 +181,11 @@ public class NovelPage extends View {
 
     }
 
-    public interface OnPageStateChangedListener{
+    public interface OnPageStateChangedListener {
 
-        void onRequestNewChapter(long requestVolumeId,long requestChapterId);
+        void onRequestNewChapter(long requestVolumeId, long requestChapterId);
 
-        void onOpenChapterList(long currentVolumeId,long currentChapterId);
+        void onOpenChapterList(long currentVolumeId, long currentChapterId);
 
     }
 

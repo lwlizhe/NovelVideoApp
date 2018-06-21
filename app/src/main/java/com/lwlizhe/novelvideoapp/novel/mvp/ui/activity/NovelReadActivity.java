@@ -150,7 +150,7 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         // 设置目录，用于判断是否有没有下一页、是否需要请求新章节等
         mPage.setCatalogue(catalogueEntity);
 
-        mPage.loadLastRead(mNovelId);
+        mPage.skipToTargetChapter(mNovelId,volumeId,chapterId);
 //        mPresenter.getChapter(mNovelId, volumeId, chapterId);
 
     }
