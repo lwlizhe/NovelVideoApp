@@ -82,7 +82,10 @@ ext {
             //弹幕库
             "DanmakuFlameMaster"        : "com.github.ctiao:DanmakuFlameMaster:0.9.16",
             "DanmakuFlameMaster-armv7a" : "com.github.ctiao:ndkbitmap-armv7a:0.9.16",
-            "DanmakuFlameMaster-x86"    : "com.github.ctiao:ndkbitmap-x86:0.9.16"
+            "DanmakuFlameMaster-x86"    : "com.github.ctiao:ndkbitmap-x86:0.9.16",
+
+            //数据库
+            "greenDao"                  :'org.greenrobot:greendao:3.2.2'
 
     ]
 

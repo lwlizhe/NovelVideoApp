@@ -39,7 +39,6 @@ public interface AppComponent {
     GlideImageLoaderStrategy mGlideImageLoader();
 
     RxEventBus eventBus();
-
     //gson
     Gson gson();
 

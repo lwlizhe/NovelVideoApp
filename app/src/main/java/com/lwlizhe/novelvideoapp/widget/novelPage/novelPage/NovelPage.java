@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.R;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentCatalogueEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.IPageLoader;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.PageLoaderFactory;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateListener;
@@ -119,9 +119,22 @@ public class NovelPage extends View {
 
     }
 
-    public void setChapterData(NovelContentCatalogueEntity catalogueEntity){
+    /**
+     * 设置目录
+     * @param catalogueEntity 目录
+     */
+    public void setCatalogue(NovelCatalogueEntity catalogueEntity){
 
-        mPageLoader.loadChapter(catalogueEntity);
+        mPageLoader.setCatalogue(catalogueEntity);
+
+    }
+
+    public void loadLastRead(long bookId){
+
+        mPageLoader.loadLastRead(bookId);
+    }
+
+    public void skipToTargetChapter(long novelId,long volumeId,long chapterId){
 
     }
 

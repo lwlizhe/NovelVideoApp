@@ -1,15 +1,18 @@
 package com.lwlizhe.novelvideoapp;
 
-import android.app.Application;
-
 import com.lwlizhe.basemodule.base.BaseApplication;
 import com.lwlizhe.basemodule.di.module.EventModule;
 import com.lwlizhe.basemodule.di.module.GlobeConfigModule;
 import com.lwlizhe.basemodule.di.module.ImageModule;
+
 import com.lwlizhe.basemodule.http.GlobeHttpHandler;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
 import com.lwlizhe.novelvideoapp.common.di.component.DaggerAppComponent;
 import com.lwlizhe.novelvideoapp.common.di.module.service.ServiceModule;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.DaoMaster;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.DaoSession;
+
+import org.greenrobot.greendao.database.Database;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -22,6 +25,7 @@ import okhttp3.Response;
 public class AppApplication extends BaseApplication {
 
     private AppComponent mAppComponent;
+    private DaoSession mDaoSession;
 
     @Override
     public void onCreate() {
@@ -39,6 +43,10 @@ public class AppApplication extends BaseApplication {
 
         mActivityManager.setRxEventBus(mAppComponent.eventBus());
 
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "data_db");
+        Database db = helper.getWritableDb();
+
+        mDaoSession = new DaoMaster(db).newSession();
     }
 
     @Override
@@ -97,5 +105,10 @@ public class AppApplication extends BaseApplication {
     public AppComponent getAppComponent(){
         return mAppComponent;
     }
+
+    public DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
 
 }

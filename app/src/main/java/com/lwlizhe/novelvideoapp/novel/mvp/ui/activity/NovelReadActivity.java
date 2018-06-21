@@ -17,7 +17,7 @@ import com.lwlizhe.novelvideoapp.novel.di.module.NovelReadModule;
 import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelReadContract;
 import com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity.NovelReadPresenter;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentCatalogueEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,21 +118,21 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
         mChapterList = (List<NovelChapterEntity>) intent.getSerializableExtra(NOVEL_CHAPTER_LIST);
 
-        NovelContentCatalogueEntity catalogueEntity = new NovelContentCatalogueEntity();
+        NovelCatalogueEntity catalogueEntity = new NovelCatalogueEntity();
 
-        List<NovelContentCatalogueEntity.NovelContentVolumeEntity> mCatalogueVolumeList = new ArrayList<>();
+        List<NovelCatalogueEntity.NovelContentVolumeEntity> mCatalogueVolumeList = new ArrayList<>();
 
         // 遍历源数据，并创建新的目录结构
         for (NovelChapterEntity srcVolumeEntity : mChapterList) {
 
-            NovelContentCatalogueEntity.NovelContentVolumeEntity volumeEntity = new NovelContentCatalogueEntity.NovelContentVolumeEntity();
-            List<NovelContentCatalogueEntity.NovelContentChapterEntity> mCatalogueChapterList = new ArrayList<>();
+            NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = new NovelCatalogueEntity.NovelContentVolumeEntity();
+            List<NovelCatalogueEntity.NovelContentChapterEntity> mCatalogueChapterList = new ArrayList<>();
 
             volumeEntity.setVolumeId(srcVolumeEntity.getVolume_id());
             volumeEntity.setVolumeName(srcVolumeEntity.getVolume_name());
 
             for (NovelChapterEntity.ChaptersBean srcChapterEntity : srcVolumeEntity.getChapters()) {
-                NovelContentCatalogueEntity.NovelContentChapterEntity chapterEntity = new NovelContentCatalogueEntity.NovelContentChapterEntity();
+                NovelCatalogueEntity.NovelContentChapterEntity chapterEntity = new NovelCatalogueEntity.NovelContentChapterEntity();
 
                 chapterEntity.setChapterId(srcChapterEntity.getChapter_id());
                 chapterEntity.setChapterName(srcChapterEntity.getChapter_name());
@@ -146,32 +146,12 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         }
 
         catalogueEntity.setVolumeList(mCatalogueVolumeList);
+        catalogueEntity.setBookId(mNovelId);
         // 设置目录，用于判断是否有没有下一页、是否需要请求新章节等
-        mPage.setChapterData(catalogueEntity);
+        mPage.setCatalogue(catalogueEntity);
 
-        // 遍历寻找卷的初始位置，找到退出循环
-        for (NovelChapterEntity entity : mChapterList) {
-
-            if (entity.getVolume_id() == volumeId) {
-                break;
-            }
-
-            mCurrentVolumePos++;
-        }
-
-        // 同理寻找章的初始位置
-        List<NovelChapterEntity.ChaptersBean> chapters = mChapterList.get( mCurrentVolumePos).getChapters();
-        for (NovelChapterEntity.ChaptersBean entity : chapters) {
-
-            if (entity.getChapter_id() == chapterId) {
-                break;
-            }
-
-            mCurrentChapterPos++;
-        }
-
-
-        mPresenter.getChapter(mNovelId, volumeId, chapterId);
+        mPage.loadLastRead(mNovelId);
+//        mPresenter.getChapter(mNovelId, volumeId, chapterId);
 
     }
 

@@ -6,19 +6,13 @@ import android.text.Html;
 import android.view.MotionEvent;
 
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentCatalogueEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelContentManager;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.manager.NovelPageBitmapManager;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.BaseAnimationBitmapLoader;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.pageAnimationBitmapLoader.PageAnimationBitmapLoaderFactory;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static android.text.Html.FROM_HTML_MODE_COMPACT;
-import static com.lwlizhe.basemodule.utils.StringUtils.getTwoSpaces;
 
 /**
  * 这部分负责的是整体页面逻辑，所有的数据都在这里进行交互处理
@@ -37,7 +31,7 @@ public abstract class BaseNovelLoader implements IPageLoader {
 //    private String mContent;
 
     // 目录
-    protected NovelContentCatalogueEntity mCatalogueEntity;
+    protected NovelCatalogueEntity mCatalogueEntity;
 
     protected BaseAnimationBitmapLoader mPageAnimationBitmapLoader;
 
@@ -126,9 +120,18 @@ public abstract class BaseNovelLoader implements IPageLoader {
 //        mTargetPageView.postInvalidate();
     }
 
+    @Override
+    public void loadLastRead(long bookId){
+        mContentManager.loadLastRead(bookId);
+    }
 
     @Override
-    public void loadChapter(NovelContentCatalogueEntity catalogueEntity) {
+    public void skipToTargetChapter(long bookId,long volumeId,long chapterId){
+        mContentManager.loadTargetChapter(bookId,volumeId,chapterId);
+    }
+
+    @Override
+    public void setCatalogue(NovelCatalogueEntity catalogueEntity) {
         mCatalogueEntity = catalogueEntity;
         mContentManager.setCatalogue(catalogueEntity);
     }

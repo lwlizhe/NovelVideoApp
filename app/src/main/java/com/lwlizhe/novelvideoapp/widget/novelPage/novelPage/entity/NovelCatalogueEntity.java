@@ -8,9 +8,19 @@ import java.util.List;
  * Created by Administrator on 2018/6/12 0012.
  */
 
-public class NovelContentCatalogueEntity {
+public class NovelCatalogueEntity {
+
+    private long bookId;
 
     private List<NovelContentVolumeEntity> volumeList;
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
 
     public List<NovelContentVolumeEntity> getVolumeList() {
         return volumeList;

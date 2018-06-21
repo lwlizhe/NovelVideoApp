@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 
 android {
@@ -24,6 +25,14 @@ android {
     }
 }
 
+greendao {
+    schemaVersion 1//数据库版本号
+//    daoPackage 'com.lwlizhe.basemodule.greendao'//设置DaoMaster、DaoSession、Dao包名
+//    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+//    //targetGenDirTest：设置生成单元测试目录
+//    //generateTests：设置自动生成单元测试用例
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -38,7 +47,7 @@ dependencies {
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'//这个多级列表库，可以学下
+//    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'//这个多级列表库，可以学下/
 
     api project(':basemodule')
 }

@@ -108,6 +108,7 @@ public class NovelPageBitmapManager {
             @Override
             public void onLoadingFinish() {
 
+                drawCurrent();
             }
 
             @Override
@@ -280,10 +281,11 @@ public class NovelPageBitmapManager {
         if (mCurChapterList == null || mCurChapterList.size() == 0) {
             return -1;
         }
+        mMaxPageCount = mCurChapterList.size();
 
         // 是不是绘制当前页，如果不是，那再判断是不是跳转章节的操作
         if (!isCurrent) {
-            if (pageNum > mCurChapterList.size() - 1) {
+            if (pageNum > mMaxPageCount - 1) {
                 isOpenNewChapter = true;
                 mContentManager.skipNextChapter();
                 return 1;
@@ -294,7 +296,6 @@ public class NovelPageBitmapManager {
             }
         }
 
-        mMaxPageCount = mCurChapterList.size();
         NovelPageEntity novelPageEntity;
         //如果是跳转到不同章节，那么重置页面的位置指针
         if (isOpenNewChapter && !isCurrentOperateNext) {

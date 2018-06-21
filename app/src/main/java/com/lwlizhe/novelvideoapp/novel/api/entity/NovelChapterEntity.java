@@ -1,8 +1,5 @@
 package com.lwlizhe.novelvideoapp.novel.api.entity;
 
-import com.chad.library.adapter.base.entity.AbstractExpandableItem;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.lwlizhe.basemodule.base.adapter.BaseExpandItemEntity;
 import com.lwlizhe.basemodule.base.adapter.ExpandChildItemEntity;
 import com.lwlizhe.basemodule.base.adapter.ExpandParentItemEntity;
 

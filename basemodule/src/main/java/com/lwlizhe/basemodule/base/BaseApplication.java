@@ -7,10 +7,10 @@ import com.lwlizhe.basemodule.di.component.DaggerBaseComponent;
 import com.lwlizhe.basemodule.di.module.AppModule;
 import com.lwlizhe.basemodule.di.module.ClientModule;
 import com.lwlizhe.basemodule.di.module.GlobeConfigModule;
-import com.lwlizhe.basemodule.di.module.ImageModule;
-import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+
+import org.greenrobot.greendao.database.Database;
 
 import javax.inject.Inject;
 
@@ -21,14 +21,13 @@ public abstract class BaseApplication extends Application {
     private ClientModule mClientModule;
     private AppModule mAppModule;
     private GlobeConfigModule mGlobeConfigModule;
-//    @Inject
+    //    @Inject
 //    public GlideImageLoaderStrategy mGlideImageLoader;
     @Inject
     protected ActivityManager mActivityManager;
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
     protected final String TAG = this.getClass().getSimpleName();
-
 
     @Override
     public void onCreate() {
@@ -77,7 +76,6 @@ public abstract class BaseApplication extends Application {
      * @return
      */
     protected abstract GlobeConfigModule getGlobeConfigModule();
-
 
     public ClientModule getClientModule() {
         return mClientModule;

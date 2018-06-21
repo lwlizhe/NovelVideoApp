@@ -3,7 +3,7 @@ package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentCatalogueEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 
 /**
  * Created by Administrator on 2018/5/18 0018.
@@ -19,7 +19,11 @@ public interface IPageLoader {
 
     void loadNovel(long bookId,long volumeId,long chapterId,String novel);
 
-    void loadChapter(NovelContentCatalogueEntity catalogueEntity);
+    void loadLastRead(long bookId);
+
+    void skipToTargetChapter(long bookId,long volumeId,long chapterId);
+
+    void setCatalogue(NovelCatalogueEntity catalogueEntity);
 
     void computeScroll();
 
