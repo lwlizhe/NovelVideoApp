@@ -166,57 +166,6 @@ public class NovelContentManager {
     }
 
     /**
-     * 跳转到下一章
-     */
-    public void skipNextChapter() {
-
-        if (mNextChapterList != null && mNextChapterList.size() != 0) {
-
-            mPreChapterList.clear();
-            mPreChapterList.addAll(mCurChapterList);
-
-            mCurChapterList.clear();
-            mCurChapterList.addAll(mNextChapterList);
-
-            mNextChapterList.clear();
-
-            mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
-        } else {
-            List<NovelCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
-
-            int chapterSize = volumeList.get(mCurrentVolumePos).getChapterList().size();
-
-            if (mCurrentVolumePos >= volumeList.size() - 1 && mCurrentChapterPos >= chapterSize - 1) {
-                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NO_NEXT);
-            } else {
-                mCurChapterList.clear();
-
-                if (mCurrentChapterPos >= chapterSize - 1) {
-                    mCurrentChapterPos = 0;
-                    mCurrentVolumePos += 1;
-
-                } else {
-                    mCurrentChapterPos += 1;
-                }
-
-                currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
-                currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
-
-                mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
-
-            }
-        }
-    }
-
-    /**
-     * 跳转到上一章
-     */
-    public void skipPreChapter() {
-
-
-    }
-
-    /**
      * 计算加载目标章节的内容
      */
     private void transformCurrentContent(final String srcContent) {
@@ -644,6 +593,9 @@ public class NovelContentManager {
             result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
         }
+
+        mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
+
         return result;
     }
 
@@ -661,6 +613,8 @@ public class NovelContentManager {
             result.setVolumeId(volumeEntity.getVolumeId());
             result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
             result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+
+            mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
             //如果上一章已经缓存
             if (mPreChapterList != null && mPreChapterList.size() != 0) {
@@ -733,6 +687,21 @@ public class NovelContentManager {
         return result;
     }
 
+    /**
+     * 是否有下一张
+     */
+    public boolean isHasNext(){
+        List<NovelCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
+
+        int chapterSize = volumeList.get(mCurrentVolumePos).getChapterList().size();
+
+        return !(mCurrentVolumePos >= volumeList.size() - 1 && mCurrentChapterPos >= chapterSize - 1);
+    }
+
+    /**
+     * 生成下一张
+     * @return
+     */
     public NovelPageEntity getNextPage() {
 
         NovelPageEntity result = null;
@@ -750,6 +719,8 @@ public class NovelContentManager {
             result.setVolumeId(volumeEntity.getVolumeId());
             result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
             result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+
+            mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
 
             //如果章节已经预加载

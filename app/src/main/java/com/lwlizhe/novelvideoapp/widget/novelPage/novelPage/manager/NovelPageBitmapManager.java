@@ -141,13 +141,13 @@ public class NovelPageBitmapManager {
         // 创建currentPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mCurrentPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
-//            drawBg(mCurrentPageBitmap);
+            drawBg(mCurrentPageBitmap);
         }
 
         // 创建nextPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mNextPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
-//            drawBg(mNextPageBitmap);
+            drawBg(mNextPageBitmap);
         }
 
         mContentManager.setPageSize(w, h);
@@ -291,31 +291,20 @@ public class NovelPageBitmapManager {
      * 绘制内容页
      *
      * @param mTargetBitmap 目标bitmap
-     * @param isCurrent     是否是绘制当前页
+     * @param novelPageEntity     绘制页的内容
      * @return 绘制结果：1表示跳转到下一页，-1表示操作失败，0成功
      */
-    private void drawContent(Bitmap mTargetBitmap, boolean isNext, boolean isCurrent) {
+    private void drawContent(Bitmap mTargetBitmap,NovelPageEntity novelPageEntity) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
-        NovelPageEntity novelPageEntity;
-
-        if (isCurrent) {
-            novelPageEntity = mContentManager.getCurrentPage();
-        } else {
-            if (isNext) {
-                novelPageEntity = mContentManager.getNextPage();
-            } else {
-                novelPageEntity = mContentManager.getPrePage();
-            }
+        if(novelPageEntity==null){
+            return;
         }
 
         // 如果正在加载
-        if (isLoading || novelPageEntity == null) {
+        if (isLoading ) {
             mCanvas.drawText("正在加载中", mContentPaint.getTextSize(), mContentPaint.getTextSize() + mContentPadding, mContentPaint);
-            if(!isCurrent){
-                mStateObserver.setNovelPageState(isNext?NovelPageStateObserver.STATE_NO_NEXT:NovelPageStateObserver.STATE_NO_PRE);
-            }
 
             return;
         }
@@ -327,9 +316,6 @@ public class NovelPageBitmapManager {
         if (novelPageEntity.getLines() == null || novelPageEntity.getLines().size() == 0) {
 
             mCanvas.drawText("正在加载中", mContentPaint.getTextSize(), mContentPaint.getTextSize() + mContentPadding, mContentPaint);
-            if(!isCurrent){
-                mStateObserver.setNovelPageState(isNext?NovelPageStateObserver.STATE_NO_NEXT:NovelPageStateObserver.STATE_NO_PRE);
-            }
 
             return;
         }
@@ -364,13 +350,18 @@ public class NovelPageBitmapManager {
      */
     public void drawCurrent() {
 
-        if (mNextPageBitmap == null || mCurrentPageBitmap == null) {
+        if (mNextPageBitmap == null || mCurrentPageBitmap == null||mContentManager==null) {
+            return;
+        }
+        NovelPageEntity currentPage = mContentManager.getCurrentPage();
+
+        if(currentPage ==null){
             return;
         }
 
         drawBg(mNextPageBitmap);
 
-        drawContent(mNextPageBitmap, false, true);
+        drawContent(mNextPageBitmap,currentPage);
 
     }
 
@@ -379,9 +370,18 @@ public class NovelPageBitmapManager {
      */
     public void drawNext() {
 
+//        if(mContentManager.isHasNext()){
+//            return;
+//        }
+        NovelPageEntity nextPage = mContentManager.getNextPage();
+
+        if(nextPage==null){
+            return;
+        }
+
         changePage();
         drawBg(mNextPageBitmap);
-        drawContent(mNextPageBitmap, true, false);
+        drawContent(mNextPageBitmap,nextPage);
 
     }
 
@@ -390,10 +390,16 @@ public class NovelPageBitmapManager {
      */
     public void drawPre() {
 
+        NovelPageEntity prePage = mContentManager.getPrePage();
+
+        if(prePage==null){
+            return;
+        }
+
         changePage();
         drawBg(mNextPageBitmap);
 
-        drawContent(mNextPageBitmap, false, false);
+        drawContent(mNextPageBitmap, prePage);
 
     }
 
