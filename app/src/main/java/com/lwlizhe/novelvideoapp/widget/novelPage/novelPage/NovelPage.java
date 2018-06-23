@@ -1,6 +1,9 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
@@ -24,7 +27,7 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelP
 
 public class NovelPage extends View {
 
-    private Paint mTextPaint;
+//    private Paint mTextPaint;
 
     private Context mContext;
 
@@ -32,6 +35,21 @@ public class NovelPage extends View {
 
     private OnPageStateChangedListener mListener;
     protected NovelPageStateObserver mStateObserver;
+
+    // 接收电池信息和时间更新的广播
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
+                int level = intent.getIntExtra("level", 0);
+                mPageLoader.updateBattery(level);
+            }
+            // 监听分钟的变化
+            else if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
+                mPageLoader.updateTime();
+            }
+        }
+    };
 
     public NovelPage(Context context) {
         super(context);
@@ -94,10 +112,11 @@ public class NovelPage extends View {
 
         initPageLoader();
 
-        mTextPaint = new Paint();
-        mTextPaint.setColor(ContextCompat.getColor(mContext, R.color.white));
-        mTextPaint.setTextSize(UiUtils.sp2px(15));
-        mTextPaint.setAntiAlias(true);
+        //注册广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        intentFilter.addAction(Intent.ACTION_TIME_TICK);
+        mContext.registerReceiver(mReceiver, intentFilter);
 
     }
 
@@ -177,6 +196,7 @@ public class NovelPage extends View {
     @Override
     protected void onDetachedFromWindow() {
         mPageLoader.onDetachedFromWindow();
+        mContext.unregisterReceiver(mReceiver);
         super.onDetachedFromWindow();
 
     }

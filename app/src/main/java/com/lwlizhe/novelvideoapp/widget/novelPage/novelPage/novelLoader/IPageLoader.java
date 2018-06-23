@@ -27,6 +27,10 @@ public interface IPageLoader {
 
     void computeScroll();
 
+    void updateTime();
+
+    void updateBattery(int level);
+
     void onDetachedFromWindow();
 
 }

@@ -106,11 +106,6 @@ public abstract class BaseAnimationBitmapLoader {
         onPageTouch(event);
     }
 
-//    public void setBitmap(Bitmap mCurrentBitmap,Bitmap mNextBitmap){
-//        this.mCurrentBitmap=mCurrentBitmap;
-//        this.mNextBitmap=mNextBitmap;
-//    }
-
     public void onDraw(Canvas canvas) {
 
         // 如果页面改变的时候，动画没有执行，那么去画静态页面

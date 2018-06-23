@@ -12,10 +12,12 @@ import android.view.MotionEvent;
 
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.R;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.entity.NovelPageEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,18 +38,25 @@ public class NovelPageBitmapManager {
     private int mViewWidth;
     private int mViewHeight;
 
-
-
+    // 绘制内容的画笔
     private Paint mContentPaint;
+    // 绘制标题的画笔
     private Paint mTitlePaint;
     // 绘制提示的画笔
     private Paint mTipPaint;
     // 绘制背景颜色的画笔(用来擦除需要重绘的部分)
     private Paint mBgPaint;
+    // 绘制页脚的画笔
+    private Paint mFooterPaint;
 
     //-----------------------------------配置相关-------------------------------------------
     private int mContentTextSize;
     private int mContentTextColor;
+
+    private int mContentPadding;
+    private int mParagraphMargin;
+
+    private int mPageFooterHeight;
 
     private int mTitleTextSize;
     private int mTitleTextColor;
@@ -55,13 +64,9 @@ public class NovelPageBitmapManager {
     private NovelContentManager mContentManager;
     private NovelPageStateObserver mStateObserver;
 
-    public int mCurrentPagePos = 0;
-    private int mMaxPageCount = 0;
-
-    private boolean isOpenNewChapter = false;
-    private boolean isCurrentOperateNext = false;
-
     private static NovelPageBitmapManager mInstance;
+
+    private boolean isLoading = false;
 
     public static synchronized NovelPageBitmapManager instance(Context mContext) {
 
@@ -102,12 +107,12 @@ public class NovelPageBitmapManager {
 
             @Override
             public void onLoading() {
-
+                isLoading = true;
             }
 
             @Override
             public void onLoadingFinish() {
-
+                isLoading = false;
                 drawCurrent();
             }
 
@@ -123,7 +128,6 @@ public class NovelPageBitmapManager {
     }
 
 
-
     /**
      * 重置页面大小
      *
@@ -137,13 +141,13 @@ public class NovelPageBitmapManager {
         // 创建currentPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mCurrentPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
-            drawBg(mCurrentPageBitmap);
+//            drawBg(mCurrentPageBitmap);
         }
 
         // 创建nextPageBitmap
         if (mViewWidth != 0 && mViewHeight != 0) {
             mNextPageBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
-            drawBg(mNextPageBitmap);
+//            drawBg(mNextPageBitmap);
         }
 
         mContentManager.setPageSize(w, h);
@@ -162,11 +166,11 @@ public class NovelPageBitmapManager {
     }
 
     private void initTextSize() {
-        mContentTextSize=UiUtils.sp2px(15);
-        mTitleTextSize=UiUtils.sp2px(15);
-
-        mContentManager.setContentTextSize(mContentTextSize);
-        mContentManager.setTitleTextSize(mTitleTextSize);
+        mContentTextSize = UiUtils.sp2px(15);
+        mTitleTextSize = UiUtils.sp2px(12);
+        mContentPadding = UiUtils.dp2px(3);
+        mParagraphMargin = UiUtils.dp2px(3);
+        mPageFooterHeight= UiUtils.dp2px(12);
     }
 
     /**
@@ -200,12 +204,27 @@ public class NovelPageBitmapManager {
         mBgPaint = new Paint();
         mBgPaint.setColor(Color.WHITE);
 
+        // 页脚
+        mFooterPaint=new TextPaint();
+        mFooterPaint.setColor(mTitleTextColor);
+        mFooterPaint.setTextSize(mPageFooterHeight);
+        mFooterPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+//        mFooterPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        mFooterPaint.setAntiAlias(true);
+
 //        // 绘制电池的画笔
 //        mBatteryPaint = new Paint();
 //        mBatteryPaint.setAntiAlias(true);
 //        mBatteryPaint.setDither(true);
 
         mContentManager.setContentPaint(mContentPaint);
+
+        mContentManager.setContentTextSize(mContentTextSize);
+        mContentManager.setTitleTextSize(mTitleTextSize);
+        mContentManager.setContentPadding(mContentPadding);
+        mContentManager.setParagraphMargin(mParagraphMargin);
+        mContentManager.setPageFooterHeight(mPageFooterHeight);
+
     }
 
     /**
@@ -262,6 +281,10 @@ public class NovelPageBitmapManager {
         Canvas mCanvas = new Canvas(mTargetBitmap);
         mCanvas.drawColor(Color.WHITE);
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");// HH:mm:ss
+        String currentTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
+        mCanvas.drawText(currentTime,mViewWidth-mFooterPaint.measureText(currentTime)-mContentPadding,mViewHeight-mContentPadding,mFooterPaint);
+
     }
 
     /**
@@ -271,69 +294,69 @@ public class NovelPageBitmapManager {
      * @param isCurrent     是否是绘制当前页
      * @return 绘制结果：1表示跳转到下一页，-1表示操作失败，0成功
      */
-    private int drawContent(Bitmap mTargetBitmap, boolean isNext, boolean isCurrent) {
+    private void drawContent(Bitmap mTargetBitmap, boolean isNext, boolean isCurrent) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
-//        List<NovelPageEntity> mCurChapterList = mContentManager.getCurChapterList();
-//        // 判断是否还有上一页或者下一页
-//        if (mCurChapterList == null || mCurChapterList.size() == 0) {
-//            return -1;
-//        }
-//        mMaxPageCount = mCurChapterList.size();
-//
-//        // 是不是绘制当前页，如果不是，那再判断是不是跳转章节的操作
-//        if (!isCurrent) {
-//            if (pageNum > mMaxPageCount - 1) {
-//                isOpenNewChapter = true;
-//                mContentManager.skipNextChapter();
-//                return 1;
-//            } else if (pageNum < 0) {
-//                isOpenNewChapter = true;
-//                mContentManager.skipPreChapter();
-//                return 1;
-//            }
-//        }
-//
-//        NovelPageEntity novelPageEntity;
-//        //如果是跳转到不同章节，那么重置页面的位置指针
-//        if (isOpenNewChapter && !isCurrentOperateNext) {
-//            novelPageEntity = mCurChapterList.get(mMaxPageCount - 1);
-//            mCurrentPagePos = mMaxPageCount - 1;
-//        } else {
-//            novelPageEntity = mCurChapterList.get(pageNum);
-//        }
-
         NovelPageEntity novelPageEntity;
 
-        if(isCurrent){
-            novelPageEntity= mContentManager.getCurrentPage();
-        }else{
-            if(isNext){
-                novelPageEntity= mContentManager.getNextPage();
-            }else{
-                novelPageEntity= mContentManager.getPrePage();
+        if (isCurrent) {
+            novelPageEntity = mContentManager.getCurrentPage();
+        } else {
+            if (isNext) {
+                novelPageEntity = mContentManager.getNextPage();
+            } else {
+                novelPageEntity = mContentManager.getPrePage();
             }
         }
 
-        if(novelPageEntity==null){
-            return -1;
+        // 如果正在加载
+        if (isLoading || novelPageEntity == null) {
+            mCanvas.drawText("正在加载中", mContentPaint.getTextSize(), mContentPaint.getTextSize() + mContentPadding, mContentPaint);
+            if(!isCurrent){
+                mStateObserver.setNovelPageState(isNext?NovelPageStateObserver.STATE_NO_NEXT:NovelPageStateObserver.STATE_NO_PRE);
+            }
+
+            return;
+        }
+
+        // 绘制标题
+        mCanvas.drawText(novelPageEntity.getTitleName(), mContentPadding, mTitlePaint.getTextSize() + mParagraphMargin + mContentPadding, mTitlePaint);
+
+        // 如果没有内容
+        if (novelPageEntity.getLines() == null || novelPageEntity.getLines().size() == 0) {
+
+            mCanvas.drawText("正在加载中", mContentPaint.getTextSize(), mContentPaint.getTextSize() + mContentPadding, mContentPaint);
+            if(!isCurrent){
+                mStateObserver.setNovelPageState(isNext?NovelPageStateObserver.STATE_NO_NEXT:NovelPageStateObserver.STATE_NO_PRE);
+            }
+
+            return;
         }
 
         List<String> lines = novelPageEntity.getLines();
         int curTextHeight = 0;
 
-        // 一行行的画文字(暂定规则：一段后加3dp)
+        // 一行行的画文字
         for (String line : lines) {
 
-            mCanvas.drawText(line, mContentPaint.getTextSize(), mContentPaint.getTextSize()+UiUtils.dp2px(10) + curTextHeight, mContentPaint);
+            mCanvas.drawText(line, mContentPadding, mContentPaint.getTextSize() + mTitleTextSize + 2 * mParagraphMargin + mContentPadding + curTextHeight, mContentPaint);
             curTextHeight += mContentPaint.getTextSize();
-            if (line.length()<22) {
-                curTextHeight += UiUtils.dp2px(3);
-            }
+
+            curTextHeight += mParagraphMargin;
+
         }
-        isOpenNewChapter = false;
-        return 0;
+        mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
+
+        drawPageNum(mCanvas,novelPageEntity);
+    }
+
+    /**
+     * 绘制页脚
+     */
+    private void drawPageNum(Canvas mCanvas,NovelPageEntity entity) {
+
+        mCanvas.drawText(entity.getCurrentPagePos()+1+"/"+entity.getMaxPageCount(),mContentPadding,mViewHeight-mContentPadding,mFooterPaint);
     }
 
     /**
@@ -347,7 +370,6 @@ public class NovelPageBitmapManager {
 
         drawBg(mNextPageBitmap);
 
-//        drawContent(mNextPageBitmap, mCurrentPagePos, true);
         drawContent(mNextPageBitmap, false, true);
 
     }
@@ -356,27 +378,10 @@ public class NovelPageBitmapManager {
      * 绘制下一页的bitmap
      */
     public void drawNext() {
-        isCurrentOperateNext = true;
 
         changePage();
         drawBg(mNextPageBitmap);
-        int result = drawContent(mNextPageBitmap, true, false);
-//        int result = drawContent(mNextPageBitmap, mCurrentPagePos + 1, false);
-
-        switch (result) {
-            case 1:
-                mCurrentPagePos = 0;
-
-                break;
-            case 0:
-                isOpenNewChapter = false;
-                mCurrentPagePos++;
-                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
-                break;
-            case -1:
-                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NO_NEXT);
-                break;
-        }
+        drawContent(mNextPageBitmap, true, false);
 
     }
 
@@ -384,28 +389,12 @@ public class NovelPageBitmapManager {
      * 绘制上一页的bitmap
      */
     public void drawPre() {
-        isCurrentOperateNext = false;
 
         changePage();
         drawBg(mNextPageBitmap);
 
-        int result = drawContent(mNextPageBitmap, false, false);
-//        int result = drawContent(mNextPageBitmap, mCurrentPagePos - 1, false);
+        drawContent(mNextPageBitmap, false, false);
 
-        switch (result) {
-            case 1:
-                mCurrentPagePos = 0;
-
-                break;
-            case 0:
-                isOpenNewChapter = false;
-                mCurrentPagePos--;
-                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
-                break;
-            case -1:
-                mStateObserver.setNovelPageState(STATE_NO_PRE);
-                break;
-        }
     }
 
     /**

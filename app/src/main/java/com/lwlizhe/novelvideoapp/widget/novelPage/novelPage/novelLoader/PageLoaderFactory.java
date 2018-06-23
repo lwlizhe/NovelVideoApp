@@ -1,7 +1,5 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 
-import android.net.IpPrefix;
-
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
 
 /**
@@ -26,7 +24,7 @@ public class PageLoaderFactory {
 
         switch (type) {
             case 0:
-                loader=new NetNovelLoader(mTargetPage);
+                loader=new SlidingNovelLoader(mTargetPage);
                 break;
             case 1:
                 break;

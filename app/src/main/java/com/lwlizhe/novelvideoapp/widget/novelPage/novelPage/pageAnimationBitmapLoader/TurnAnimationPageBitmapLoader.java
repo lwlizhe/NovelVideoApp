@@ -359,15 +359,12 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
             int dx, dy;
 
             if (mCornerX > 0) {
-//            dx = -(int) (mScreenWidth + mTouch.x);
                 dx = -(int) ( mTouch.x);
             } else {
                 dx = (int) (mScreenWidth - mTouch.x );
-//            dx = (int) (mScreenWidth - mTouch.x + mScreenWidth);
             }
             if (mCornerY > 0) {
                 dy = (int) (mScreenHeight - mTouch.y);
-//            dy = (int) (mScreenHeight - mTouch.y);
             } else {
                 dy = (int) (1 - mTouch.y); // 防止mTouch.y最终变为0
             }
@@ -391,21 +388,6 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
      * 画翻起页面
      */
     private void drawCurrentPageCanvas(Canvas canvas) {
-
-//        mCurPagePath.reset();
-//
-//        mCurPagePath.moveTo(0,0);
-//        mCurPagePath.lineTo(mTouch.x,0);
-//        mCurPagePath.lineTo(mTouch.x, UiUtils.getScreenHeight());
-//        mCurPagePath.lineTo(0,UiUtils.getScreenHeight());
-//
-//        mCurPagePath.close();
-//
-//        canvas.save();
-//        canvas.clipPath(mCurPagePath, Region.Op.INTERSECT);
-//        canvas.drawBitmap(mBitmapManager.getCurrentPageBitmap(), 0, 0, null);
-//
-//        canvas.restore();
 
         mCurPagePath.reset();
         mCurPagePath.moveTo(mBezierStart1.x, mBezierStart1.y);

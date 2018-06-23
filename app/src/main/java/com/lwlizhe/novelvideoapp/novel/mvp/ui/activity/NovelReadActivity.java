@@ -122,7 +122,7 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
         List<NovelCatalogueEntity.NovelContentVolumeEntity> mCatalogueVolumeList = new ArrayList<>();
 
-        // 遍历源数据，并创建新的目录结构
+        // 遍历源数据，并创建阅读器需要的新的目录结构
         for (NovelChapterEntity srcVolumeEntity : mChapterList) {
 
             NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = new NovelCatalogueEntity.NovelContentVolumeEntity();
@@ -149,9 +149,9 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         catalogueEntity.setBookId(mNovelId);
         // 设置目录，用于判断是否有没有下一页、是否需要请求新章节等
         mPage.setCatalogue(catalogueEntity);
+        mPage.skipToTargetChapter(mNovelId,volumeId,chapterId);//跳转到指定章节
 
-        mPage.skipToTargetChapter(mNovelId,volumeId,chapterId);
-//        mPresenter.getChapter(mNovelId, volumeId, chapterId);
+//        mPresenter.getChapter(mNovelId, volumeId, chapterId);//跳转到上次阅读的位置
 
     }
 

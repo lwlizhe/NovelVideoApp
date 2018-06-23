@@ -8,14 +8,13 @@ import android.util.Log;
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.AppApplication;
 import com.lwlizhe.novelvideoapp.common.CommonSubscriber;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.DaoSession;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelContentEntityDao;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelInfoEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelInfoEntityDao;
-import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.entity.NovelPageEntity;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelPageStateObserver;
 
 import org.reactivestreams.Publisher;
@@ -71,6 +70,8 @@ public class NovelContentManager {
     private int mContentTextSize;
     private int mTitleTextSize;
 
+    private int mPageFooterHeight;
+
     private int mParagraphMargin;
     private int mContentPadding;
 
@@ -85,7 +86,7 @@ public class NovelContentManager {
 
     private int mCurrentVolumePos = -1;
     private int mCurrentChapterPos = -1;
-    private int mCurrentPagePos = -1;
+    private int mCurrentPagePos = 0;
 
     private long currentRequestVolumeId;
     private long currentRequestChapterId;
@@ -113,8 +114,6 @@ public class NovelContentManager {
         mNovelDao = mDataDaoSession.getNovelContentEntityDao();
         mInfoDao = mDataDaoSession.getNovelInfoEntityDao();
 
-        mContentPadding = UiUtils.dp2px(10);
-        mParagraphMargin = UiUtils.dp2px(3);
     }
 
     /**
@@ -140,6 +139,7 @@ public class NovelContentManager {
     public void setContentTextSize(int contentTextSize) {
 
         mContentTextSize = contentTextSize;
+        mContentPaint.setTextSize(contentTextSize);
 
     }
 
@@ -151,6 +151,14 @@ public class NovelContentManager {
 
     public void setParagraphMargin(int margin) {
         mParagraphMargin = margin;
+    }
+
+    public void setContentPadding(int padding) {
+        mContentPadding = padding;
+    }
+
+    public void setPageFooterHeight(int footerHeight){
+        mPageFooterHeight=footerHeight;
     }
 
     public void setContentPaint(Paint mTextContentPaint) {
@@ -348,7 +356,7 @@ public class NovelContentManager {
         NovelContentEntity targetContent = mNovelDao.queryBuilder().where(NovelContentEntityDao.Properties.BookId.eq(bookId), NovelContentEntityDao.Properties.VolumeId.eq(volumeId), NovelContentEntityDao.Properties.ChapterId.eq(chapterId)).unique();
 
         if (targetContent != null) {
-            mCurrentPagePos=0;
+            mCurrentPagePos = 0;
             initPos(volumeId, chapterId);
             checkCacheChapter();
 
@@ -416,7 +424,7 @@ public class NovelContentManager {
         long checkVolumeId = 0;
         long checkChapterId = 0;
 
-        if(mPreChapterList!=null&&mPreChapterList.size()!=0){
+        if (mPreChapterList != null && mPreChapterList.size() != 0) {
             return;
         }
 
@@ -614,28 +622,46 @@ public class NovelContentManager {
         mCatalogue = catalogue;
     }
 
+    public NovelCatalogueEntity getCatalogueInfo() {
+        return mCatalogue;
+    }
 
     public List<NovelPageEntity> getCurChapterList() {
         return mCurChapterList;
     }
 
-    public NovelPageEntity getCurrentPage(){
-        NovelPageEntity result=null;
-        int maxPagePos = mCurChapterList.size()-1;
-        if(mCurrentPagePos<maxPagePos){
-            result=mCurChapterList.get(mCurrentPagePos);
+    public NovelPageEntity getCurrentPage() {
+        NovelPageEntity result = null;
+        int maxPagePos = mCurChapterList.size() - 1;
+        if (mCurrentPagePos <= maxPagePos) {
+            result = mCurChapterList.get(mCurrentPagePos);
+            result.setCurrentPagePos(mCurrentPagePos);
+            result.setMaxPageCount(mCurChapterList.size());
+
+            NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+            result.setVolumeId(volumeEntity.getVolumeId());
+            result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+
         }
         return result;
     }
 
-    public NovelPageEntity getPrePage(){
-        NovelPageEntity result=null;
+    public NovelPageEntity getPrePage() {
+        NovelPageEntity result = null;
 
         // 如果不跳转章节
-        if(mCurrentPagePos!=0){
+        if (mCurrentPagePos != 0) {
             mCurrentPagePos--;
-            result=mCurChapterList.get(mCurrentPagePos);
-        }else {
+            result = mCurChapterList.get(mCurrentPagePos);
+            result.setCurrentPagePos(mCurrentPagePos);
+            result.setMaxPageCount(mCurChapterList.size());
+
+            NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+            result.setVolumeId(volumeEntity.getVolumeId());
+            result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+        } else {
             //如果上一章已经缓存
             if (mPreChapterList != null && mPreChapterList.size() != 0) {
 
@@ -649,21 +675,28 @@ public class NovelContentManager {
                 mPreChapterList.clear();
 
                 // 跳转到上一章结尾，页码调最大
-                mCurrentPagePos=mCurChapterList.size()-1;
+                mCurrentPagePos = mCurChapterList.size() - 1;
 
                 //如果当前章节是当前卷的第一章，那么卷-1，章节最大
-                if(mCurrentChapterPos==0){
+                if (mCurrentChapterPos == 0) {
                     mCurrentVolumePos--;
-                    mCurrentChapterPos=mCatalogue.getVolumeList().get(mCurrentVolumePos).getChapterList().size()-1;
-                }else{
+                    mCurrentChapterPos = mCatalogue.getVolumeList().get(mCurrentVolumePos).getChapterList().size() - 1;
+                } else {
                     mCurrentChapterPos--;
                 }
                 // 请求新的预加载内容
                 checkCacheChapter();
 
-                result=mCurChapterList.get(mCurrentPagePos);
-                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
+                result = mCurChapterList.get(mCurrentPagePos);
+                result.setCurrentPagePos(mCurrentPagePos);
+                result.setMaxPageCount(mCurChapterList.size());
 
+                NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+                result.setVolumeId(volumeEntity.getVolumeId());
+                result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+                result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+
+                mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
 
             } else {
                 //判断章节是否是0，也就是是不是开头
@@ -685,6 +718,11 @@ public class NovelContentManager {
                     }
                     currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                     currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
+
+                    result= new NovelPageEntity();
+
+                    result.setTitleName(volumeList.get(mCurrentVolumePos).getVolumeName() + " " + volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterName());
+
                     //获取请求的卷id和章节id，发送请求
                     mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
                 }
@@ -697,15 +735,22 @@ public class NovelContentManager {
 
     public NovelPageEntity getNextPage() {
 
-        NovelPageEntity result=null;
+        NovelPageEntity result = null;
 
-        int maxPagePos = mCurChapterList.size()-1;
+        int maxPagePos = mCurChapterList.size() - 1;
 
         // 如果不跳转章节
-        if(mCurrentPagePos<maxPagePos){
+        if (mCurrentPagePos < maxPagePos) {
             mCurrentPagePos++;
-            result=mCurChapterList.get(mCurrentPagePos);
-        }else{
+            result = mCurChapterList.get(mCurrentPagePos);
+            result.setCurrentPagePos(mCurrentPagePos);
+            result.setMaxPageCount(mCurChapterList.size());
+
+            NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+            result.setVolumeId(volumeEntity.getVolumeId());
+            result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+        } else {
 
             //如果章节已经预加载
             if (mNextChapterList != null && mNextChapterList.size() != 0) {
@@ -719,22 +764,29 @@ public class NovelContentManager {
                 mNextChapterList.clear();
 
                 // 章节页码归零
-                mCurrentPagePos=0;
+                mCurrentPagePos = 0;
                 //如果当前章节是当前卷的最后一章，那么卷+1，章节归零
-                if(mCurrentChapterPos==mCatalogue.getVolumeList().get(mCurrentVolumePos).getChapterList().size()-1){
+                if (mCurrentChapterPos == mCatalogue.getVolumeList().get(mCurrentVolumePos).getChapterList().size() - 1) {
                     mCurrentVolumePos++;
-                    mCurrentChapterPos=0;
-                }else{
+                    mCurrentChapterPos = 0;
+                } else {
                     mCurrentChapterPos++;
                 }
                 // 请求新的预加载内容
                 checkCacheChapter();
 
-                result=mCurChapterList.get(mCurrentPagePos);
+                result = mCurChapterList.get(mCurrentPagePos);
+                result.setCurrentPagePos(mCurrentPagePos);
+                result.setMaxPageCount(mCurChapterList.size());
+
+                NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+                result.setVolumeId(volumeEntity.getVolumeId());
+                result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+                result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
                 mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
 
 
-            }else{
+            } else {
                 List<NovelCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
 
                 int chapterSize = volumeList.get(mCurrentVolumePos).getChapterList().size();
@@ -755,6 +807,17 @@ public class NovelContentManager {
                     currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                     currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
 
+                    result= new NovelPageEntity();
+
+                    result.setTitleName(volumeList.get(mCurrentVolumePos).getVolumeName() + " " + volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterName());
+                    result.setCurrentPagePos(mCurrentPagePos);
+                    result.setMaxPageCount(mCurChapterList.size());
+
+                    NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
+                    result.setVolumeId(volumeEntity.getVolumeId());
+                    result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+                    result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+
                     mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
 
                 }
@@ -773,7 +836,8 @@ public class NovelContentManager {
     private List<NovelPageEntity> calPageContent(String srcContent) {
 
         int curTextHeight = 0;
-        int validContentPageHeight = mPageHeight - mTitleTextSize - 2 * mParagraphMargin;
+        int validContentPageHeight = mPageHeight - mTitleTextSize - mPageFooterHeight- 2 * mParagraphMargin-2*mContentPadding;//内容页是整体页面-标题栏-页脚高度-2*标题栏的Margin-2*内容padding
+
 
         String[] paragraphs = srcContent.split("\n");
 
@@ -784,10 +848,13 @@ public class NovelContentManager {
         for (String paragraph : paragraphs) {
             if (TextUtils.isEmpty(paragraph)) continue;
 
+            paragraph="\u3000\u3000"+paragraph.trim();//首行缩进,加上2空格,去掉所有空格
             while (paragraph.length() > 0) {
 
+                curTextHeight += mContentPaint.getTextSize();
+
                 // 如果超过一页，那么新建一页，并添加进集合
-                if (curTextHeight > validContentPageHeight) {
+                if (curTextHeight >= validContentPageHeight) {
                     NovelPageEntity singleEntity = new NovelPageEntity();
 
                     singleEntity.setLines(new ArrayList<String>(chapterLines));
@@ -796,12 +863,9 @@ public class NovelContentManager {
                     chapterLines.clear();
 
                     curTextHeight = 0;
-                    curTextHeight += mParagraphMargin;
                     continue;
-                } else {
-                    //如果没超过一页，那么继续往下加
-                    curTextHeight += mContentPaint.getTextSize();
                 }
+
                 //计算单行多少个字
                 int singleLineWordCount = mContentPaint.breakText(paragraph, true, mPageWidth - 2 * mContentPadding, null);
 
@@ -810,8 +874,9 @@ public class NovelContentManager {
                 chapterLines.add(line);
                 paragraph = paragraph.substring(singleLineWordCount);
 
+                curTextHeight += mParagraphMargin;
             }
-            curTextHeight += mParagraphMargin;
+
         }
         // 遍历完成，把最后一页的加上
         if (chapterLines.size() != 0) {
