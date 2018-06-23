@@ -43,6 +43,7 @@ import java.util.List;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_ID;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_LIST;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_ID;
+import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_QUICK_START;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_VOLUME_ID;
 
 /**
@@ -182,8 +183,7 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
 
                 Intent intent=new Intent(NovelChapterActivity.this,NovelReadActivity.class);
                 intent.putExtra(NOVEL_ID,novelId);
-                intent.putExtra(NOVEL_CHAPTER_ID,(long)chapterList.get(0).getChapters().get(0).getChapter_id());
-                intent.putExtra(NOVEL_VOLUME_ID,(long)chapterList.get(0).getVolume_id());
+                intent.putExtra(NOVEL_QUICK_START,true);
                 intent.putExtra(NOVEL_CHAPTER_LIST, (Serializable) chapterList);
 
                 launchActivity(intent);

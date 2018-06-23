@@ -53,13 +53,16 @@ public class NovelPageBitmapManager {
     private int mContentTextSize;
     private int mContentTextColor;
 
-    private int mContentPadding;
-    private int mParagraphMargin;
+    private int mContentPadding;// 展示的内边距
+    private int mParagraphMargin;// 段落边距
 
-    private int mPageFooterHeight;
+    private int mPageModuleMargin;// 各个模块之间距离
+
+    private int mPageFooterTextSize;// 页脚内容文字大小
 
     private int mTitleTextSize;
     private int mTitleTextColor;
+    private int mFooterTextColor;
 
     private NovelContentManager mContentManager;
     private NovelPageStateObserver mStateObserver;
@@ -162,15 +165,17 @@ public class NovelPageBitmapManager {
 
         mContentTextColor = ContextCompat.getColor(mContext, R.color.chapter_title_night);
         mTitleTextColor = ContextCompat.getColor(mContext, R.color.chapter_title_night);
+        mFooterTextColor = ContextCompat.getColor(mContext, R.color.chapter_content_night);
 
     }
 
     private void initTextSize() {
-        mContentTextSize = UiUtils.sp2px(15);
-        mTitleTextSize = UiUtils.sp2px(12);
-        mContentPadding = UiUtils.dp2px(3);
-        mParagraphMargin = UiUtils.dp2px(3);
-        mPageFooterHeight= UiUtils.dp2px(12);
+        mContentTextSize = UiUtils.sp2px(16);
+        mTitleTextSize = UiUtils.sp2px(13);
+        mContentPadding = UiUtils.dp2px(12);
+        mParagraphMargin = UiUtils.dp2px(6);
+        mPageFooterTextSize= UiUtils.sp2px(13);
+        mPageModuleMargin=UiUtils.dp2px(5);
     }
 
     /**
@@ -206,10 +211,10 @@ public class NovelPageBitmapManager {
 
         // 页脚
         mFooterPaint=new TextPaint();
-        mFooterPaint.setColor(mTitleTextColor);
-        mFooterPaint.setTextSize(mPageFooterHeight);
+        mFooterPaint.setColor(mFooterTextColor);
+        mFooterPaint.setTextSize(mPageFooterTextSize);
         mFooterPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-//        mFooterPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        mFooterPaint.setTypeface(Typeface.DEFAULT_BOLD);
         mFooterPaint.setAntiAlias(true);
 
 //        // 绘制电池的画笔
@@ -221,9 +226,10 @@ public class NovelPageBitmapManager {
 
         mContentManager.setContentTextSize(mContentTextSize);
         mContentManager.setTitleTextSize(mTitleTextSize);
+        mContentManager.setFooterTextSize(mPageFooterTextSize);
         mContentManager.setContentPadding(mContentPadding);
         mContentManager.setParagraphMargin(mParagraphMargin);
-        mContentManager.setPageFooterHeight(mPageFooterHeight);
+        mContentManager.setPageModuleMargin(mPageModuleMargin);
 
     }
 
@@ -310,7 +316,7 @@ public class NovelPageBitmapManager {
         }
 
         // 绘制标题
-        mCanvas.drawText(novelPageEntity.getTitleName(), mContentPadding, mTitlePaint.getTextSize() + mParagraphMargin + mContentPadding, mTitlePaint);
+        mCanvas.drawText(novelPageEntity.getTitleName(), mContentPadding, mTitlePaint.getTextSize()+ mContentPadding, mTitlePaint);
 
         // 如果没有内容
         if (novelPageEntity.getLines() == null || novelPageEntity.getLines().size() == 0) {
@@ -326,7 +332,7 @@ public class NovelPageBitmapManager {
         // 一行行的画文字
         for (String line : lines) {
 
-            mCanvas.drawText(line, mContentPadding, mContentPaint.getTextSize() + mTitleTextSize + 2 * mParagraphMargin + mContentPadding + curTextHeight, mContentPaint);
+            mCanvas.drawText(line, mContentPadding, mContentPaint.getTextSize() + mParagraphMargin+(mTitleTextSize + mContentPadding + mPageModuleMargin) + curTextHeight, mContentPaint);
             curTextHeight += mContentPaint.getTextSize();
 
             curTextHeight += mParagraphMargin;

@@ -28,6 +28,7 @@ import java.util.List;
 
 public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implements NovelReadContract.View {
 
+    public static final String NOVEL_QUICK_START = "novel_quick_start";
     public static final String NOVEL_ID = "novel_id";
     public static final String NOVEL_CHAPTER_ID = "novel_chapter_id";
     public static final String NOVEL_VOLUME_ID = "novel_volume_id";
@@ -112,6 +113,7 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
         Intent intent = getIntent();
 
+        boolean isQuickStart = intent.getBooleanExtra(NOVEL_QUICK_START, false);
         mNovelId = intent.getLongExtra(NOVEL_ID, 1);
         long volumeId = intent.getLongExtra(NOVEL_VOLUME_ID, 1);
         long chapterId = intent.getLongExtra(NOVEL_CHAPTER_ID, 1);
@@ -149,9 +151,12 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
         catalogueEntity.setBookId(mNovelId);
         // 设置目录，用于判断是否有没有下一页、是否需要请求新章节等
         mPage.setCatalogue(catalogueEntity);
-        mPage.skipToTargetChapter(mNovelId,volumeId,chapterId);//跳转到指定章节
 
-//        mPresenter.getChapter(mNovelId, volumeId, chapterId);//跳转到上次阅读的位置
+        if(isQuickStart){
+            mPage.loadLastRead(mNovelId);//跳转到上次阅读的位置
+        }else{
+            mPage.skipToTargetChapter(mNovelId,volumeId,chapterId);//跳转到指定章节
+        }
 
     }
 

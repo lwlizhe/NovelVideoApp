@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.AppApplication;
 import com.lwlizhe.novelvideoapp.common.CommonSubscriber;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.DaoSession;
@@ -69,8 +68,9 @@ public class NovelContentManager {
 
     private int mContentTextSize;
     private int mTitleTextSize;
+    private int mFooterTextSize;
 
-    private int mPageFooterHeight;
+    private int mModuleMargin;
 
     private int mParagraphMargin;
     private int mContentPadding;
@@ -90,6 +90,8 @@ public class NovelContentManager {
 
     private long currentRequestVolumeId;
     private long currentRequestChapterId;
+
+    private long mBookId;
 
     public static synchronized NovelContentManager instance(Context mContext) {
 
@@ -144,9 +146,11 @@ public class NovelContentManager {
     }
 
     public void setTitleTextSize(int titleTextSize) {
-
         mTitleTextSize = titleTextSize;
+    }
 
+    public void setFooterTextSize(int footerTextSize) {
+        mFooterTextSize = footerTextSize;
     }
 
     public void setParagraphMargin(int margin) {
@@ -157,8 +161,8 @@ public class NovelContentManager {
         mContentPadding = padding;
     }
 
-    public void setPageFooterHeight(int footerHeight){
-        mPageFooterHeight=footerHeight;
+    public void setPageModuleMargin(int margin) {
+        mModuleMargin = margin;
     }
 
     public void setContentPaint(Paint mTextContentPaint) {
@@ -216,7 +220,7 @@ public class NovelContentManager {
      * @param content   章节内容
      */
     public void setContent(final long bookId, final long volumeId, final long chapterId, final String content) {
-
+        mBookId=bookId;
         // 保存到数据库
         final NovelContentEntity contentEntity = new NovelContentEntity(bookId, volumeId, chapterId, content);
 
@@ -273,7 +277,7 @@ public class NovelContentManager {
             mCurrentChapterPos = 0;
             mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, mCatalogue.getVolumeList().get(0).getVolumeId(), mCatalogue.getVolumeList().get(0).getChapterList().get(0).getChapterId());
         } else {
-            long lastReadBookId = load.getBookId();
+            mBookId = load.getBookId();
             long lastReadVolumeId = load.getLastReadVolumeId();
             long lastReadChapterId = load.getLastReadChapterId();
             mCurrentPagePos = load.getLastReadPageNum();
@@ -281,7 +285,7 @@ public class NovelContentManager {
             initPos(lastReadVolumeId, lastReadChapterId);
             checkCacheChapter();
 
-            NovelContentEntity targetContent = mNovelDao.queryBuilder().where(NovelContentEntityDao.Properties.BookId.eq(lastReadBookId), NovelContentEntityDao.Properties.VolumeId.eq(lastReadVolumeId), NovelContentEntityDao.Properties.ChapterId.eq(lastReadChapterId)).unique();
+            NovelContentEntity targetContent = mNovelDao.queryBuilder().where(NovelContentEntityDao.Properties.BookId.eq(mBookId), NovelContentEntityDao.Properties.VolumeId.eq(lastReadVolumeId), NovelContentEntityDao.Properties.ChapterId.eq(lastReadChapterId)).unique();
 
             mContent = targetContent.getNovelContent();
 
@@ -303,6 +307,8 @@ public class NovelContentManager {
     public void loadTargetChapter(long bookId, long volumeId, long chapterId) {
 
         NovelContentEntity targetContent = mNovelDao.queryBuilder().where(NovelContentEntityDao.Properties.BookId.eq(bookId), NovelContentEntityDao.Properties.VolumeId.eq(volumeId), NovelContentEntityDao.Properties.ChapterId.eq(chapterId)).unique();
+
+        mBookId=bookId;
 
         if (targetContent != null) {
             mCurrentPagePos = 0;
@@ -590,7 +596,7 @@ public class NovelContentManager {
             NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
             result.setVolumeId(volumeEntity.getVolumeId());
             result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+            result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
         }
 
@@ -612,7 +618,7 @@ public class NovelContentManager {
             NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
             result.setVolumeId(volumeEntity.getVolumeId());
             result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+            result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
             mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
@@ -648,7 +654,7 @@ public class NovelContentManager {
                 NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
                 result.setVolumeId(volumeEntity.getVolumeId());
                 result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-                result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+                result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
                 mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
 
@@ -673,7 +679,7 @@ public class NovelContentManager {
                     currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                     currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
 
-                    result= new NovelPageEntity();
+                    result = new NovelPageEntity();
 
                     result.setTitleName(volumeList.get(mCurrentVolumePos).getVolumeName() + " " + volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterName());
 
@@ -684,22 +690,17 @@ public class NovelContentManager {
             }
         }
 
+        if(result!=null){
+            NovelInfoEntity infoEntity = new NovelInfoEntity(mBookId, result.getVolumeId(), result.getChapterId(), result.getCurrentPagePos());
+            mInfoDao.insertOrReplace(infoEntity);
+        }
+
         return result;
     }
 
     /**
-     * 是否有下一张
-     */
-    public boolean isHasNext(){
-        List<NovelCatalogueEntity.NovelContentVolumeEntity> volumeList = mCatalogue.getVolumeList();
-
-        int chapterSize = volumeList.get(mCurrentVolumePos).getChapterList().size();
-
-        return !(mCurrentVolumePos >= volumeList.size() - 1 && mCurrentChapterPos >= chapterSize - 1);
-    }
-
-    /**
      * 生成下一张
+     *
      * @return
      */
     public NovelPageEntity getNextPage() {
@@ -718,7 +719,7 @@ public class NovelContentManager {
             NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
             result.setVolumeId(volumeEntity.getVolumeId());
             result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-            result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+            result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
             mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
         } else {
@@ -753,7 +754,7 @@ public class NovelContentManager {
                 NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
                 result.setVolumeId(volumeEntity.getVolumeId());
                 result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-                result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+                result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
                 mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
 
 
@@ -778,7 +779,7 @@ public class NovelContentManager {
                     currentRequestChapterId = volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterId();
                     currentRequestVolumeId = volumeList.get(mCurrentVolumePos).getVolumeId();
 
-                    result= new NovelPageEntity();
+                    result = new NovelPageEntity();
 
                     result.setTitleName(volumeList.get(mCurrentVolumePos).getVolumeName() + " " + volumeList.get(mCurrentVolumePos).getChapterList().get(mCurrentChapterPos).getChapterName());
                     result.setCurrentPagePos(mCurrentPagePos);
@@ -787,12 +788,17 @@ public class NovelContentManager {
                     NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
                     result.setVolumeId(volumeEntity.getVolumeId());
                     result.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
-                    result.setTitleName(volumeEntity.getVolumeName()+" "+volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
+                    result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
                     mStateObserver.setNovelPageState(STATE_REQUEST_CHAPTER, currentRequestVolumeId, currentRequestChapterId);
 
                 }
             }
+        }
+
+        if(result!=null){
+            NovelInfoEntity infoEntity = new NovelInfoEntity(mBookId, result.getVolumeId(), result.getChapterId(), result.getCurrentPagePos());
+            mInfoDao.insertOrReplace(infoEntity);
         }
 
         return result;
@@ -807,8 +813,7 @@ public class NovelContentManager {
     private List<NovelPageEntity> calPageContent(String srcContent) {
 
         int curTextHeight = 0;
-        int validContentPageHeight = mPageHeight - mTitleTextSize - mPageFooterHeight- 2 * mParagraphMargin-2*mContentPadding;//内容页是整体页面-标题栏-页脚高度-2*标题栏的Margin-2*内容padding
-
+        int validContentPageHeight = mPageHeight - (mTitleTextSize + mContentPadding + mModuleMargin) - 2 * mParagraphMargin - (mContentPadding + mModuleMargin + mFooterTextSize);// 页面高度-头部-2*段落间距-脚部
 
         String[] paragraphs = srcContent.split("\n");
 
@@ -819,7 +824,7 @@ public class NovelContentManager {
         for (String paragraph : paragraphs) {
             if (TextUtils.isEmpty(paragraph)) continue;
 
-            paragraph="\u3000\u3000"+paragraph.trim();//首行缩进,加上2空格,去掉所有空格
+            paragraph = "\u3000\u3000" + paragraph.trim();//首行缩进,加上2空格,去掉所有空格
             while (paragraph.length() > 0) {
 
                 curTextHeight += mContentPaint.getTextSize();
@@ -838,7 +843,7 @@ public class NovelContentManager {
                 }
 
                 //计算单行多少个字
-                int singleLineWordCount = mContentPaint.breakText(paragraph, true, mPageWidth - 2 * mContentPadding, null);
+                int singleLineWordCount = mContentPaint.breakText(paragraph, true, mPageWidth -  2* mContentPadding, null);
 
                 // 添加行并重置段落
                 String line = paragraph.substring(0, singleLineWordCount);
