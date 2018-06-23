@@ -205,8 +205,6 @@ public class NovelPage extends View {
 
         void onRequestNewChapter(long requestVolumeId, long requestChapterId);
 
-        void onOpenChapterList(long currentVolumeId, long currentChapterId);
-
     }
 
 }

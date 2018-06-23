@@ -172,11 +172,6 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
                 }
 
             }
-
-            @Override
-            public void onOpenChapterList(long currentVolumeId, long currentChapterId) {
-
-            }
         });
 
     }
