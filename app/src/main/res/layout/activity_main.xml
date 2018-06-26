@@ -3,47 +3,25 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/root_view"
+    <com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu
+            android:elevation="1dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--底部页面-->
+            <TextView
+                android:text="dfsfdsfsdfsdfdsf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
-    </FrameLayout>
+        </com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu>
 
-    <!--<com.lwlizhe.novelvideoapp.widget.ExpandTextView-->
-        <!--android:id="@+id/expand_text_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-    <!--</com.lwlizhe.novelvideoapp.widget.ExpandTextView>-->
-
-
-    <!--<RelativeLayout-->
-        <!--android:background="@color/alpha_gray"-->
-        <!--android:padding="10dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<ImageView-->
-            <!--android:id="@+id/img_test"-->
-            <!--android:layout_width="200dp"-->
-            <!--android:layout_height="200dp" />-->
-    <!--</RelativeLayout>-->
-
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<Button-->
-            <!--android:id="@+id/btn_test"-->
-            <!--android:text="test"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
-
-    <!--</RelativeLayout>-->
+    </com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView>
 
 </LinearLayout>

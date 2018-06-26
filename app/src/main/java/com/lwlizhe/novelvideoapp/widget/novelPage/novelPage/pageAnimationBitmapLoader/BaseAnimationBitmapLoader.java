@@ -27,6 +27,7 @@ public abstract class BaseAnimationBitmapLoader {
     protected View mTargetView;
 
     protected PointF mTouch = new PointF();
+    protected PointF mStart = new PointF();
 
 //    protected Bitmap mCurrentBitmap;
 //    protected Bitmap mNextBitmap;
@@ -40,15 +41,9 @@ public abstract class BaseAnimationBitmapLoader {
     protected int mScreenWidth;
     protected int mScreenHeight;
 
-//    protected boolean isNextEnable=false;
-//    protected boolean isPreEnable=false;
-
-    protected static final String STATE_LOADING="state_loading";
-    protected static final String STATE_NO_MORE="state_no_more";
-    protected static final String STATE_NO_PRE="state_no_pre";
-    protected static final String STATE_NORMAL="state_normal";
-
-    protected String mCurrentState=STATE_LOADING;
+    protected boolean isHasPre=false;
+    protected boolean isHasNext=false;
+    protected boolean isLoading=false;
 
 
     public BaseAnimationBitmapLoader(View targetView) {
@@ -71,32 +66,35 @@ public abstract class BaseAnimationBitmapLoader {
         mStateObserver.addListener(new NovelPageStateListener() {
             @Override
             public void onNextDisable() {
-                mCurrentState=STATE_NO_MORE;
+                isHasNext=false;
             }
 
             @Override
             public void onRequestNewChapter(long requestVolumeId, long requestChapterId) {
-                mCurrentState=STATE_LOADING;
+
             }
 
             @Override
             public void onPreDisable() {
-                mCurrentState=STATE_NO_PRE;
+                isHasPre=false;
             }
 
             @Override
             public void onLoading() {
-                mCurrentState=STATE_LOADING;
+                isLoading=true;
             }
 
             @Override
             public void onLoadingFinish() {
-
+                isLoading=false;
+                isHasPre=true;
+                isHasNext=true;
             }
 
             @Override
             public void onNormal() {
-                mCurrentState=STATE_NORMAL;
+                isHasPre=true;
+                isHasNext=true;
             }
         });
 
@@ -117,7 +115,6 @@ public abstract class BaseAnimationBitmapLoader {
             drawStatic(canvas);
         }
 
-//        isAnimationRunning = false;
     }
 
     protected abstract void calTouchPoint();
@@ -145,9 +142,6 @@ public abstract class BaseAnimationBitmapLoader {
 
             mTouch.x = currX;
             mTouch.y = currY;
-
-//            Logger.d(currX);
-//            Logger.d(currY);
 
             if(mScroller.getFinalX() == currX && mScroller.getFinalY() == currY){
                 isAnimationRunning=false;

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class NovelPageEntity {
 
+    private long bookId;
+
     private long chapterId;
 
     private long volumeId;
@@ -18,6 +20,14 @@ public class NovelPageEntity {
     private int maxPageCount;
 
     List<String> lines;
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
 
     public int getMaxPageCount() {
         return maxPageCount;

@@ -3,6 +3,7 @@ package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.NovelControlViewStateChangedListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 
 /**
@@ -23,7 +24,15 @@ public interface IPageLoader {
 
     void skipToTargetChapter(long bookId,long volumeId,long chapterId);
 
+    void skipToNextChapter();
+
+    void skipToPreChapter();
+
+    void skipToTargetPagePos(int pos);
+
     void setCatalogue(NovelCatalogueEntity catalogueEntity);
+
+    void setControlViewStateListener(NovelControlViewStateChangedListener listener);
 
     void computeScroll();
 

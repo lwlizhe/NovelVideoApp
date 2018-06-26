@@ -10,12 +10,10 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Region;
 import android.graphics.drawable.GradientDrawable;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
-
-import com.lwlizhe.basemodule.utils.UiUtils;
 
 import java.util.HashMap;
 
@@ -56,7 +54,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
     int[] mBackShadowColors;// 背面颜色组
     int[] mFrontShadowColors;// 前面颜色组
 
-    private float mMaxLength ;
+    private float mMaxLength;
 
     float mMiddleX;
     float mMiddleY;
@@ -68,15 +66,17 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
     Matrix mMatrix;
     float[] mMatrixArray = {0, 0, 0, 0, 0, 0, 0, 0, 1.0f};
 
+    private boolean isTouchMoving = false;
+
     public TurnAnimationPageBitmapLoader(View targetView) {
         super(targetView);
 
-        mCurPagePath=new Path();
-        mNextPagePath=new Path();
+        mCurPagePath = new Path();
+        mNextPagePath = new Path();
 
         mMaxLength = (float) Math.hypot(mScreenWidth, mScreenHeight);
 
-        mPaint=new Paint();
+        mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
 
         ColorMatrix cm = new ColorMatrix();//设置颜色数组
@@ -198,7 +198,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
     public void calcCornerXY(float x, float y) {
         if (x <= mScreenWidth / 2) {
             mCornerX = 0;
-        }else {
+        } else {
             mCornerX = mScreenWidth;
         }
         if (y <= mScreenHeight / 2) {
@@ -210,7 +210,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
         if ((mCornerX == 0 && mCornerY == mScreenHeight)
                 || (mCornerX == mScreenWidth && mCornerY == 0)) {
             mIsRTandLB = true;
-        }else {
+        } else {
             mIsRTandLB = false;
         }
 
@@ -220,10 +220,9 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
     protected void drawStatic(Canvas canvas) {
         HashMap<String, Object> nextPageBitmapResult = mBitmapManager.getNextPageBitmap();
 
-        if((int)(nextPageBitmapResult.get("result"))==0){
+        if ((int) (nextPageBitmapResult.get("result")) == 0) {
             canvas.drawBitmap((Bitmap) nextPageBitmapResult.get("bitmap"), 0, 0, null);
         }
-
 
 
     }
@@ -237,6 +236,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     /**
      * 画下一页
+     *
      * @param canvas
      */
     private void drawNextPageCanvas(Canvas canvas) {
@@ -271,7 +271,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
         HashMap<String, Object> nextPageBitmapResult = mBitmapManager.getNextPageBitmap();
 
-        if((int)(nextPageBitmapResult.get("result"))==0){
+        if ((int) (nextPageBitmapResult.get("result")) == 0) {
             canvas.drawBitmap((Bitmap) nextPageBitmapResult.get("bitmap"), 0, 0, null);
         }
 
@@ -295,6 +295,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     /**
      * 画翻起页
+     *
      * @param canvas
      */
     private void drawCurrentPageBackArea(Canvas canvas) {
@@ -356,28 +357,28 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
     @Override
     protected void startAnimation() {
 
-            int dx, dy;
+        int dx, dy;
 
-            if (mCornerX > 0) {
-                dx = -(int) ( mTouch.x);
-            } else {
-                dx = (int) (mScreenWidth - mTouch.x );
-            }
-            if (mCornerY > 0) {
-                dy = (int) (mScreenHeight - mTouch.y);
-            } else {
-                dy = (int) (1 - mTouch.y); // 防止mTouch.y最终变为0
-            }
+        if (mCornerX > 0) {
+            dx = -(int) (mTouch.x);
+        } else {
+            dx = (int) (mScreenWidth - mTouch.x);
+        }
+        if (mCornerY > 0) {
+            dy = (int) (mScreenHeight - mTouch.y);
+        } else {
+            dy = (int) (1 - mTouch.y); // 防止mTouch.y最终变为0
+        }
 
-            mScroller.startScroll((int)mTouch.x, (int)mTouch.y, dx, dy, 300);
-            isAnimationRunning = true;
-            mTargetView.postInvalidate();
+        mScroller.startScroll((int) mTouch.x, (int) mTouch.y, dx, dy, 300);
+        isAnimationRunning = true;
+        mTargetView.postInvalidate();
 
     }
 
     @Override
     protected void abortAnimation() {
-        if (!mScroller.isFinished()){
+        if (!mScroller.isFinished()) {
             mScroller.abortAnimation();
             isAnimationRunning = false;
             mTargetView.postInvalidate();
@@ -513,7 +514,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
      * 创建阴影的GradientDrawable
      */
     private void createDrawable() {
-        int[] color = { 0x333333, 0xb0333333 };
+        int[] color = {0x333333, 0xb0333333};
         mFolderShadowDrawableRL = new GradientDrawable(
                 GradientDrawable.Orientation.RIGHT_LEFT, color);
         mFolderShadowDrawableRL
@@ -524,7 +525,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
         mFolderShadowDrawableLR
                 .setGradientType(GradientDrawable.LINEAR_GRADIENT);
 
-        mBackShadowColors = new int[] { 0xff111111, 0x111111 };
+        mBackShadowColors = new int[]{0xff111111, 0x111111};
         mBackShadowDrawableRL = new GradientDrawable(
                 GradientDrawable.Orientation.RIGHT_LEFT, mBackShadowColors);
         mBackShadowDrawableRL.setGradientType(GradientDrawable.LINEAR_GRADIENT);
@@ -533,7 +534,7 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
                 GradientDrawable.Orientation.LEFT_RIGHT, mBackShadowColors);
         mBackShadowDrawableLR.setGradientType(GradientDrawable.LINEAR_GRADIENT);
 
-        mFrontShadowColors = new int[] { 0x80111111, 0x111111 };
+        mFrontShadowColors = new int[]{0x80111111, 0x111111};
         mFrontShadowDrawableVLR = new GradientDrawable(
                 GradientDrawable.Orientation.LEFT_RIGHT, mFrontShadowColors);
         mFrontShadowDrawableVLR
@@ -556,55 +557,67 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     public void onPageTouch(MotionEvent event) {
 
-        if(mCurrentState.equals(STATE_LOADING)){
+        if (isLoading) {
             return;
         }
 
-        if(event.getX() > mScreenWidth / 2&&mCurrentState.equals(STATE_NO_MORE)){
-
-            if(event.getAction()== MotionEvent.ACTION_DOWN){
-                Toast.makeText(mContext, "没有下一页了", Toast.LENGTH_SHORT).show();
-            }
-
-            return;
-        }
-
-        if(event.getX() < mScreenWidth / 2&&mCurrentState.equals(STATE_NO_PRE)){
-
-            if(event.getAction()== MotionEvent.ACTION_DOWN){
-                Toast.makeText(mContext, "没有上一页了", Toast.LENGTH_SHORT).show();
-            }
-
-            return;
-        }
         mTouch.x = event.getX();
         mTouch.y = event.getY();
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN://这里做的是翻页判断和拦截，以及触控点的重置
 
-                if(isAnimationRunning){
+                mStart.x = mTouch.x;
+                mStart.y = mTouch.y;
+
+                if (mTouch.x > mScreenWidth / 2 && !isHasNext) {
+
+
+
+                    return;
+                }
+
+                if (mTouch.x < mScreenWidth / 2 && !isHasPre) {
+
+
+                    return;
+                }
+
+
+                if (isAnimationRunning) {
                     abortAnimation();
                 }
 
                 isAnimationRunning = false;
 
-                calcCornerXY(event.getX(), event.getY());
+                calcCornerXY(mTouch.x, mTouch.y);
                 break;
-            case MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_MOVE://主要跟触控过程中的翻页有关。
+                final int slop = ViewConfiguration.get(mContext).getScaledTouchSlop();
+                if (!isTouchMoving) {
+                    isTouchMoving = Math.abs(mTouch.x - event.getX()) > slop || Math.abs(mTouch.x - event.getY()) > slop;
+                }
 
-                isAnimationRunning=true;
+                if (isTouchMoving) {
+                    if ((mStart.x < mScreenWidth / 2 && !isHasPre) || (mStart.x > mScreenWidth / 2 && !isHasNext)) {
+                        return;
+                    }
+                }
+
+                isAnimationRunning = true;
                 mTargetView.postInvalidate();
                 break;
             case MotionEvent.ACTION_UP:
-
-//                calcCornerXY(event.getX(), event.getY());
-
-            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_CANCEL://跟点一下的翻页动画有关
+                if ((mStart.x < mScreenWidth / 2 && !isHasPre) || (mStart.x > mScreenWidth / 2 && !isHasNext)) {
+                    return;
+                }
 
                 startAnimation();
 
                 break;
         }
     }
+
+
 }

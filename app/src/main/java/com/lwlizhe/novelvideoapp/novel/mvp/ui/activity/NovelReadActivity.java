@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.lwlizhe.basemodule.utils.SystemBarUtils;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonActivity;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
@@ -17,10 +17,13 @@ import com.lwlizhe.novelvideoapp.novel.di.module.NovelReadModule;
 import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelReadContract;
 import com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity.NovelReadPresenter;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2018/5/9 0009.
@@ -36,7 +39,7 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
     private FrameLayout mRootView;
 
-    private NovelPage mPage;
+    private NovelView mPage;
 
     private List<NovelChapterEntity> mChapterList;
 
@@ -93,8 +96,11 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
     @Override
     protected View initRootView() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        SystemBarUtils.hideStableNavBar(this);
+        SystemBarUtils.hideStableStatusBar(this);
+        SystemBarUtils.transparentStatusBar(this);
         return LayoutInflater.from(this).inflate(R.layout.activity_novel_read, null);
     }
 
@@ -102,10 +108,10 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
     protected void initView() {
 
         mRootView = findViewById(R.id.root_view);
-        mPage = new NovelPage(this);
-        mPage.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        mRootView.addView(mPage);
+        mPage = findViewById(R.id.view_read);
+//        mPage.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//        mRootView.addView(mPage);
     }
 
     @Override

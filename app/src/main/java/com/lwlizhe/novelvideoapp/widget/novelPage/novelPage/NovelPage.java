@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.lwlizhe.basemodule.utils.UiUtils;
-import com.lwlizhe.novelvideoapp.R;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.NovelControlViewStateChangedListener;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.IPageLoader;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader.PageLoaderFactory;
@@ -22,7 +19,6 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.stateObserver.NovelP
 
 /**
  * Created by Administrator on 2018/5/10 0010.
- * TODO：1、缓存（数据库）；2、页面跳转和章节跳转；3、优化
  */
 
 public class NovelPage extends View {
@@ -34,6 +30,8 @@ public class NovelPage extends View {
     private IPageLoader mPageLoader;
 
     private OnPageStateChangedListener mListener;
+    private OnTipStateChangedListener mTipListener;
+
     protected NovelPageStateObserver mStateObserver;
 
     // 接收电池信息和时间更新的广播
@@ -86,12 +84,16 @@ public class NovelPage extends View {
 
         @Override
         public void onLoading() {
-
+            if(mTipListener!=null){
+                mTipListener.onLoading();
+            }
         }
 
         @Override
         public void onLoadingFinish() {
-
+            if(mTipListener!=null){
+                mTipListener.onLoadingFinish();
+            }
         }
 
         @Override
@@ -159,11 +161,33 @@ public class NovelPage extends View {
 
         mPageLoader.skipToTargetChapter(novelId, volumeId, chapterId);
     }
+    public void skipToNextChapter() {
+
+        mPageLoader.skipToNextChapter();
+    }
+    public void skipToPreChapter() {
+
+        mPageLoader.skipToPreChapter();
+    }
+
+    public void skipToTargetPagePos(int pos){
+        mPageLoader.skipToTargetPagePos(pos);
+    }
 
     public void setPageStateListener(OnPageStateChangedListener listener) {
 
         this.mListener = listener;
 
+    }
+
+    public void setTipsStateListener(OnTipStateChangedListener tipListener) {
+        mTipListener = tipListener;
+    }
+
+    public void setControlViewStateListener(NovelControlViewStateChangedListener listener) {
+        if (listener != null) {
+            mPageLoader.setControlViewStateListener(listener);
+        }
     }
 
     @Override
@@ -205,6 +229,14 @@ public class NovelPage extends View {
 
         void onRequestNewChapter(long requestVolumeId, long requestChapterId);
 
+    }
+
+    public interface OnTipStateChangedListener {
+        void onLoading();
+
+        void onLoadingFinish();
+
+        void onLoadingError(int reason);
     }
 
 }
