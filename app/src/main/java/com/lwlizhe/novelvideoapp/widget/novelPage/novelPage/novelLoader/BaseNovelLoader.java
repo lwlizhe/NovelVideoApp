@@ -198,9 +198,9 @@ public abstract class BaseNovelLoader implements IPageLoader {
     @Override
     public void onTouch(MotionEvent event) {
 
-        if (isLoading) {
-            return;
-        }
+//        if (isLoading) {
+//            return;
+//        }
 
         if (mCenterRect == null) {
             mCenterRect = new RectF(mPageWidth / 5, mPageHeight / 3,

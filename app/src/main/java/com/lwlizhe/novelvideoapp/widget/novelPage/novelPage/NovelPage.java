@@ -98,7 +98,9 @@ public class NovelPage extends View {
 
         @Override
         public void onNormal() {
-
+            if(mTipListener!=null){
+                mTipListener.onNormal();
+            }
         }
     };
 
@@ -235,6 +237,8 @@ public class NovelPage extends View {
         void onLoading();
 
         void onLoadingFinish();
+
+        void onNormal();
 
         void onLoadingError(int reason);
     }

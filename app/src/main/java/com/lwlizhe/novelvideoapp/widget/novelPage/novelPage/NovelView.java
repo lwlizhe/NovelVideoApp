@@ -78,6 +78,11 @@ public class NovelView extends RelativeLayout {
             }
 
             @Override
+            public void onNormal() {
+                mLoadingProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
             public void onLoadingError(int reason) {
 
             }

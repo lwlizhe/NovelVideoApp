@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 提供绘制完成的currentBitmap和nextBitmap，所有bitmap的操作都走这里
+ * 提供绘制完成的currentBitmap和nextBitmap，所有bitmap的操作都走这里,也是绘制背景、文字的地方
  * Created by Administrator on 2018/5/18 0018.
  */
 
@@ -339,16 +339,18 @@ public class NovelPageBitmapManager {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
 
-        // 如果正在加载
-        if (isLoading || novelPageEntity == null) {
+        if (novelPageEntity == null) {
             return;
         }
 
         // 绘制标题
         mCanvas.drawText(novelPageEntity.getTitleName(), mContentPadding, mTitlePaint.getTextSize() + mContentPadding, mTitlePaint);
 
-        // 如果没有内容
+        // 如果没有文字内容，请求新章节
         if (novelPageEntity.getLines() == null || novelPageEntity.getLines().size() == 0) {
+
+            mContentManager.requestNewChapter(novelPageEntity.getVolumeId(), novelPageEntity.getChapterId());
+
             return;
         }
 
@@ -403,9 +405,6 @@ public class NovelPageBitmapManager {
      */
     public void drawNext() {
 
-//        if(mContentManager.isHasNext()){
-//            return;
-//        }
         NovelPageEntity nextPage = mContentManager.getNextPage();
 
         if (nextPage == null) {

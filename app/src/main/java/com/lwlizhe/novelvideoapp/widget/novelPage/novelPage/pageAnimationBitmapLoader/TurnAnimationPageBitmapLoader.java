@@ -557,9 +557,9 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     public void onPageTouch(MotionEvent event) {
 
-        if (isLoading) {
-            return;
-        }
+//        if (isLoading) {
+//            return;
+//        }
 
         mTouch.x = event.getX();
         mTouch.y = event.getY();
