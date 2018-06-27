@@ -111,7 +111,7 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
     public void onOpen(NovelPage targetPage) {
         this.setVisibility(View.VISIBLE);
         SystemBarUtils.showUnStableStatusBar((Activity) mContext);
-        SystemBarUtils.showUnStableNavBar((Activity) mContext);
+//        SystemBarUtils.showUnStableNavBar((Activity) mContext);
 
         mTargetPage=targetPage;
     }
@@ -120,7 +120,7 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
     public void onClose(NovelPage targetPage) {
         this.setVisibility(View.GONE);
         SystemBarUtils.hideStableStatusBar((Activity) mContext);
-        SystemBarUtils.hideStableNavBar((Activity) mContext);
+//        SystemBarUtils.hideStableNavBar((Activity) mContext);
 
         mTargetPage=targetPage;
     }
