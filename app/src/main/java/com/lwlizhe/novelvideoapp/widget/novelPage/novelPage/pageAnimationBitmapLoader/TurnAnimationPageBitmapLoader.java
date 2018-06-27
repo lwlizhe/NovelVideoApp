@@ -227,6 +227,10 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     }
 
+    /**
+     * 画第二页
+     * @param canvas
+     */
     @Override
     protected void drawNextPage(Canvas canvas) {
 
@@ -283,6 +287,10 @@ public class TurnAnimationPageBitmapLoader extends BaseAnimationBitmapLoader {
 
     }
 
+    /**
+     * 画第一页
+     * @param canvas
+     */
     @Override
     protected void drawCurPage(Canvas canvas) {
         mCurPagePath.reset();

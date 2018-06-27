@@ -98,8 +98,8 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
     protected View initRootView() {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        SystemBarUtils.hideStableNavBar(this);
-//        SystemBarUtils.hideStableStatusBar(this);
+//        SystemBarUtils.hideStableNavBar(this);
+        SystemBarUtils.hideStableStatusBar(this);
         SystemBarUtils.transparentStatusBar(this);
         return LayoutInflater.from(this).inflate(R.layout.activity_novel_read, null);
     }
