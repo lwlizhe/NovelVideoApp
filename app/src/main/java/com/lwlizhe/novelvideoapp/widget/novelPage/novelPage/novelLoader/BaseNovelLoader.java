@@ -1,6 +1,7 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.text.Html;
@@ -110,10 +111,7 @@ public abstract class BaseNovelLoader implements IPageLoader {
     @Override
     public void loadNovel(long bookId, long volumeId, long chapterId, String content) {
 
-
         content = Html.fromHtml(content).toString();
-
-
         mContentManager.setContent(bookId, volumeId, chapterId, content);
 
     }
@@ -160,8 +158,28 @@ public abstract class BaseNovelLoader implements IPageLoader {
     }
 
     @Override
-    public void setControlViewStateListener(NovelControlViewStateChangedListener listener) {
-        mMenuManager.setControlViewListener(listener);
+    public void addControlViewStateListener(NovelControlViewStateChangedListener listener) {
+        mMenuManager.addControlViewListener(listener);
+    }
+
+    @Override
+    public void setTextSize(int size) {
+
+    }
+
+    @Override
+    public void setBg(Bitmap bgBitmap) {
+
+    }
+
+    @Override
+    public void setBg(int bgResourceId) {
+
+    }
+
+    @Override
+    public void setBgColor(int color) {
+
     }
 
     @Override
@@ -176,31 +194,17 @@ public abstract class BaseNovelLoader implements IPageLoader {
     private void notifyPageSizeChanged(int w, int h) {
 
         mBitmapManager.setPageSize(w, h);
-
-//        if(mContentManager.getCurChapterList().size()!=0){
         mBitmapManager.drawCurrent();
-//        }
-
-//        mPageAnimationBitmapLoader.setBitmap(mBitmapManager.getCurrentPageBitmap(), mBitmapManager.getNextPageBitmap());
-
-
     }
 
     @Override
     public void onDraw(Canvas mTargetPageCanvas) {
 
         mPageAnimationBitmapLoader.onDraw(mTargetPageCanvas);
-
-//        mTargetPageCanvas.drawBitmap(mBitmapManager.getCurrentPageBitmap(), 0, 0, null);
-
     }
 
     @Override
     public void onTouch(MotionEvent event) {
-
-//        if (isLoading) {
-//            return;
-//        }
 
         if (mCenterRect == null) {
             mCenterRect = new RectF(mPageWidth / 5, mPageHeight / 3,
@@ -241,8 +245,6 @@ public abstract class BaseNovelLoader implements IPageLoader {
                 onPageTouch(event);
                 break;
         }
-
-//        onPageTouch(event);
 
     }
 

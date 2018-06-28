@@ -1,5 +1,6 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.novelLoader;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
@@ -12,34 +13,33 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogu
 
 public interface IPageLoader {
 
+    //***********************************绘制******************************************
     void onTouch(MotionEvent event);
-
     void onDraw(Canvas mCanvas);
 
+    //***********************************周期******************************************
     void onPageSizeChanged(int w,int h);
+    void computeScroll();
+    void onDetachedFromWindow();
 
+    //***********************************内容装载***************************************
     void loadNovel(long bookId,long volumeId,long chapterId,String novel);
-
     void loadLastRead(long bookId);
-
     void skipToTargetChapter(long bookId,long volumeId,long chapterId);
-
     void skipToNextChapter();
-
     void skipToPreChapter();
-
     void skipToTargetPagePos(int pos);
-
     void setCatalogue(NovelCatalogueEntity catalogueEntity);
 
-    void setControlViewStateListener(NovelControlViewStateChangedListener listener);
-
-    void computeScroll();
-
+    //**********************************功能和配置***************************************
+    void setTextSize(int size);
+    void setBg(Bitmap bgBitmap);
+    void setBg(int bgResourceId);
+    void setBgColor(int color);
     void updateTime();
-
     void updateBattery(int level);
 
-    void onDetachedFromWindow();
+    //**********************************监听器********************************************
+    void addControlViewStateListener(NovelControlViewStateChangedListener listener);
 
 }

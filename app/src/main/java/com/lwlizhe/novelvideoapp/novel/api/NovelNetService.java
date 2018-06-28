@@ -28,9 +28,6 @@ import retrofit2.http.Path;
 
 public interface NovelNetService {
 
-    @GET("http://www.wanandroid.com"+"/article/list/1/json")
-    Flowable<String> getTest();
-
     @GET(GlobeConstance.NOVEL_BASE_URL+"recommend.json")
     Flowable<List<NovelReCommendEntity>> getNovelReCommend();
 

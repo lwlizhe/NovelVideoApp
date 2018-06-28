@@ -176,6 +176,10 @@ public class NovelPage extends View {
         mPageLoader.skipToTargetPagePos(pos);
     }
 
+    public void setTextSize(int size){
+        mPageLoader.setTextSize(size);
+    }
+
     public void setPageStateListener(OnPageStateChangedListener listener) {
 
         this.mListener = listener;
@@ -186,9 +190,9 @@ public class NovelPage extends View {
         mTipListener = tipListener;
     }
 
-    public void setControlViewStateListener(NovelControlViewStateChangedListener listener) {
+    public void addControlViewStateListener(NovelControlViewStateChangedListener listener) {
         if (listener != null) {
-            mPageLoader.setControlViewStateListener(listener);
+            mPageLoader.addControlViewStateListener(listener);
         }
     }
 

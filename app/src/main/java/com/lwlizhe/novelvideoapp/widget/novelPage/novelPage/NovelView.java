@@ -88,15 +88,17 @@ public class NovelView extends RelativeLayout {
             }
         });
 
-        mNovelPage.setControlViewStateListener(new NovelControlViewStateChangedListener() {
+        mNovelPage.addControlViewStateListener(new NovelControlViewStateChangedListener() {
             @Override
             public void onOpenCatalog(long curBookId, long curVolumeId, long curChapterId) {
-                Log.d("test", "test");
+
+
+
             }
 
             @Override
             public void onShowControlView() {
-                Log.d("test", "test");
+
                 for(BaseControlView view:mControlViewList){
                     view.onOpen(mNovelPage);
                 }
@@ -105,7 +107,6 @@ public class NovelView extends RelativeLayout {
 
             @Override
             public void onHideControlView() {
-                Log.d("test", "test");
 
                 for(BaseControlView view:mControlViewList){
                     view.onClose(mNovelPage);
@@ -114,7 +115,7 @@ public class NovelView extends RelativeLayout {
 
             @Override
             public void onPageStateChanged(NovelPageInfo pageInfo) {
-                    Log.d("test", "test");
+
                 for(BaseControlView view:mControlViewList){
                     view.onPageInfoChanged(pageInfo);
                 }
