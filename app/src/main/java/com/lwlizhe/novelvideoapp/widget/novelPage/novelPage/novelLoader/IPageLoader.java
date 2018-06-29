@@ -33,8 +33,6 @@ public interface IPageLoader {
 
     //**********************************功能和配置***************************************
     void setTextSize(int size);
-    void setBg(Bitmap bgBitmap);
-    void setBg(int bgResourceId);
     void setBgColor(int color);
     void updateTime();
     void updateBattery(int level);

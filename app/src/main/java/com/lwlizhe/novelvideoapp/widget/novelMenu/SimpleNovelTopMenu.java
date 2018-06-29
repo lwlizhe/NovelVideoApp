@@ -15,7 +15,7 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.BaseCont
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
 /**
- * 一个简单的顶部菜单栏
+ * 一个简单的顶部菜单栏(这里就做了最简单的显示隐藏，不过你可以加个动画啥的)
  * Created by Administrator on 2018/6/26 0026.
  */
 
@@ -36,7 +36,7 @@ public class SimpleNovelTopMenu extends FrameLayout implements BaseControlView {
     }
 
     private void init() {
-        this.setVisibility(View.GONE);
+
     }
 
     @Override

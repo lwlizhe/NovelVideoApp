@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.NovelControlViewStateChangedListener;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
@@ -19,19 +20,19 @@ public class NovelMenuManager {
     private Context mContext;
 
     private static NovelMenuManager mInstance;
-    private NovelContentManager mContentManager;
 
     private List<NovelControlViewStateChangedListener> mControlViewListeners;
 
     private boolean isControlViewHidden = true;
+    private boolean isCatalogViewHidden = true;
     private long tempVolumeId = 0;
     private long tempChapterId = 0;
     private int tempPagePos = 0;
+    private int tempMaxPageCount = 0;
+
 
     private NovelMenuManager(Context mContext) {
         this.mContext = mContext;
-
-        mContentManager = NovelContentManager.instance(mContext);
 
         mControlViewListeners = new ArrayList<>();
     }
@@ -48,14 +49,16 @@ public class NovelMenuManager {
         return mInstance;
     }
 
+    //判断是页面内容
     public void notifyPageChanged(NovelPageEntity currentPage) {
 
         if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
-            if (currentPage != null && (currentPage.getVolumeId() != tempVolumeId || currentPage.getChapterId() != tempChapterId || currentPage.getCurrentPagePos() != tempPagePos)) {
+            if (currentPage != null && (currentPage.getVolumeId() != tempVolumeId || currentPage.getChapterId() != tempChapterId || currentPage.getCurrentPagePos() != tempPagePos||currentPage.getMaxPageCount() != tempMaxPageCount)) {
 
                 tempVolumeId = currentPage.getVolumeId();
                 tempChapterId = currentPage.getChapterId();
                 tempPagePos = currentPage.getCurrentPagePos();
+                tempMaxPageCount=currentPage.getMaxPageCount();
 
                 NovelPageInfo pageInfo = new NovelPageInfo();
 
@@ -73,45 +76,68 @@ public class NovelMenuManager {
         }
     }
 
+    /**
+     * 复位，这里是关闭所有界面
+     */
+    public void reset(){
+        hideControlView();
+        closeCatalog();
+    }
+
     public void onTouch(MotionEvent event) {
 
-
         if (isControlViewHidden) {
-            onOpenControlView();
+            openControlView();
         } else {
-            onHideControlView();
+            hideControlView();
         }
 
     }
 
-    public void onOpenControlView() {
+    public void openControlView() {
         if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
-            isControlViewHidden = !isControlViewHidden;
+            isControlViewHidden = false;
             for (NovelControlViewStateChangedListener mControlViewListener : mControlViewListeners) {
                 mControlViewListener.onShowControlView();
             }
         }
     }
 
-    public void onHideControlView() {
+    public void hideControlView() {
         if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
-            isControlViewHidden = !isControlViewHidden;
+            isControlViewHidden = true;
             for (NovelControlViewStateChangedListener mControlViewListener : mControlViewListeners) {
                 mControlViewListener.onHideControlView();
             }
         }
     }
 
-    public void onOpenCatalog(long bookId, long currentVolumeId, long currentChapterId) {
+    public void onOpenCatalog(NovelCatalogueEntity catalogueEntity,long bookId, long currentVolumeId, long currentChapterId) {
         if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
+            isCatalogViewHidden=false;
             for (NovelControlViewStateChangedListener mControlViewListener : mControlViewListeners) {
-                mControlViewListener.onOpenCatalog(bookId, currentVolumeId, currentChapterId);
+                mControlViewListener.onOpenCatalog(catalogueEntity,bookId, currentVolumeId, currentChapterId);
+            }
+        }
+    }
+    public void closeCatalog() {
+        if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
+            isCatalogViewHidden=true;
+            for (NovelControlViewStateChangedListener mControlViewListener : mControlViewListeners) {
+                mControlViewListener.onCloseCatalog();
             }
         }
     }
 
     public void addControlViewListener(NovelControlViewStateChangedListener listener) {
         mControlViewListeners.add(listener);
+    }
+
+    public boolean isControlViewOpen(){
+        return !isControlViewHidden;
+    }
+    public boolean isCatalogViewOpen(){
+        return !isCatalogViewHidden;
     }
 
 }

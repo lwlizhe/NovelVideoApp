@@ -1,5 +1,6 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView;
 
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
 /**
@@ -8,7 +9,9 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo
 
 public interface NovelControlViewStateChangedListener {
 
-    void onOpenCatalog(long curBookId,long curVolumeId,long curChapterId);
+    void onOpenCatalog(NovelCatalogueEntity catalogueEntity, long curBookId, long curVolumeId, long curChapterId);
+
+    void onCloseCatalog();
 
     void onShowControlView();
 

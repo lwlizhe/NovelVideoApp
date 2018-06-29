@@ -160,6 +160,21 @@
 
         </com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu>
 
+        <com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelCatalog
+            android:layout_centerInParent="true"
+            android:layout_margin="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_catalog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelCatalog>
+
     </com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView>
 
 </FrameLayout>

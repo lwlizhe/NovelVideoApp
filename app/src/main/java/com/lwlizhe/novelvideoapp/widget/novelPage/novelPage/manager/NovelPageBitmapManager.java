@@ -53,6 +53,8 @@ public class NovelPageBitmapManager {
     private int mContentTextSize;
     private int mContentTextColor;
 
+    private int mBgColr;
+
     private int mContentPadding;// 展示的内边距
     private int mParagraphMargin;// 段落边距
 
@@ -180,6 +182,7 @@ public class NovelPageBitmapManager {
         mTitleTextColor = ContextCompat.getColor(mContext, R.color.chapter_title_night);
         mFooterTextColor = ContextCompat.getColor(mContext, R.color.chapter_content_night);
 
+        mBgColr= Color.WHITE;
     }
 
     private void initTextSize() {
@@ -246,60 +249,31 @@ public class NovelPageBitmapManager {
 
     }
 
-    /**
-     * bitmap的点击事件，用来通知处理bitmap的相关部分（绘制上一页、下一页、交换位置并重置等）
-     *
-     * @param event 点击事件
-     */
-    public void onTouch(MotionEvent event) {
-
-        if (isLoading) {
-            return;
-        }
-
-        if (event.getX() > mViewWidth / 2 && !isHasNext) {
-
-            return;
-        }
-
-        if (event.getX() < mViewWidth / 2 && !isHasPre) {
-
-            return;
-        }
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-
-//                //是否点击了中间
-//                if (mCenterRect.contains(event.getX(), event.getY())) {
-//                    return;
-//                }
-
-                if (event.getX() > mViewWidth / 2) {
-                    drawNext();
-                } else if (event.getX() < mViewWidth / 2) {
-                    drawPre();
-                }
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-
-
-                break;
-            case MotionEvent.ACTION_UP:
-
-
-                break;
-            case MotionEvent.ACTION_CANCEL:
-
-
-                break;
-        }
-
-    }
-
     public void setTouchRect(RectF mCenterRect) {
         this.mCenterRect = mCenterRect;
+    }
+
+    public void setBgColor(int bgColor){
+        mBgColr=bgColor;
+    }
+    /**
+     * 在这里打算做的一个操作是根据原来的文字大小，等比缩放其他所有大小，包括间距
+     * @param size 文字大小，单位sp
+     */
+    public void setTextSize(int size){
+        double ratio = (double) size/(double) mContentTextSize;
+
+        mContentTextSize=size;
+        mTitleTextSize= (int) (mTitleTextSize*ratio);
+        mPageFooterTextSize= (int) (mPageFooterTextSize*ratio);
+
+        mPageModuleMargin= (int) (mPageModuleMargin*ratio);
+        mParagraphMargin= (int) (mParagraphMargin*ratio);
+
+        initPaint();
+
+        mContentManager.refreshCurrent();
+
     }
 
     /**
@@ -320,7 +294,7 @@ public class NovelPageBitmapManager {
     private void drawBg(Bitmap mTargetBitmap) {
 
         Canvas mCanvas = new Canvas(mTargetBitmap);
-        mCanvas.drawColor(Color.WHITE);
+        mCanvas.drawColor(mBgColr);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");// HH:mm:ss
         String currentTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));

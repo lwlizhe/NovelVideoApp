@@ -1,11 +1,14 @@
 package com.lwlizhe.novelvideoapp.widget.novelMenu;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.BaseCatalogView;
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
 /**
@@ -26,13 +29,21 @@ public class SimpleNovelCatalog extends RelativeLayout implements BaseCatalogVie
     }
 
     @Override
-    public void onOpen() {
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        RecyclerView catalog = findViewById(R.id.rv_catalog);
 
     }
 
     @Override
-    public void onClose() {
+    public void onOpen(NovelCatalogueEntity catalogueEntity) {
+        this.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void onClose() {
+        this.setVisibility(View.GONE);
     }
 
     @Override

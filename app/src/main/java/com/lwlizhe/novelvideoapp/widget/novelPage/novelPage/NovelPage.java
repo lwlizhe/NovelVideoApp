@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -178,6 +179,10 @@ public class NovelPage extends View {
 
     public void setTextSize(int size){
         mPageLoader.setTextSize(size);
+    }
+
+    public void setBgColor(int bgColor){
+        mPageLoader.setBgColor(bgColor);
     }
 
     public void setPageStateListener(OnPageStateChangedListener listener) {

@@ -90,9 +90,14 @@ public class NovelView extends RelativeLayout {
 
         mNovelPage.addControlViewStateListener(new NovelControlViewStateChangedListener() {
             @Override
-            public void onOpenCatalog(long curBookId, long curVolumeId, long curChapterId) {
+            public void onOpenCatalog(NovelCatalogueEntity catalogueEntity,long curBookId, long curVolumeId, long curChapterId) {
 
 
+
+            }
+
+            @Override
+            public void onCloseCatalog() {
 
             }
 

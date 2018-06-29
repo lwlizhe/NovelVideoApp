@@ -1,5 +1,6 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView;
 
+import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
 /**
@@ -8,9 +9,9 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo
 
 public interface BaseCatalogView {
 
-   void onOpen();
+    void onOpen(NovelCatalogueEntity catalogueEntity);
 
-   void onClose();
+    void onClose();
 
     void onPageInfoChanged(NovelPageInfo pageInfo);
 }

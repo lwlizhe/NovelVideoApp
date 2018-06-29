@@ -162,23 +162,22 @@ public abstract class BaseNovelLoader implements IPageLoader {
         mMenuManager.addControlViewListener(listener);
     }
 
+
     @Override
     public void setTextSize(int size) {
 
-    }
-
-    @Override
-    public void setBg(Bitmap bgBitmap) {
-
-    }
-
-    @Override
-    public void setBg(int bgResourceId) {
+        mBitmapManager.setTextSize(size);
+//        mBitmapManager.drawCurrent();
+//        mTargetPageView.postInvalidate();
 
     }
 
     @Override
     public void setBgColor(int color) {
+
+        mBitmapManager.setBgColor(color);
+        mBitmapManager.drawCurrent();
+        mTargetPageView.postInvalidate();
 
     }
 
@@ -195,6 +194,7 @@ public abstract class BaseNovelLoader implements IPageLoader {
 
         mBitmapManager.setPageSize(w, h);
         mBitmapManager.drawCurrent();
+        mMenuManager.reset();
     }
 
     @Override
@@ -210,6 +210,16 @@ public abstract class BaseNovelLoader implements IPageLoader {
             mCenterRect = new RectF(mPageWidth / 5, mPageHeight / 3,
                     mPageWidth * 4 / 5, mPageHeight * 2 / 3);
             mBitmapManager.setTouchRect(mCenterRect);
+        }
+
+        // 如果已经打开了
+        if(mMenuManager.isControlViewOpen()||mMenuManager.isCatalogViewOpen()){
+            if(event.getAction()==MotionEvent.ACTION_UP){
+                mMenuManager.closeCatalog();
+                mMenuManager.hideControlView();
+            }
+
+            return;
         }
         switch (event.getAction()) {
 

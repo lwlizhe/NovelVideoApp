@@ -2,6 +2,7 @@ package com.lwlizhe.novelvideoapp.widget.novelMenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,13 +11,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.lwlizhe.basemodule.utils.SystemBarUtils;
+import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.BaseControlView;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
 /**
- * 一个简单的底部菜单栏
+ * 一个简单的底部菜单栏(这里就做了最简单的显示隐藏，不过你可以加个动画啥的)
  * Created by Administrator on 2018/6/26 0026.
  */
 
@@ -51,11 +53,11 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
     }
 
     private void init(Context mContext) {
-        this.mContext=mContext;
-        this.setVisibility(View.GONE);
+        this.mContext = mContext;
+
     }
 
-    public void setContent(View view){
+    public void setContent(View view) {
         this.addView(view);
     }
 
@@ -67,12 +69,14 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
 
         TextView tvwPreChapter = rootView.findViewById(R.id.read_tv_pre_chapter);
         TextView tvwNextChapter = rootView.findViewById(R.id.read_tv_next_chapter);
+        TextView tvwNextSetting = rootView.findViewById(R.id.read_tv_setting);
+        TextView tvwNightMode = rootView.findViewById(R.id.read_tv_night_mode);
 
 
         seekBar = rootView.findViewById(R.id.read_sb_chapter_progress);
 
         seekBar.setMax(maxPageCount);
-        seekBar.setProgress(currentPagePos+1);
+        seekBar.setProgress(currentPagePos + 1);
 
         tvwPreChapter.setOnClickListener(new OnClickListener() {
             @Override
@@ -85,6 +89,21 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
             @Override
             public void onClick(View v) {
                 mTargetPage.skipToNextChapter();
+            }
+        });
+
+        tvwNextSetting.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mTargetPage.setTextSize(UiUtils.sp2px(30));
+            }
+        });
+
+        tvwNightMode.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTargetPage.setBgColor(Color.GRAY);
             }
         });
 
@@ -113,7 +132,7 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
         SystemBarUtils.showUnStableStatusBar((Activity) mContext);
 //        SystemBarUtils.showUnStableNavBar((Activity) mContext);
 
-        mTargetPage=targetPage;
+        mTargetPage = targetPage;
     }
 
     @Override
@@ -122,22 +141,22 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
         SystemBarUtils.hideStableStatusBar((Activity) mContext);
 //        SystemBarUtils.hideStableNavBar((Activity) mContext);
 
-        mTargetPage=targetPage;
+        mTargetPage = targetPage;
     }
 
     @Override
     public void onPageInfoChanged(NovelPageInfo pageInfo) {
 
-        bookId=pageInfo.getBookId();
-        volumeId=pageInfo.getVolumeId();
-        chapterId=pageInfo.getChapterId();
-        currentPagePos=pageInfo.getCurPagePos();
+        bookId = pageInfo.getBookId();
+        volumeId = pageInfo.getVolumeId();
+        chapterId = pageInfo.getChapterId();
+        currentPagePos = pageInfo.getCurPagePos();
 
-        maxPageCount=pageInfo.getMaxPageCount();
+        maxPageCount = pageInfo.getMaxPageCount();
 
-        if(seekBar!=null){
+        if (seekBar != null) {
             seekBar.setMax(maxPageCount);
-            seekBar.setProgress(currentPagePos+1);
+            seekBar.setProgress(currentPagePos + 1);
         }
     }
 
