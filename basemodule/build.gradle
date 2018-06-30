@@ -57,6 +57,7 @@ dependencies {
     api (rootProject.ext.dependencies["glide"]){
         exclude group: "com.android.support"
     }
+    api rootProject.ext.dependencies["gilde-transformations"]
 
     api rootProject.ext.dependencies["greenDao"]
 

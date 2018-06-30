@@ -14,7 +14,6 @@ import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.lwlizhe.basemodule.imageloader.BaseImageLoaderStrategy;
-import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,7 +23,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 
 
 /**
@@ -44,8 +42,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if (ctx == null) throw new IllegalStateException("Context is required");
         if (config == null) throw new IllegalStateException("GlideImageConfig is required");
         if (TextUtils.isEmpty(config.getUrl())) throw new IllegalStateException("url is required");
-        if (config.getImageView() == null) throw new IllegalStateException("imageview is required");
-
+        if (config.getImageView()==null&& config.getTarget()== null) throw new IllegalStateException("imageview or target is required");
 
         RequestManager manager;
 
@@ -65,7 +62,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
                     .transition(withCrossFade());
         }
 
-        requestOptions=new RequestOptions().centerCrop();
+        requestOptions = new RequestOptions().centerCrop();
 
         switch (config.getCacheStrategy()) {//缓存策略
             case 0:
@@ -86,9 +83,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         }
 
         if (config.getTransformation() != null) {//glide用它来改变图形的形状
-            requestOptions=requestOptions.transform(config.getTransformation());
+            requestOptions = requestOptions.apply(config.getTransformation());
         }
-
 
         if (config.getPlaceholder() != 0)//设置占位符
             requestOptions.placeholder(config.getPlaceholder());
@@ -96,7 +92,11 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if (config.getErrorPic() != 0)//设置错误的图片
             requestOptions.error(config.getErrorPic());
 
-        requestBuilder.apply(requestOptions).into(config.getImageView());
+        if (config.getTarget() != null) {
+            requestBuilder.apply(requestOptions).into(config.getTarget());
+        } else {
+            requestBuilder.apply(requestOptions).into(config.getImageView());
+        }
     }
 
     @Override
@@ -110,9 +110,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
             }
         }
 
-        if (config.getTargets() != null && config.getTargets().length > 0) {//取消在执行的任务并且释放资源
-            for (Target target : config.getTargets())
-                Glide.with(ctx).clear(target);
+        if (config.getTarget() != null ) {//取消在执行的任务并且释放资源
+            Glide.with(ctx).clear(config.getTarget());
         }
 
 

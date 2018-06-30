@@ -37,6 +37,7 @@ ext {
             "butterknife-apt"           : "com.jakewharton:butterknife-compiler:${android["butterKnifeSDKVersion"]}",
             "glide"                     : "com.github.bumptech.glide:glide:4.7.1",
             "glide-compiler"            : "com.github.bumptech.glide:compiler:4.7.1",
+            "gilde-transformations"     : "jp.wasabeef:glide-transformations:3.3.0",
             "androideventbus"           : "org.simple:androideventbus:1.0.5.1",
             //RX
             "rxandroid"                 : "io.reactivex.rxjava2:rxandroid:2.0.1",

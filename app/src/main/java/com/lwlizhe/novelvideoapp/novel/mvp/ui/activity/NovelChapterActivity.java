@@ -1,6 +1,11 @@
 package com.lwlizhe.novelvideoapp.novel.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,10 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.BaseFragment;
 import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
@@ -20,6 +30,7 @@ import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageConfig;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.basemodule.utils.CustomDateUtils;
+import com.lwlizhe.basemodule.utils.FastBlur;
 import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.novelvideoapp.GlobeConstance;
 import com.lwlizhe.novelvideoapp.R;
@@ -39,6 +50,8 @@ import com.orhanobut.logger.Logger;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_ID;
 import static com.lwlizhe.novelvideoapp.novel.mvp.ui.activity.NovelReadActivity.NOVEL_CHAPTER_LIST;
@@ -60,6 +73,8 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
     private TextView mTvwHitCount;
     private TextView mTvwLastUpdateTime;
     private TextView mTvwQuickRead;
+
+    private RelativeLayout mRltHeader;
 
     private ImageView mIvwAvatar;
 
@@ -88,6 +103,8 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
 
     @Override
     protected void initView() {
+
+        mRltHeader = findViewById(R.id.llt_head_layout);
 
         mTvwQuickRead=findViewById(R.id.tvw_quickRead);
 
@@ -123,8 +140,21 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
         mImageLoader.loadImage(this,GlideImageConfig
                 .builder()
                 .url(data.getCover())
-                .imageView(mIvwAvatar)
                 .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                .imageView(mIvwAvatar)
+                .build());
+
+        mImageLoader.loadImage(this,GlideImageConfig
+                .builder()
+                .url(data.getCover())
+                .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                .transformation(RequestOptions.bitmapTransform(new BlurTransformation(10)))
+                .target(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        mRltHeader.setBackgroundDrawable(resource);
+                    }
+                })
                 .build());
 
         mIvwAvatar.setOnClickListener(new View.OnClickListener() {

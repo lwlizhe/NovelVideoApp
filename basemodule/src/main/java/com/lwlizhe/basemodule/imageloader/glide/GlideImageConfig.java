@@ -1,8 +1,11 @@
 package com.lwlizhe.basemodule.imageloader.glide;
 
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.lwlizhe.basemodule.imageloader.ImageConfig;
 
@@ -16,13 +19,13 @@ import com.lwlizhe.basemodule.imageloader.ImageConfig;
  */
 public class GlideImageConfig extends ImageConfig {
     private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
-    private BitmapTransformation transformation;//glide用它来改变图形的形状
-    private Target[] targets;
+    private RequestOptions transformation;//glide用它来改变图形的形状
+    private Target<Drawable> target;
     private ImageView[] imageViews;
     private boolean isClearMemory;//清理内存缓存
     private boolean isClearDiskCache;//清理本地缓存
 
-    private GlideImageConfig(Buidler builder) {
+    private GlideImageConfig(Builder builder) {
         this.url = builder.url;
         this.refererUrl = builder.refererUrl;
         this.imageView = builder.imageView;
@@ -30,7 +33,7 @@ public class GlideImageConfig extends ImageConfig {
         this.errorPic = builder.errorPic;
         this.cacheStrategy = builder.cacheStrategy;
         this.transformation = builder.transformation;
-        this.targets = builder.targets;
+        this.target = builder.target;
         this.imageViews = builder.imageViews;
         this.isClearMemory = builder.isClearMemory;
         this.isClearDiskCache = builder.isClearDiskCache;
@@ -40,12 +43,12 @@ public class GlideImageConfig extends ImageConfig {
         return cacheStrategy;
     }
 
-    public BitmapTransformation getTransformation() {
+    public RequestOptions getTransformation() {
         return transformation;
     }
 
-    public Target[] getTargets() {
-        return targets;
+    public Target getTarget() {
+        return target;
     }
 
     public ImageView[] getImageViews() {
@@ -60,79 +63,79 @@ public class GlideImageConfig extends ImageConfig {
         return isClearDiskCache;
     }
 
-    public static Buidler builder() {
-        return new Buidler();
+    public static Builder builder() {
+        return new Builder();
     }
 
 
-    public static final class Buidler {
+    public static final class Builder {
         private String url;
         private ImageView imageView;
         private String refererUrl;
         private int placeholder;
         private int errorPic;
         private int cacheStrategy;//0对应DiskCacheStrategy.all,1对应DiskCacheStrategy.NONE,2对应DiskCacheStrategy.SOURCE,3对应DiskCacheStrategy.RESULT
-        private BitmapTransformation transformation;//glide用它来改变图形的形状
-        private Target[] targets;
+        private RequestOptions transformation;//glide用它来改变图形的形状
+        private Target<Drawable> target;
         private ImageView[] imageViews;
         private boolean isClearMemory;//清理内存缓存
         private boolean isClearDiskCache;//清理本地缓存
 
-        private Buidler() {
+        private Builder() {
         }
 
-        public Buidler url(String url) {
+        public Builder url(String url) {
             this.url = url;
             return this;
         }
 
-        public Buidler refererUrl(String url) {
+        public Builder refererUrl(String url) {
             this.refererUrl = url;
 
             return this;
         }
 
-        public Buidler placeholder(int placeholder) {
+        public Builder placeholder(int placeholder) {
             this.placeholder = placeholder;
             return this;
         }
 
-        public Buidler errorPic(int errorPic) {
+        public Builder errorPic(int errorPic) {
             this.errorPic = errorPic;
             return this;
         }
 
-        public Buidler imageView(ImageView imageView) {
+        public Builder imageView(ImageView imageView) {
             this.imageView = imageView;
             return this;
         }
 
-        public Buidler cacheStrategy(int cacheStrategy) {
+        public Builder cacheStrategy(int cacheStrategy) {
             this.cacheStrategy = cacheStrategy;
             return this;
         }
 
-        public Buidler transformation(BitmapTransformation transformation) {
+        public Builder transformation(RequestOptions transformation) {
             this.transformation = transformation;
             return this;
         }
 
-        public Buidler targets(Target... targets) {
-            this.targets = targets;
+        public Builder target(Target<Drawable> target) {
+            this.target = target;
             return this;
         }
 
-        public Buidler imageViews(ImageView... imageViews) {
+        public Builder imageViews(ImageView... imageViews) {
             this.imageViews = imageViews;
             return this;
         }
 
-        public Buidler isClearMemory(boolean isClearMemory) {
+        public Builder isClearMemory(boolean isClearMemory) {
             this.isClearMemory = isClearMemory;
             return this;
         }
 
-        public Buidler isClearDiskCache(boolean isClearDiskCache) {
+        public Builder isClearDiskCache(boolean isClearDiskCache) {
             this.isClearDiskCache = isClearDiskCache;
             return this;
         }
