@@ -205,6 +205,12 @@ public class NovelContentManager {
                         @Override
                         public void onSuccess(List<NovelPageEntity> pages) {
                             mCurrentChapterPageList = pages;
+
+                            // 用于修正改变字体之后，当前页码越界
+                            if(mCurrentChapterPageList.size()-1<=mCurrentPagePos){
+                                mCurrentPagePos=mCurrentChapterPageList.size()-1;
+                            }
+
                             mStateObserver.setNovelPageState(STATE_LOADING_FINISH);
                         }
 
@@ -712,6 +718,7 @@ public class NovelContentManager {
         result.setBookId(mBookId);
         result.setVolumeId(mCurVolumeId);
         result.setChapterId(mCurChapterId);
+        result.setCurTextSize(mContentTextSize);
         result.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
         mStateObserver.setNovelPageState(NovelPageStateObserver.STATE_NORMAL);
@@ -1048,6 +1055,8 @@ public class NovelContentManager {
         targetPageEntity.setBookId(mBookId);
         targetPageEntity.setVolumeId(volumeEntity.getVolumeId());
         targetPageEntity.setChapterId(volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterId());
+        targetPageEntity.setCurTextSize(mContentTextSize);
+
         targetPageEntity.setTitleName(volumeEntity.getVolumeName() + " " + volumeEntity.getChapterList().get(mCurrentChapterPos).getChapterName());
 
         return targetPageEntity;

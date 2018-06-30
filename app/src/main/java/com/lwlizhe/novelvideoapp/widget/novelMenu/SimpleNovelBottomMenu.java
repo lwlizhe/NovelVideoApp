@@ -3,10 +3,15 @@ package com.lwlizhe.novelvideoapp.widget.novelMenu;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,12 +22,14 @@ import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelPage;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.controlView.BaseControlView;
 import com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity.NovelPageInfo;
 
+import java.util.Arrays;
+
 /**
  * 一个简单的底部菜单栏(这里就做了最简单的显示隐藏，不过你可以加个动画啥的)
  * Created by Administrator on 2018/6/26 0026.
  */
 
-public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlView {
+public class SimpleNovelBottomMenu extends RelativeLayout implements BaseControlView {
 
     private Context mContext;
 
@@ -36,6 +43,10 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
     private int maxPageCount;
 
     private SeekBar seekBar;
+    private LinearLayout mMenuLayout;
+
+    private TextView mTvwTextSize;
+
 
     public SimpleNovelBottomMenu(Context context) {
         super(context);
@@ -72,6 +83,12 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
         TextView tvwNextSetting = rootView.findViewById(R.id.read_tv_setting);
         TextView tvwNightMode = rootView.findViewById(R.id.read_tv_night_mode);
 
+        TextView tvwFontPlus = rootView.findViewById(R.id.read_setting_tv_font_plus);
+        TextView tvwFontMinus = rootView.findViewById(R.id.read_setting_tv_font_minus);
+
+        mTvwTextSize = rootView.findViewById(R.id.read_setting_tv_font);
+
+        mMenuLayout = rootView.findViewById(R.id.read_setting_ll_menu);
 
         seekBar = rootView.findViewById(R.id.read_sb_chapter_progress);
 
@@ -95,8 +112,7 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
         tvwNextSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mTargetPage.setTextSize(UiUtils.sp2px(30));
+                mMenuLayout.setVisibility(mMenuLayout.getVisibility()==VISIBLE?GONE:VISIBLE);
             }
         });
 
@@ -104,6 +120,20 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
             @Override
             public void onClick(View v) {
                 mTargetPage.setBgColor(Color.GRAY);
+            }
+        });
+
+        tvwFontPlus.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTargetPage.setTextSize(UiUtils.sp2px(Integer.parseInt(mTvwTextSize.getText().toString())+1));
+            }
+        });
+
+        tvwFontMinus.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTargetPage.setTextSize(UiUtils.sp2px(Integer.parseInt(mTvwTextSize.getText().toString())-1));
             }
         });
 
@@ -129,6 +159,7 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
     @Override
     public void onOpen(NovelPage targetPage) {
         this.setVisibility(View.VISIBLE);
+        mMenuLayout.setVisibility(GONE);
         SystemBarUtils.showUnStableStatusBar((Activity) mContext);
 //        SystemBarUtils.showUnStableNavBar((Activity) mContext);
 
@@ -158,6 +189,8 @@ public class SimpleNovelBottomMenu extends FrameLayout implements BaseControlVie
             seekBar.setMax(maxPageCount);
             seekBar.setProgress(currentPagePos + 1);
         }
+        int textSize  = (int) UiUtils.px2sp(pageInfo.getPageTextSize());
+        mTvwTextSize.setText(String.valueOf(textSize));
     }
 
 }

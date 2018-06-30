@@ -19,7 +19,17 @@ public class NovelPageEntity {
     private int currentPagePos;
     private int maxPageCount;
 
+    private int mCurTextSize;
+
     List<String> lines;
+
+    public int getCurTextSize() {
+        return mCurTextSize;
+    }
+
+    public void setCurTextSize(int mCurTextSize) {
+        this.mCurTextSize = mCurTextSize;
+    }
 
     public long getBookId() {
         return bookId;

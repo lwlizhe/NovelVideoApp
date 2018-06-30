@@ -4,12 +4,14 @@ package com.lwlizhe.novelvideoapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Administrator on 2018/5/3 0003.
  */
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity{
 
 
     @Override
@@ -17,8 +19,8 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
     }
-
-
 
 }

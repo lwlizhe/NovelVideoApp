@@ -257,20 +257,21 @@ public class NovelPageBitmapManager {
         mBgColr=bgColor;
     }
     /**
-     * 在这里打算做的一个操作是根据原来的文字大小，等比缩放其他所有大小，包括间距
+     * 修改文字大小
      * @param size 文字大小，单位sp
      */
     public void setTextSize(int size){
-        double ratio = (double) size/(double) mContentTextSize;
+//        double ratio = (double) size/(double) mContentTextSize;
 
         mContentTextSize=size;
-        mTitleTextSize= (int) (mTitleTextSize*ratio);
-        mPageFooterTextSize= (int) (mPageFooterTextSize*ratio);
+//        mTitleTextSize= (int) (mTitleTextSize*ratio);
+//        mPageFooterTextSize= (int) (mPageFooterTextSize*ratio);
+//
+//        mPageModuleMargin= (int) (mPageModuleMargin*ratio);
+//        mParagraphMargin= (int) (mParagraphMargin*ratio);
 
-        mPageModuleMargin= (int) (mPageModuleMargin*ratio);
-        mParagraphMargin= (int) (mParagraphMargin*ratio);
-
-        initPaint();
+        mContentManager.setContentTextSize(mContentTextSize);
+//        mContentManager.setParagraphMargin(mParagraphMargin);
 
         mContentManager.refreshCurrent();
 

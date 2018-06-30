@@ -61,7 +61,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <!--底部页面-->
+
+            <!--底部菜单栏-->
             <LinearLayout
                 android:id="@+id/read_ll_bottom_menu"
                 android:layout_width="match_parent"
@@ -158,9 +159,19 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!--底部设置页面-->
+            <include
+                android:visibility="gone"
+                android:layout_above="@+id/read_ll_bottom_menu"
+                layout="@layout/layout_read_setting"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            </include>
+
         </com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu>
 
         <com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelCatalog
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:layout_margin="30dp"
             android:layout_width="wrap_content"

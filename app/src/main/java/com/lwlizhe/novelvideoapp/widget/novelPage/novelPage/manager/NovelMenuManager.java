@@ -28,7 +28,7 @@ public class NovelMenuManager {
     private long tempVolumeId = 0;
     private long tempChapterId = 0;
     private int tempPagePos = 0;
-    private int tempMaxPageCount = 0;
+    private int tempTextSize = 0;
 
 
     private NovelMenuManager(Context mContext) {
@@ -53,12 +53,12 @@ public class NovelMenuManager {
     public void notifyPageChanged(NovelPageEntity currentPage) {
 
         if (mControlViewListeners != null && mControlViewListeners.size() != 0) {
-            if (currentPage != null && (currentPage.getVolumeId() != tempVolumeId || currentPage.getChapterId() != tempChapterId || currentPage.getCurrentPagePos() != tempPagePos||currentPage.getMaxPageCount() != tempMaxPageCount)) {
+            if (currentPage != null && (currentPage.getVolumeId() != tempVolumeId || currentPage.getChapterId() != tempChapterId || currentPage.getCurrentPagePos() != tempPagePos||currentPage.getCurTextSize() != tempTextSize)) {
 
                 tempVolumeId = currentPage.getVolumeId();
                 tempChapterId = currentPage.getChapterId();
                 tempPagePos = currentPage.getCurrentPagePos();
-                tempMaxPageCount=currentPage.getMaxPageCount();
+                tempTextSize=currentPage.getMaxPageCount();
 
                 NovelPageInfo pageInfo = new NovelPageInfo();
 
@@ -66,6 +66,7 @@ public class NovelMenuManager {
                 pageInfo.setVolumeId(tempVolumeId);
                 pageInfo.setChapterId(tempChapterId);
                 pageInfo.setCurPagePos(tempPagePos);
+                pageInfo.setPageTextSize(currentPage.getCurTextSize());
                 pageInfo.setMaxPageCount(currentPage.getMaxPageCount());
 
                 for (NovelControlViewStateChangedListener mControlViewListener : mControlViewListeners) {

@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu
-            android:elevation="1dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!--底部页面-->
-            <TextView
-                android:text="dfsfdsfsdfsdfdsf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-        </com.lwlizhe.novelvideoapp.widget.novelMenu.SimpleNovelBottomMenu>
-
-    </com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.NovelView>
 
 </LinearLayout>
