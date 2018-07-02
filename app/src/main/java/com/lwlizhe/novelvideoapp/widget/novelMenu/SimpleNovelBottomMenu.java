@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -154,6 +156,25 @@ public class SimpleNovelBottomMenu extends RelativeLayout implements BaseControl
             }
         });
 
+        Drawable[] drawables = {
+                getDrawable(R.color.nb_read_bg_1)
+                , getDrawable(R.color.nb_read_bg_2)
+                , getDrawable(R.color.nb_read_bg_3)
+                , getDrawable(R.color.nb_read_bg_4)
+                , getDrawable(R.color.nb_read_bg_5)};
+
+
+//        mAdapter = new SimplePageBgAdapter(Arrays.asList(drawables));
+//
+//        RecyclerView catalog = findViewById(R.id.rv_catalog);
+//        catalog.setLayoutManager(new LinearLayoutManager(getContext()));
+//        catalog.setAdapter(mAdapter);
+
+    }
+
+
+    private Drawable getDrawable(int drawRes) {
+        return ContextCompat.getDrawable(getContext(), drawRes);
     }
 
     @Override

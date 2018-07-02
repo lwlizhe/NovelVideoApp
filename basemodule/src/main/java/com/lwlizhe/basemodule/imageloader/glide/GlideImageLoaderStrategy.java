@@ -92,6 +92,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if (config.getErrorPic() != 0)//设置错误的图片
             requestOptions.error(config.getErrorPic());
 
+        if(config.isCenterCrop())
+            requestOptions.centerCrop();
+
         if (config.getTarget() != null) {
             requestBuilder.apply(requestOptions).into(config.getTarget());
         } else {
@@ -122,7 +125,6 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
                         @Override
                         public void accept(Integer integer) throws Exception {
                             Glide.get(ctx).clearDiskCache();
-
                         }
                     });
         }

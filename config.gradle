@@ -86,7 +86,11 @@ ext {
             "DanmakuFlameMaster-x86"    : "com.github.ctiao:ndkbitmap-x86:0.9.16",
 
             //数据库
-            "greenDao"                  :'org.greenrobot:greendao:3.2.2'
+            "greenDao"                  :'org.greenrobot:greendao:3.2.2',
+
+            //Jsoup
+            "jsoup"                     :'org.jsoup:jsoup:1.11.3',
+            "jsoup-annotations"         :'com.github.fcannizzaro:jsoup-annotations:1.0.3'
 
     ]
 

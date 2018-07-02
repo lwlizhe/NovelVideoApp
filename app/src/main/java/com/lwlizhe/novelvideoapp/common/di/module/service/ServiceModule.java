@@ -3,7 +3,7 @@ package com.lwlizhe.novelvideoapp.common.di.module.service;
 
 
 import com.lwlizhe.novelvideoapp.novel.api.NovelNetService;
-import com.lwlizhe.novelvideoapp.video.api.BilibiliNetService;
+
 
 import javax.inject.Singleton;
 
@@ -29,10 +29,10 @@ public class ServiceModule {
         return retrofit.create(NovelNetService.class);
     }
 
-    @Singleton
-    @Provides
-    BilibiliNetService provideBilibiliNetService(Retrofit retrofit){
-        return retrofit.create(BilibiliNetService.class);
-    }
+//    @Singleton
+//    @Provides
+//    BilibiliNetService provideBilibiliNetService(Retrofit retrofit){
+//        return retrofit.create(BilibiliNetService.class);
+//    }
 
 }

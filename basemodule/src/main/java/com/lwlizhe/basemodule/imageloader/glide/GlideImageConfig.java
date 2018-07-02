@@ -24,6 +24,7 @@ public class GlideImageConfig extends ImageConfig {
     private ImageView[] imageViews;
     private boolean isClearMemory;//清理内存缓存
     private boolean isClearDiskCache;//清理本地缓存
+    private boolean isCenterCrop;
 
     private GlideImageConfig(Builder builder) {
         this.url = builder.url;
@@ -37,6 +38,7 @@ public class GlideImageConfig extends ImageConfig {
         this.imageViews = builder.imageViews;
         this.isClearMemory = builder.isClearMemory;
         this.isClearDiskCache = builder.isClearDiskCache;
+        this.isCenterCrop=builder.isCenterCrop;
     }
 
     public int getCacheStrategy() {
@@ -63,6 +65,10 @@ public class GlideImageConfig extends ImageConfig {
         return isClearDiskCache;
     }
 
+    public boolean isCenterCrop() {
+        return isCenterCrop;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -80,6 +86,7 @@ public class GlideImageConfig extends ImageConfig {
         private ImageView[] imageViews;
         private boolean isClearMemory;//清理内存缓存
         private boolean isClearDiskCache;//清理本地缓存
+        private boolean isCenterCrop;//是否采用centerCrop
 
         private Builder() {
         }
@@ -140,6 +147,10 @@ public class GlideImageConfig extends ImageConfig {
             return this;
         }
 
+        public Builder centerCrop() {
+            this.isCenterCrop = true;
+            return this;
+        }
 
         public GlideImageConfig build() {
             return new GlideImageConfig(this);

@@ -1,6 +1,5 @@
 package com.lwlizhe.novelvideoapp.widget.novelPage.novelPage.entity;
 
-import com.lwlizhe.novelvideoapp.video.entity.video.VideoCommentInfo;
 
 import java.util.List;
 

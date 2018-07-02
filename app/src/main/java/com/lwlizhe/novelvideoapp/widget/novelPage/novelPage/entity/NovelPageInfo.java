@@ -11,6 +11,7 @@ public class NovelPageInfo {
     private long chapterId;
 
     private int pageTextSize;
+    private int pageBgColor;
 
     private int curPagePos;
     private int maxPageCount;
@@ -71,5 +72,13 @@ public class NovelPageInfo {
 
     public void setPageState(int pageState) {
         this.pageState = pageState;
+    }
+
+    public int getPageBgColor() {
+        return pageBgColor;
+    }
+
+    public void setPageBgColor(int pageBgColor) {
+        this.pageBgColor = pageBgColor;
     }
 }
