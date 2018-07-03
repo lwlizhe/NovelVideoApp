@@ -97,7 +97,7 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 
     public void initData(boolean shouldRefresh) {
 
-        mRootView.startRefresh();
+        mRootView.showLoading();
 
         mModel.getNovelReCommend(shouldRefresh)
                 .subscribeOn(Schedulers.io())
@@ -135,13 +135,13 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 
                     @Override
                     public void onFailed(Throwable t) {
-                        mRootView.endRefresh();
+                        mRootView.hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
 
-                        mRootView.endRefresh();
+                        mRootView.hideLoading();
 
                     }
                 });

@@ -1,4 +1,4 @@
-package com.lwlizhe.novelvideoapp.video.entity.jsoup;
+package com.lwlizhe.novelvideoapp.video.api.entity.jsoup;
 
 import com.fcannizzaro.jsoup.annotations.interfaces.Attr;
 import com.fcannizzaro.jsoup.annotations.interfaces.Items;

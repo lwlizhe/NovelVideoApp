@@ -13,7 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--<intent-filter>-->
+    <!--<action android:name="android.intent.action.MAIN" />-->
 
+    <!--<category android:name="android.intent.category.LAUNCHER" />-->
+    <!--</intent-filter>-->
     <application
         android:name=".AppApplication"
         android:allowBackup="true"
@@ -21,8 +25,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".novel.mvp.ui.activity.NovelMainActivity"
+            android:name=".main.mvp.ui.activity.AppMainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,13 +35,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity2">
             <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+
         <activity
             android:name=".novel.mvp.ui.activity.NovelChapterActivity"
             android:screenOrientation="portrait" />

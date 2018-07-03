@@ -2,11 +2,7 @@ package com.lwlizhe.novelvideoapp.novel.di.module;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelReadContract;
-import com.lwlizhe.novelvideoapp.novel.mvp.model.activity.NovelMainModel;
 import com.lwlizhe.novelvideoapp.novel.mvp.model.activity.NovelReadModel;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

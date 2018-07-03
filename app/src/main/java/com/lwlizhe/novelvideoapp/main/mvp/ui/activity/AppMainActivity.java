@@ -1,4 +1,4 @@
-package com.lwlizhe.novelvideoapp.novel.mvp.ui.activity;
+package com.lwlizhe.novelvideoapp.main.mvp.ui.activity;
 
 
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,10 +14,11 @@ import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonActivity;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
-import com.lwlizhe.novelvideoapp.novel.di.component.DaggerNovelMainComponent;
-import com.lwlizhe.novelvideoapp.novel.di.module.NovelMainModule;
-import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelMainContract;
-import com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity.NovelMainPresenter;
+import com.lwlizhe.novelvideoapp.main.di.component.DaggerAppMainComponent;
+import com.lwlizhe.novelvideoapp.main.di.module.AppMainModule;
+
+import com.lwlizhe.novelvideoapp.main.mvp.contract.AppMainContract;
+import com.lwlizhe.novelvideoapp.main.mvp.presenter.activity.AppMainPresenter;
 
 
 
@@ -27,7 +27,7 @@ import com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity.NovelMainPresenter
  * 邮箱：624456662@qq.com
  */
 
-public class NovelMainActivity extends CommonActivity<NovelMainPresenter> implements NovelMainContract.View {
+public class AppMainActivity extends CommonActivity<AppMainPresenter> implements AppMainContract.View {
 
 
     ViewPager mViewPager;
@@ -45,18 +45,17 @@ public class NovelMainActivity extends CommonActivity<NovelMainPresenter> implem
     @Override
     public void setFragmentPagerAdapter(BaseFragmentPagerAdapter adapter) {
         mViewPager.setAdapter(adapter);
-
     }
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerNovelMainComponent.builder().appComponent(appComponent).novelMainModule(new NovelMainModule(this)).build().inject(this);
-    }
+        DaggerAppMainComponent.builder().appComponent(appComponent).appMainModule(new AppMainModule(this)).build().inject(this);
 
+    }
 
     @Override
     protected View initRootView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_novel_main, null, false);
+        return LayoutInflater.from(getContext()).inflate(R.layout.activity_novel_main, null, false);
     }
 
     @Override
@@ -68,7 +67,6 @@ public class NovelMainActivity extends CommonActivity<NovelMainPresenter> implem
 
     @Override
     protected void initData() {
-//        mPresenter.requestCommend(true);
         mPresenter.setEventBus(mEventBus);
     }
 
@@ -99,7 +97,7 @@ public class NovelMainActivity extends CommonActivity<NovelMainPresenter> implem
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(NovelMainActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppMainActivity.this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -114,11 +112,11 @@ public class NovelMainActivity extends CommonActivity<NovelMainPresenter> implem
 
     @Override
     public AppCompatActivity getContext() {
-        return NovelMainActivity.this;
+        return this;
     }
 
     public void onViewClicked() {
-//        Intent intent=new Intent(NovelMainActivity.this, BilibiliMainActivity.class);
+//        Intent intent=new Intent(AppMainActivity.this, BilibiliMainActivity.class);
 //        launchActivity(intent);
     }
 

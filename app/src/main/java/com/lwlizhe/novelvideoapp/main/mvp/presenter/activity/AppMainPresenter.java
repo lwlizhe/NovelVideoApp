@@ -1,4 +1,4 @@
-package com.lwlizhe.novelvideoapp.novel.mvp.presenter.activity;
+package com.lwlizhe.novelvideoapp.main.mvp.presenter.activity;
 
 import android.app.Application;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
-import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelMainContract;
+import com.lwlizhe.novelvideoapp.main.mvp.contract.AppMainContract;
 import com.lwlizhe.novelvideoapp.novel.mvp.ui.adapter.NovelMainAdapter;
 import com.lwlizhe.novelvideoapp.novel.mvp.ui.fragment.NovelRecommendFragment;
+import com.lwlizhe.novelvideoapp.video.mvp.ui.fragment.VideoMainFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import javax.inject.Inject;
  * 邮箱：624456662@qq.com
  */
 
-public class NovelMainPresenter extends BasePresenter<NovelMainContract.Model, NovelMainContract.View> {
+public class AppMainPresenter extends BasePresenter<AppMainContract.Model, AppMainContract.View> {
 
 
     private List<String> mPagerTitles=new ArrayList<>();
@@ -37,7 +38,7 @@ public class NovelMainPresenter extends BasePresenter<NovelMainContract.Model, N
     private AppCompatActivity mActivity;
 
     @Inject
-    public NovelMainPresenter(NovelMainContract.Model model, NovelMainContract.View view, ActivityManager activityManager, Application application) {
+    public AppMainPresenter(AppMainContract.Model model, AppMainContract.View view, ActivityManager activityManager, Application application) {
         super(model, view);
         this.mApplication = application;
         this.mActivityManager = activityManager;
@@ -50,11 +51,11 @@ public class NovelMainPresenter extends BasePresenter<NovelMainContract.Model, N
 
     private void initData() {
         mFragments.add(new NovelRecommendFragment());
-        mFragments.add(new NovelRecommendFragment());
+        mFragments.add(new VideoMainFragment());
         mFragments.add(new NovelRecommendFragment());
 
-        mPagerTitles.add("推荐");
-        mPagerTitles.add("最新");
+        mPagerTitles.add("小说");
+        mPagerTitles.add("番剧");
         mPagerTitles.add("分类");
     }
 

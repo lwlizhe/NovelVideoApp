@@ -47,8 +47,7 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
     }
 
     /**
-     * 是否使用eventBus,默认为使用(true)，
-     *
+     * 设置RxEventBus
      * @return
      */
     public void setEventBus(RxEventBus mBus) {

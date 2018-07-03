@@ -1,11 +1,11 @@
-package com.lwlizhe.novelvideoapp.novel.mvp.model.activity;
+package com.lwlizhe.novelvideoapp.main.mvp.model.activity;
 
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.novelvideoapp.common.cache.manager.CacheManager;
 import com.lwlizhe.novelvideoapp.common.service.manager.ServiceManager;
-import com.lwlizhe.novelvideoapp.novel.mvp.contract.activity.NovelMainContract;
+import com.lwlizhe.novelvideoapp.main.mvp.contract.AppMainContract;
 
 import javax.inject.Inject;
 
@@ -17,9 +17,9 @@ import javax.inject.Inject;
  * 邮箱：624456662@qq.com
  */
 @ActivityScope
-public class NovelMainModel extends BaseModel<ServiceManager,CacheManager> implements NovelMainContract.Model {
+public class AppMainModel extends BaseModel<ServiceManager,CacheManager> implements AppMainContract.Model {
     @Inject
-    public NovelMainModel(ServiceManager serviceManager,CacheManager cacheManager) {
+    public AppMainModel(ServiceManager serviceManager, CacheManager cacheManager) {
         super(serviceManager,cacheManager);
     }
 

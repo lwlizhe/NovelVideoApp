@@ -1,4 +1,4 @@
-package com.lwlizhe.novelvideoapp.novel.mvp.contract.activity;
+package com.lwlizhe.novelvideoapp.main.mvp.contract;
 
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,7 +12,7 @@ import com.lwlizhe.basemodule.mvp.IModel;
  * 邮箱：624456662@qq.com
  */
 
-public interface NovelMainContract {
+public interface AppMainContract {
 
     //对于经常使用的关于UI的方法可以定义到BaseView中,如显示隐藏进度条,和显示文字消息
     interface View extends BaseView {

@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
+import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonFragment;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
@@ -69,31 +71,6 @@ public class NovelRecommendFragment extends CommonFragment<NovelRecommendPresent
     }
 
     @Override
-    public void startLoadMore() {
-
-
-    }
-
-    @Override
-    public void endLoadMore() {
-
-    }
-
-    @Override
-    public void startRefresh() {
-
-        mRefreshLayout.setRefreshing(true);
-
-    }
-
-    @Override
-    public void endRefresh() {
-
-        mRefreshLayout.setRefreshing(false);
-
-    }
-
-    @Override
     public Context getContext() {
         return getActivity();
     }
@@ -109,12 +86,12 @@ public class NovelRecommendFragment extends CommonFragment<NovelRecommendPresent
 
     @Override
     public void showLoading() {
-
+        mRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -127,7 +104,7 @@ public class NovelRecommendFragment extends CommonFragment<NovelRecommendPresent
     @Override
     public void launchActivity(Intent intent) {
 
-        getContext().startActivity(intent);
+        mEventBus.post(new ActivityMessage<>(ActivityManager.ActivityEventType.START_ACTIVITY_INTENT,intent));
 
     }
 

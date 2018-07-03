@@ -1,4 +1,4 @@
-package com.lwlizhe.novelvideoapp.video.entity.jsoup;
+package com.lwlizhe.novelvideoapp.video.api.entity.jsoup;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -78,6 +78,8 @@ public class ScheduleWeek implements Parcelable {
     };
     @Text("a")
     private String name;
+    @Attr(query = "span",attr = "class")
+    private String typeName;
     @Text("span a")
     private String episode;
     @Attr(query = "a", attr = "href")
@@ -90,6 +92,7 @@ public class ScheduleWeek implements Parcelable {
 
     protected ScheduleItem(Parcel in) {
       this.name = in.readString();
+      this.typeName=in.readString();
       this.episode = in.readString();
       this.animeLink = in.readString();
       this.episodeLink = in.readString();
@@ -101,6 +104,14 @@ public class ScheduleWeek implements Parcelable {
 
     public void setName(String name) {
       this.name = name;
+    }
+
+    public String getTypeName() {
+      return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+      this.typeName = typeName;
     }
 
     public String getEpisode() {
@@ -135,6 +146,7 @@ public class ScheduleWeek implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
       dest.writeString(this.name);
+      dest.writeString(this.typeName);
       dest.writeString(this.episode);
       dest.writeString(this.animeLink);
       dest.writeString(this.episodeLink);
@@ -144,6 +156,7 @@ public class ScheduleWeek implements Parcelable {
     public String toString() {
       return "ScheduleItem{" +
           "name='" + name + '\'' +
+          "typeName='" + typeName + '\'' +
           ", episode='" + episode + '\'' +
           ", animeLink='" + animeLink + '\'' +
           ", episodeLink='" + episodeLink + '\'' +
