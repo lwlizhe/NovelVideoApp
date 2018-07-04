@@ -2,12 +2,14 @@ package com.lwlizhe.novelvideoapp.video.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.lwlizhe.basemodule.base.ActivityManager;
+import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonFragment;
@@ -47,8 +49,10 @@ public class VideoMainFragment extends CommonFragment<VideoMainPresenter> implem
     @Override
     protected void initView() {
         mSwipeRefreshLayout = mRootView.findViewById(R.id.srl_refresh_layout);
+        mVideoMainList = mRootView.findViewById(R.id.rvw_main);
 
-        mVideoMainList=mRootView.findViewById(R.id.rcv_recommend_list);
+
+        mVideoMainList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_orange_light,
@@ -84,5 +88,10 @@ public class VideoMainFragment extends CommonFragment<VideoMainPresenter> implem
     @Override
     public void onRefresh() {
         mPresenter.getData();
+    }
+
+    @Override
+    public void setRecyclerAdapter(RecyclerView.Adapter adapter) {
+        mVideoMainList.setAdapter(adapter);
     }
 }

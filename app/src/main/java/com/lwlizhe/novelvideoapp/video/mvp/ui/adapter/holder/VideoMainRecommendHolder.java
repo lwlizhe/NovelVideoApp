@@ -8,9 +8,9 @@ import com.lwlizhe.basemodule.base.adapter.BaseHolder;
  * Created by Administrator on 2018/7/3 0003.
  */
 
-public class VideoMainHolder extends BaseHolder {
+public class VideoMainRecommendHolder extends BaseHolder {
 
-    public VideoMainHolder(View itemView) {
+    public VideoMainRecommendHolder(View itemView) {
         super(itemView);
     }
 
