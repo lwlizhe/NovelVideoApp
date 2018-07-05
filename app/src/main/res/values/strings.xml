@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">NovelVideoApp</string>
 
     <!--novel-->
@@ -153,289 +153,45 @@
     <string name="about_tag">标签相关</string>
     <string name="tag_edit">编辑</string>
 
-    <string name="test">
 
-        百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
+    <string name="unexpected_intent_action">Unexpected intent action: <xliff:g id="action">%1$s</xliff:g></string>
 
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
+    <string name="error_generic">Playback failed</string>
 
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭/n
+    <string name="error_unrecognized_abr_algorithm">Unrecognized ABR algorithm</string>
 
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。/n
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
+    <string name="error_drm_not_supported">Protected content not supported on API levels below 18</string>
 
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个
-E起奔放 只为更好 新奔奔EV260官方网站官网
+    <string name="error_drm_unsupported_scheme">This device does not support the required DRM scheme</string>
 
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
+    <string name="error_drm_unknown">An unknown DRM error occurred</string>
 
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
+    <string name="error_no_decoder">This device does not provide a decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
 
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询/n
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家/n
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家/n
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科/n
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。/n
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
+    <string name="error_no_secure_decoder">This device does not provide a secure decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
 
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
+    <string name="error_querying_decoders">Unable to query device decoders</string>
 
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。/n
-www.changan.com.cn 2018-05 - 品牌广告/n
+    <string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
 
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
+    <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
 
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家
+    <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
 
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,
-                百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
+    <string name="storage_permission_denied">Permission to access storage was denied</string>
 
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
+    <string name="sample_list_load_error">One or more sample lists failed to load</string>
 
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭/n
+    <string name="ima_not_loaded">Playing sample without ads, as the IMA extension was not loaded</string>
 
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。/n
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
+    <string name="download_start_error">Failed to start download</string>
 
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个
-E起奔放 只为更好 新奔奔EV260官方网站官网
+    <string name="download_playlist_unsupported">This demo app does not support downloading playlists</string>
 
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
+    <string name="download_drm_unsupported">This demo app does not support downloading protected content</string>
 
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
+    <string name="download_scheme_unsupported">This demo app only supports downloading http streams</string>
 
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询/n
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家/n
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家/n
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科/n
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。/n
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
+    <string name="download_ads_unsupported">IMA does not support offline ads</string>
 
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
-
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。/n
-www.changan.com.cn 2018-05 - 品牌广告/n
-
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
-
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家
-
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,
-                百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
-
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
-
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭/n
-
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。/n
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
-
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个
-E起奔放 只为更好 新奔奔EV260官方网站官网
-
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告/n
-
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
-
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询/n
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家/n
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家/n
-https://www.autohome.com.cn/3217/  - 百度快照/n
-奔奔_百度百科/n
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。/n
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试/n
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家/n
-
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个/n
-E起奔放 只为更好 新奔奔EV260官方网站官网/n
-
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。/n
-www.changan.com.cn 2018-05 - 品牌广告/n
-
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
-
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家
-
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,
-
-    </string>
-    <string name="test2">
-
-        百度为您找到相关结果约17,100,000个
-E起奔放 只为更好 新奔奔EV260官方网站官网
-
-长安新奔奔纯电动260汽车，纯净升级，开启清新生活新体验，驭风前行，畅享智能便捷，向更好的未来E起奔放。
-www.changan.com.cn 2018-05 - 品牌广告
-
-型装·流光E彩
-精质 ·心E匠造
-前蔚· 纯净能源
-智趣· 创E互联
-优适·随心所驭
-
-直流充电和交流充电双重充电方式，全面切换满足充电新国标。
-先进电池模组
-双重充电模式
-动力系统实时监控
-环保节能回收系统
-官方网站	试乘试驾	立即购车	经销商查询
-【奔奔】_长安_新奔奔汽车_奔奔报价_奔奔图片_汽车之家
-汽车之家奔奔频道为您提供奔奔报价,奔奔图片,奔奔参数配置,奔奔最新文章,保养周期及费用等最新信息,最精彩奔奔汽车内容尽在汽车之家
-https://www.autohome.com.cn/3217/  - 百度快照
-奔奔_百度百科
-奔奔是一款经济型的小轿车，是中国长安汽车集团旗下的长安汽车历经3年时间，由上百名中外专家和技术人员设计和研发完成的。
-概况 简介 参数配置 车型对比 内饰建议 试驾体验 对比测试
-baike.baidu.com/
-【图】奔奔EV_长安_奔奔EV报价_奔奔EV图片_汽车之家
-
-汽车之家奔奔EV频道为您提供奔奔EV报价,奔奔EV图片,奔奔EV参数配置,奔奔EV最新文章,保养周期及费用等最新信息,百度为您找到相关结果约17,100,000个
-E起奔放 只为更好 新奔奔EV260官方网站官网
-
-
-
-    </string>
 </resources>

@@ -24,19 +24,21 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+>
 
         <activity
             android:name=".main.mvp.ui.activity.AppMainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <activity android:name=".MainActivity2">
+
 
         </activity>
 
@@ -46,6 +48,9 @@
         <activity
             android:name=".novel.mvp.ui.activity.NovelReadActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.mvp.ui.activity.VideoPlayerActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

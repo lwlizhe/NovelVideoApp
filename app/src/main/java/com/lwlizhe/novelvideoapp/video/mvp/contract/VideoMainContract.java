@@ -1,5 +1,6 @@
 package com.lwlizhe.novelvideoapp.video.mvp.contract;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
@@ -16,7 +17,10 @@ import io.reactivex.Flowable;
 public interface VideoMainContract {
 
     interface View extends BaseView{
+
          void setRecyclerAdapter(RecyclerView.Adapter adapter);
+
+         Context getContext();
 
     }
 

@@ -43,6 +43,11 @@ dependencies {
 
     implementation rootProject.ext.dependencies["banner"]
 
+    implementation rootProject.ext.dependencies["exoPlayer"]
+    implementation rootProject.ext.dependencies["exoPlayer-core"]
+    implementation rootProject.ext.dependencies["exoPlayer-dash"]
+    implementation rootProject.ext.dependencies["exoPlayer-ui"]
+
     implementation rootProject.ext.dependencies["dagger2"]
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
