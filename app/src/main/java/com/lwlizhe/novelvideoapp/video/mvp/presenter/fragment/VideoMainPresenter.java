@@ -2,7 +2,6 @@ package com.lwlizhe.novelvideoapp.video.mvp.presenter.fragment;
 
 import android.app.Application;
 import android.content.Intent;
-
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
 import com.lwlizhe.novelvideoapp.GlobeConstance;
@@ -12,12 +11,7 @@ import com.lwlizhe.novelvideoapp.video.mvp.contract.VideoMainContract;
 import com.lwlizhe.novelvideoapp.video.mvp.ui.activity.VideoPlayerActivity;
 import com.lwlizhe.novelvideoapp.video.mvp.ui.adapter.VideoMainAdapter;
 import com.lwlizhe.novelvideoapp.video.mvp.ui.adapter.holder.VideoMainBannerHolder;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 

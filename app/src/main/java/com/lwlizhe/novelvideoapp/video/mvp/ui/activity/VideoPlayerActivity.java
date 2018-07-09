@@ -10,7 +10,6 @@ import android.view.View;
 import com.fcannizzaro.jsoup.annotations.JP;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
@@ -22,14 +21,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.lwlizhe.novelvideoapp.GlobeConstance;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonActivity;
 import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
-import com.lwlizhe.novelvideoapp.video.api.entity.jsoup.DilidiliInfo;
 import com.lwlizhe.novelvideoapp.video.api.entity.jsoup.DilidiliVideo;
-import com.lwlizhe.novelvideoapp.video.api.entity.jsoup.ScheduleVideo;
-import com.lwlizhe.novelvideoapp.video.api.entity.jsoup.ScheduleVideo1;
 import com.lwlizhe.novelvideoapp.video.di.component.DaggerVideoPlayerComponent;
 import com.lwlizhe.novelvideoapp.video.di.module.VideoPlayerModule;
 import com.lwlizhe.novelvideoapp.video.mvp.contract.VideoPlayerContract;
@@ -37,8 +32,6 @@ import com.lwlizhe.novelvideoapp.video.mvp.presenter.activity.VideoPlayerPresent
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
@@ -110,7 +103,6 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
 
         playerView.setPlayer(player);
 
-
     }
 
     @Override
@@ -134,13 +126,10 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
         }
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
-                "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+                Util.getUserAgent(this,"NovelVideo"));
         // This is the MediaSource representing the media to be played.
-
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(videoUrl));
-//        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-//                .createMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"));
         // Prepare the player with the source.
         player.prepare(videoSource);
     }
@@ -162,28 +151,6 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
                     e.onSuccess(videoUrl);
                 }
 
-//                Element html2 = Jsoup.connect(scheduleVideo.getVideoUrl()).get();
-//
-//                ScheduleVideo1 scheduleVideo1 = JP.from(html2, ScheduleVideo1.class);
-//
-//                scheduleVideo1.getVideoUrl();
-
-//                Element player = content.getElementById("player");
-//
-//                String src = player.attr("src");
-//
-//                Element html3 = Jsoup.connect(src).get();
-//
-//                Element dplayer = html3.getElementById("dplayer");
-//
-//                Element divDplayer = dplayer.getElementsByClass("dplayer-video-wrap").get(0);
-//
-//                Element videoPlayer = divDplayer.getElementsByClass("dplayer-video dplayer-video-current").get(0);
-//
-//                String src1 = videoPlayer.attr("src");
-//
-//                e.onSuccess(src1);
-
             }
         }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<String>() {
             @Override
@@ -198,8 +165,6 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
 
             @Override
             public void onError(Throwable e) {
-                Log.d("test", e.toString());
-//                initPlayer(GlobeConstance.DILIDILI_URL+);
             }
         });
 

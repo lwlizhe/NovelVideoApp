@@ -3,9 +3,25 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:text="test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.lwlizhe.novelvideoapp.widget.CustomWeekView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.lwlizhe.novelvideoapp.widget.CustomView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="This is first child view"/>
+
+        <com.lwlizhe.novelvideoapp.widget.CustomView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="This is second child view"/>
+
+        <com.lwlizhe.novelvideoapp.widget.CustomView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="This is third child view"/>
+
+    </com.lwlizhe.novelvideoapp.widget.CustomWeekView>
 
 </LinearLayout>
