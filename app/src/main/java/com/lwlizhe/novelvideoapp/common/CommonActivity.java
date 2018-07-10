@@ -3,12 +3,13 @@ package com.lwlizhe.novelvideoapp.common;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+
+import com.lwlizhe.AppApplication;
 import com.lwlizhe.basemodule.base.BaseActivity;
 import com.lwlizhe.basemodule.event.RxEventBus;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.basemodule.mvp.Presenter;
-import com.lwlizhe.novelvideoapp.AppApplication;
-import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
+import com.lwlizhe.common.di.component.AppComponent;
 
 import javax.inject.Inject;
 

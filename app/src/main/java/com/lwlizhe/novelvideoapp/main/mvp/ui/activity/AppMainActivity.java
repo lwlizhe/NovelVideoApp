@@ -11,9 +11,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
+import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.novelvideoapp.R;
 import com.lwlizhe.novelvideoapp.common.CommonActivity;
-import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
+
 import com.lwlizhe.novelvideoapp.main.di.component.DaggerAppMainComponent;
 import com.lwlizhe.novelvideoapp.main.di.module.AppMainModule;
 

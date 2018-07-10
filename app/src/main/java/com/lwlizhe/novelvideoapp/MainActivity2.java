@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import static android.media.AudioManager.STREAM_MUSIC;
@@ -28,6 +29,21 @@ public class MainActivity2 extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        final ImageView view = findViewById(R.id.test);
+
+        final View decorView = MainActivity2.this.getWindow().getDecorView();
+        decorView.setDrawingCacheEnabled(true);
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                view.setImageBitmap(decorView.getDrawingCache());
+            }
+        });
+
     }
 
     @Override

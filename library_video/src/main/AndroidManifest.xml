@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lwlizhe.library_video" >
+
+    <application>
+        <activity android:name="com.lwlizhe.video.mvp.ui.activity.VideoPlayerActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
+    </application>
+
+
+</manifest>

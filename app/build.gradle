@@ -25,14 +25,6 @@ android {
     }
 }
 
-greendao {
-    schemaVersion 1//数据库版本号
-//    daoPackage 'com.lwlizhe.basemodule.greendao'//设置DaoMaster、DaoSession、Dao包名
-//    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
-//    //targetGenDirTest：设置生成单元测试目录
-//    //generateTests：设置自动生成单元测试用例
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -41,18 +33,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation rootProject.ext.dependencies["banner"]
-
-    implementation rootProject.ext.dependencies["exoPlayer"]
-    implementation rootProject.ext.dependencies["exoPlayer-core"]
-    implementation rootProject.ext.dependencies["exoPlayer-dash"]
-    implementation rootProject.ext.dependencies["exoPlayer-ui"]
-
     implementation rootProject.ext.dependencies["dagger2"]
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
 //    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'//这个多级列表库，可以学下/
 
-    api project(':basemodule')
+    api project(':library_comic')
+    api project(':library_novel')
+    api project(':library_video')
 }

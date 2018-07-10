@@ -2,7 +2,7 @@ package com.lwlizhe.novelvideoapp.main.di.component;
 
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
-import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
+import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.novelvideoapp.main.di.module.AppMainModule;
 import com.lwlizhe.novelvideoapp.main.mvp.ui.activity.AppMainActivity;
 

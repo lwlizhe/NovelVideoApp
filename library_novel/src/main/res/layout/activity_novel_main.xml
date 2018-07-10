@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/title_singer_work"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:contentInsetStart="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <LinearLayout
+                android:id="@+id/navigation_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_drawer_home" />
+
+                <ImageView
+                    android:id="@+id/toolbar_user_avatar"
+                    android:layout_width="@dimen/circle_user_small_size"
+                    android:layout_height="@dimen/circle_user_small_size"
+                    android:layout_marginEnd="@dimen/default_tiny_margin"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:src="@mipmap/ico_user_default"
+                    android:layout_marginRight="@dimen/default_tiny_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_general_margin"
+                    android:maxLines="1"
+                    android:text="@string/login_user_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_medium_text_size"
+                    android:layout_marginLeft="@dimen/default_general_margin" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="标签区域"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_novel_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/flb_switch_mode"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp" />
+</android.support.design.widget.CoordinatorLayout>

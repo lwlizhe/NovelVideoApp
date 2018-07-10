@@ -1,14 +1,11 @@
 package com.lwlizhe.novelvideoapp.common;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.lwlizhe.AppApplication;
 import com.lwlizhe.basemodule.base.BaseFragment;
 import com.lwlizhe.basemodule.event.RxEventBus;
 import com.lwlizhe.basemodule.mvp.Presenter;
-import com.lwlizhe.novelvideoapp.AppApplication;
-import com.lwlizhe.novelvideoapp.common.di.component.AppComponent;
+import com.lwlizhe.common.di.component.AppComponent;
 
 /**
  * Created by Administrator on 2018/5/3 0003.

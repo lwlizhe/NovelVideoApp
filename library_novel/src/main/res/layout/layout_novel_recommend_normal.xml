@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1px"
+    android:background="@drawable/bg_image_item"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivw_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvw_title_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.lwlizhe.common.widget.AutoMultiImageView
+            android:id="@+id/ivw_auto_multi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </com.lwlizhe.common.widget.AutoMultiImageView>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,8 +3,8 @@ package com.lwlizhe.novelvideoapp.main.mvp.model.activity;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
-import com.lwlizhe.novelvideoapp.common.cache.manager.CacheManager;
-import com.lwlizhe.novelvideoapp.common.service.manager.ServiceManager;
+import com.lwlizhe.common.cache.manager.CacheManager;
+import com.lwlizhe.common.service.manager.ServiceManager;
 import com.lwlizhe.novelvideoapp.main.mvp.contract.AppMainContract;
 
 import javax.inject.Inject;

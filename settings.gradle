@@ -1,1 +1,6 @@
-include ':app', ':basemodule'
+include ':app',
+        ':basemodule',
+        ':library_novel',
+        ':library_video',
+        ':library_comic',
+        ':library_base'

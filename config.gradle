@@ -73,6 +73,7 @@ ext {
             "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
             "banner"                    : "com.youth.banner:banner:1.4.10",
 
+            //Indicator
             "magicIndicator"            : "com.github.hackware1993:MagicIndicator:1.5.0",
             "expandTextView"            : "com.hymane.expandtextview:library:1.0.2",
             //ijkPlayer
@@ -96,7 +97,7 @@ ext {
             "exoPlayer"                 :'com.google.android.exoplayer:exoplayer:2.8.2',
             "exoPlayer-core"            :'com.google.android.exoplayer:exoplayer-core:2.8.2',
             "exoPlayer-dash"            :'com.google.android.exoplayer:exoplayer-dash:2.8.2',
-            "exoPlayer-ui"              :'com.google.android.exoplayer:exoplayer-ui:2.8.2'
+            "exoPlayer-ui"              :'com.google.android.exoplayer:exoplayer-ui:2.8.2',
 
 
 

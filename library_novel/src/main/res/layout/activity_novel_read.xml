@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lwlizhe.novel.widget.novelPage.novelPage.NovelView
+        android:id="@+id/view_read"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.lwlizhe.novel.widget.novelMenu.SimpleNovelTopMenu
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/read_abl_top_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#191919">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right">
+
+                        <TextView
+                            android:id="@+id/read_tv_brief"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textColor="#CBCBCB"
+                            android:textSize="16sp"
+                            android:layout_alignParentRight="true"
+                            android:text="简介" />
+
+                        <TextView
+                            android:id="@+id/read_tv_community"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textColor="#CBCBCB"
+                            android:textSize="16sp"
+                            android:layout_toLeftOf="@id/read_tv_brief"
+                            android:text="社区" />
+                    </RelativeLayout>
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.AppBarLayout>
+
+        </com.lwlizhe.novel.widget.novelMenu.SimpleNovelTopMenu>
+
+        <com.lwlizhe.novel.widget.novelMenu.SimpleNovelBottomMenu
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--底部菜单栏-->
+            <LinearLayout
+                android:id="@+id/read_ll_bottom_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#191919"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <!--页面进度栏-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/read_tv_pre_chapter"
+                        android:textColor="#CBCBCB"
+                        android:textSize="12sp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="上一章" />
+
+                    <SeekBar
+                        android:id="@+id/read_sb_chapter_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:maxHeight="3dp"
+                        android:minHeight="3dp"
+                        android:progressDrawable="@drawable/seekbar_bg"
+                        android:thumb="@drawable/seekbar_thumb"
+                        android:thumbOffset="10dp" />
+
+                    <TextView
+                        android:id="@+id/read_tv_next_chapter"
+                        android:textColor="#CBCBCB"
+                        android:textSize="12sp"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="下一章" />
+                </LinearLayout>
+
+                <!--菜单栏-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:id="@+id/read_tv_category"
+                        android:textColor="#CBCBCB"
+                        android:textSize="12sp"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/ic_read_menu_category"
+                        android:text="目录" />
+
+                    <TextView
+                        android:id="@+id/read_tv_night_mode"
+                        android:textColor="#CBCBCB"
+                        android:textSize="12sp"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/ic_read_menu_night"
+                        android:text="夜间" />
+
+                    <!--                <TextView
+                                        style="@style/NB.Theme.TextAppearance.Read.BottomMenu.Button"
+                                        android:id="@+id/read_tv_download"
+                                        android:drawableTop="@drawable/ic_read_menu_download"
+                                        android:text="@string/nb.read.download" />-->
+
+                    <TextView
+                        android:id="@+id/read_tv_setting"
+                        android:textColor="#CBCBCB"
+                        android:textSize="12sp"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/ic_read_menu_font"
+                        android:text="字体" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--底部设置页面-->
+            <include
+                android:visibility="gone"
+                android:layout_above="@+id/read_ll_bottom_menu"
+                layout="@layout/layout_read_setting"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            </include>
+
+        </com.lwlizhe.novel.widget.novelMenu.SimpleNovelBottomMenu>
+
+    </com.lwlizhe.novel.widget.novelPage.novelPage.NovelView>
+
+</FrameLayout>
