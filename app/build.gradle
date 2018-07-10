@@ -39,7 +39,7 @@ dependencies {
 
 //    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'//这个多级列表库，可以学下/
 
-    api project(':library_comic')
-    api project(':library_novel')
-    api project(':library_video')
+    api project(':component_comic')
+    api project(':component_novel')
+    api project(':component_video')
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
+import com.lwlizhe.comic.mvp.ui.fragment.ComicMainFragment;
 import com.lwlizhe.novel.mvp.ui.adapter.NovelMainAdapter;
 import com.lwlizhe.novel.mvp.ui.fragment.NovelRecommendFragment;
 import com.lwlizhe.novelvideoapp.main.mvp.contract.AppMainContract;
@@ -50,11 +51,11 @@ public class AppMainPresenter extends BasePresenter<AppMainContract.Model, AppMa
     private void initData() {
         mFragments.add(new NovelRecommendFragment());
         mFragments.add(new VideoMainFragment());
-        mFragments.add(new NovelRecommendFragment());
+        mFragments.add(new ComicMainFragment());
 
         mPagerTitles.add("小说");
         mPagerTitles.add("番剧");
-        mPagerTitles.add("分类");
+        mPagerTitles.add("漫画");
     }
 
     private void initRootView() {

@@ -1,6 +1,6 @@
 include ':app',
         ':basemodule',
-        ':library_novel',
-        ':library_video',
-        ':library_comic',
+        ':component_novel',
+        ':component_video',
+        ':component_comic',
         ':library_base'

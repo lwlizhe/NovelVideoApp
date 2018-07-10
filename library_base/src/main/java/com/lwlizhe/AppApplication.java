@@ -11,8 +11,6 @@ import com.lwlizhe.common.di.component.DaggerAppComponent;
 import com.lwlizhe.common.di.module.service.ServiceModule;
 
 
-import org.greenrobot.greendao.database.Database;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
