@@ -2,21 +2,25 @@ package com.lwlizhe.video.mvp.presenter.fragment;
 
 import android.app.Application;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
-import com.lwlizhe.GlobeConstance;
-import com.lwlizhe.video.base.CommonSubscriber;
 import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.base.CommonSubscriber;
 import com.lwlizhe.video.mvp.contract.VideoMainContract;
 import com.lwlizhe.video.mvp.ui.activity.VideoPlayerActivity;
 import com.lwlizhe.video.mvp.ui.adapter.VideoMainAdapter;
-import com.lwlizhe.video.mvp.ui.adapter.holder.VideoMainBannerHolder;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo.TYPE_BANNER;
 
 /**
  * Created by Administrator on 2018/7/2 0002.
@@ -36,16 +40,25 @@ public class VideoMainPresenter extends BasePresenter<VideoMainContract.Model, V
 
     private void initAdapter() {
 
-        mVideoMainAdapter=new VideoMainAdapter();
+        mVideoMainAdapter = new VideoMainAdapter();
 
-        mVideoMainAdapter.setOnBannerItemClickListener(new VideoMainBannerHolder.OnBannerClickListener() {
+        mVideoMainAdapter.setOnItemClickListener(new VideoMainAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void OnBannerClick(int position, DilidiliInfo.ScheudleBanner itemData) {
-                String animeUrl = itemData.getAnimeLink().contains(GlobeConstance.DILIDILI_URL)?itemData.getAnimeLink():GlobeConstance.DILIDILI_URL+itemData.getAnimeLink();
-                Intent videoIntent=new Intent(mRootView.getContext(),VideoPlayerActivity.class);
-                videoIntent.putExtra(VideoPlayerActivity.INTENT_VIDEO_PAGE_URL,animeUrl);
-                mRootView.launchActivity(videoIntent);
+            public void onItemClick(View view, int viewType, Object data, int position) {
+                String animUrl = null;
+                switch (viewType) {
+                    case TYPE_BANNER:
+                        animUrl = ((DilidiliInfo.ScheudleBanner) data).getAnimeLink().contains(GlobeConstance.DILIDILI_URL) ? ((DilidiliInfo.ScheudleBanner) data).getAnimeLink() : GlobeConstance.DILIDILI_URL + ((DilidiliInfo.ScheudleBanner) data).getAnimeLink();
+                        break;
+                }
 
+                if(TextUtils.isEmpty(animUrl)){
+                    return;
+                }
+
+                Intent videoIntent = new Intent(mRootView.getContext(), VideoPlayerActivity.class);
+                videoIntent.putExtra(VideoPlayerActivity.INTENT_VIDEO_PAGE_URL, animUrl);
+                mRootView.launchActivity(videoIntent);
             }
         });
 

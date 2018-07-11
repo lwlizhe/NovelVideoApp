@@ -1,6 +1,7 @@
 package com.lwlizhe.video.di.module;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.video.mvp.contract.VideoMainContract;
 import com.lwlizhe.video.mvp.model.fragment.VideoMainModel;
 
@@ -19,13 +20,13 @@ public class VideoMainModule {
         this.view = view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     VideoMainContract.View provideVideoMainView(){
         return this.view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     VideoMainContract.Model provideVideoMainModel(VideoMainModel model){
         return model;

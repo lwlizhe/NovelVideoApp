@@ -1,16 +1,18 @@
-package com.lwlizhe.novel.mvp.ui.holder;
+package com.lwlizhe.comic.mvp.ui.adapter.holder;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.lwlizhe.AppApplication;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageConfig;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
-import com.lwlizhe.AppApplication;
-import com.lwlizhe.GlobeConstance;
-import com.lwlizhe.library.novel.R;
+import com.lwlizhe.common.api.comic.entity.ComicRecommendResponse;
 import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.library.comic.R;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -19,50 +21,33 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-//import butterknife.BindView;
-
-
 /**
- * Created by lwlizhe on 2017/6/2.
- * 邮箱：624456662@qq.com
+ * Created by Administrator on 2018/7/11 0011.
  */
 
-public class NovelRecommendIBannerHolder extends BaseHolder<NovelReCommendEntity> {
+public class ComicMainBannerHolder extends BaseHolder<ComicRecommendResponse> {
 
-    public Banner mBanner;
-//    @BindView(R.id.rgp_select_area)
-//    public RadioGroup mRadioGroup;
-//    @BindView(R.id.rbt_follow_novel)
-//    public RadioButton mRbtFollowNovel;
-//    @BindView(R.id.rbt_search_novel)
-//    public RadioButton mRbtSearchNovel;
-//    @BindView(R.id.rbt_novel_chart)
-//    public RadioButton mRbtNovelChart;
-
-//    private ImageLoader mGlideImageLoader;//用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
+    private Banner mBanner;
     private final AppApplication mApplication;
     private GlideImageLoaderStrategy mGlideImageLoader;
 
-    private List<NovelReCommendEntity.DataBean> datas;
+    private List<ComicRecommendResponse.DataBean> datas;
 
-    public NovelRecommendIBannerHolder(View itemView) {
+    public ComicMainBannerHolder(View itemView) {
         super(itemView);
 
-        mBanner=itemView.findViewById(R.id.banner);
 
-
+        mBanner = itemView.findViewById(R.id.banner);
         mApplication = (AppApplication) itemView.getContext().getApplicationContext();
         mGlideImageLoader = mApplication.getAppComponent().mGlideImageLoader();
-
     }
 
     @Override
-    public void setData(NovelReCommendEntity data, int position) {
-
+    public void setData(ComicRecommendResponse data, int position) {
         setBannerData(data);
     }
 
-    public void setBannerData(NovelReCommendEntity mBannerData){
+    private void setBannerData(ComicRecommendResponse mBannerData){
 
         ArrayList<String> bannerImages=new ArrayList<>();
         ArrayList<String> bannerTitles=new ArrayList<>();
@@ -70,7 +55,7 @@ public class NovelRecommendIBannerHolder extends BaseHolder<NovelReCommendEntity
 
         datas = mBannerData.getData();
 
-        for(NovelReCommendEntity.DataBean data:datas){
+        for(ComicRecommendResponse.DataBean data:datas){
             bannerImages.add(data.getCover());
             bannerTitles.add(data.getTitle());
         }
@@ -79,7 +64,7 @@ public class NovelRecommendIBannerHolder extends BaseHolder<NovelReCommendEntity
 
     }
 
-    public void setBanner(ArrayList<String> images, ArrayList<String> titles) {
+    private void setBanner(ArrayList<String> images, ArrayList<String> titles) {
         mBanner.setImageLoader(new com.youth.banner.loader.ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
@@ -102,16 +87,16 @@ public class NovelRecommendIBannerHolder extends BaseHolder<NovelReCommendEntity
         mBanner.start();
     }
 
-    public void setBannerClickListener(final OnBannerClickListener listener){
+    public void setBannerClickListener(final OnBannerClickListener listener) {
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                listener.OnBannerClick(position,datas.get(position));
+                listener.OnBannerClick(ComicMainBannerHolder.this.itemView,datas.get(position),position);
             }
         });
     }
 
-    public interface OnBannerClickListener{
-        void OnBannerClick(int position, NovelReCommendEntity.DataBean itemData);
+    public interface OnBannerClickListener {
+        void OnBannerClick(View view, ComicRecommendResponse.DataBean itemData,int position);
     }
 }

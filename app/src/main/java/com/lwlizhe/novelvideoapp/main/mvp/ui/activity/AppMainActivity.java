@@ -64,6 +64,8 @@ public class AppMainActivity extends CommonActivity<AppMainPresenter> implements
         mViewPager=findViewById(R.id.vp_novel_main);
         rootView=findViewById(R.id.root_view);
         mSwitchBtn=findViewById(R.id.flb_switch_mode);
+
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     @Override

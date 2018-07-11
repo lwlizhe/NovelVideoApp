@@ -6,10 +6,8 @@ import com.lwlizhe.basemodule.di.module.GlobeConfigModule;
 import com.lwlizhe.basemodule.di.module.ImageModule;
 import com.lwlizhe.basemodule.http.GlobeHttpHandler;
 import com.lwlizhe.common.di.component.AppComponent;
-
 import com.lwlizhe.common.di.component.DaggerAppComponent;
 import com.lwlizhe.common.di.module.service.ServiceModule;
-
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -53,6 +51,7 @@ public class AppApplication extends BaseApplication {
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                         //这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                         //重新请求token,并重新执行请求
+
 //                        try {
 //                            if (!TextUtils.isEmpty(httpResult)) {
 //                                JSONArray array = new JSONArray(httpResult);
@@ -89,19 +88,26 @@ public class AppApplication extends BaseApplication {
 
                         //return chain.request().newBuilder().header("token", tokenId)
 //                .build();
+
+                        if (request.url().host().contains("dmzj")) {
+                            return chain.request().newBuilder()
+                                    .headers(request.headers())
+                                    .removeHeader("User-Agent")
+                                    .addHeader("User-Agent", GlobeConstance.DMZJ_IMG_REFERER_URL)
+                                    .removeHeader("Referer")
+                                    .addHeader("Referer",GlobeConstance.DMZJ_IMG_REFERER_URL)
+                                    .build();
+                        }
+
                         return request;
                     }
                 })
                 .build();
     }
 
-    public AppComponent getAppComponent(){
+    public AppComponent getAppComponent() {
         return mAppComponent;
     }
-
-//    public DaoSession getDaoSession() {
-//        return mDaoSession;
-//    }
 
 
 }

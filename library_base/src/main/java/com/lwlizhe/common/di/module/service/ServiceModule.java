@@ -1,6 +1,7 @@
 package com.lwlizhe.common.di.module.service;
 
 
+import com.lwlizhe.common.api.comic.ComicNetService;
 import com.lwlizhe.common.api.novel.NovelNetService;
 
 import javax.inject.Singleton;
@@ -15,11 +16,11 @@ import retrofit2.Retrofit;
 @Module
 public class ServiceModule {
 
-//    @Singleton
-//    @Provides
-//    CommonService provideCommonService(Retrofit retrofit) {
-//        return retrofit.create(CommonService.class);
-//    }
+    @Singleton
+    @Provides
+    ComicNetService provideCommicService(Retrofit retrofit) {
+        return retrofit.create(ComicNetService.class);
+    }
 
     @Singleton
     @Provides

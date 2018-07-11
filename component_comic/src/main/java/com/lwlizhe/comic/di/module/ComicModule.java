@@ -1,6 +1,7 @@
 package com.lwlizhe.comic.di.module;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.comic.mvp.contract.fragment.ComicMainContract;
 import com.lwlizhe.comic.mvp.model.ComicMainModel;
 
@@ -19,13 +20,13 @@ public class ComicModule {
         this.view = view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     public ComicMainContract.View providerComicView(){
         return view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     public ComicMainContract.Model providerComicModel(ComicMainModel model){
         return model;

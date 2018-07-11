@@ -1,6 +1,7 @@
 package com.lwlizhe.novel.mvp.model.fragment;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
 import com.lwlizhe.common.cache.manager.CacheManager;
@@ -17,7 +18,7 @@ import io.reactivex.Flowable;
  * Created by lwlizhe on 2017/6/2.
  * 邮箱：624456662@qq.com
  */
-@ActivityScope
+@FragmentScope
 public class NovelReCommendModel  extends BaseModel<ServiceManager,CacheManager> implements NovelRecommendContract.Model {
 
     @Inject

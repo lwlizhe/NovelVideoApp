@@ -96,13 +96,13 @@ public class VideoMainBannerHolder extends BaseHolder<List<DilidiliInfo.BaseMult
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                listener.OnBannerClick(position, (DilidiliInfo.ScheudleBanner) mBannerData.get(position));
+                listener.OnBannerClick(VideoMainBannerHolder.this.itemView,(DilidiliInfo.ScheudleBanner) mBannerData.get(position),position);
             }
         });
     }
 
     public interface OnBannerClickListener {
-        void OnBannerClick(int position, DilidiliInfo.ScheudleBanner itemData);
+        void OnBannerClick(View view, DilidiliInfo.ScheudleBanner itemData,int position);
     }
 
 

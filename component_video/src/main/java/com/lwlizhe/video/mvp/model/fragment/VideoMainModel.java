@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.fcannizzaro.jsoup.annotations.JP;
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.common.cache.manager.CacheManager;
@@ -27,7 +28,7 @@ import io.reactivex.annotations.NonNull;
 /**
  * Created by Administrator on 2018/7/2 0002.
  */
-@ActivityScope
+@FragmentScope
 public class VideoMainModel extends BaseModel<ServiceManager,CacheManager> implements Model {
 
     @Inject

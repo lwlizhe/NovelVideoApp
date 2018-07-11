@@ -1,6 +1,7 @@
 package com.lwlizhe.novel.mvp.model.fragment;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
 import com.lwlizhe.common.cache.manager.CacheManager;
@@ -17,7 +18,7 @@ import io.reactivex.Flowable;
 /**
  * Created by Administrator on 2018/6/4 0004.
  */
-@ActivityScope
+@FragmentScope
 public class NovelDetailChapterModel extends BaseModel<ServiceManager, CacheManager> implements NovelDetailChapterContract.Model {
     @Inject
     public NovelDetailChapterModel(ServiceManager serviceManager, CacheManager cacheManager) {

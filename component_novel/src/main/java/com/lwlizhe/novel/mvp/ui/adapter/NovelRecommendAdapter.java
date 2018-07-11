@@ -39,7 +39,6 @@ public class NovelRecommendAdapter extends BaseRecyclerViewAdapter<NovelReCommen
         switch (viewType){
             case VIEW_TYPE_BANNER:
                 holder=new NovelRecommendIBannerHolder(v);
-                ((NovelRecommendIBannerHolder)holder).setBannerData(mInfos.get(0));
 
                 if(mBannerListener!=null){
                     ((NovelRecommendIBannerHolder)holder).setBannerClickListener(mBannerListener);

@@ -1,6 +1,7 @@
 package com.lwlizhe.novel.di.module;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.novel.mvp.contract.fragment.NovelDetailChapterContract;
 import com.lwlizhe.novel.mvp.model.fragment.NovelDetailChapterModel;
 
@@ -23,13 +24,13 @@ public class NovelDetailChapterModule {
         this.view = view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     NovelDetailChapterContract.View provideNovelView(){
         return this.view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     NovelDetailChapterContract.Model provideNovelRecommendContract(NovelDetailChapterModel model){
         return model;

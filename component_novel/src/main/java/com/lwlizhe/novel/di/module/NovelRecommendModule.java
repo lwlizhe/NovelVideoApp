@@ -1,6 +1,7 @@
 package com.lwlizhe.novel.di.module;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
+import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.novel.mvp.contract.fragment.NovelRecommendContract;
 import com.lwlizhe.novel.mvp.model.fragment.NovelReCommendModel;
 
@@ -24,13 +25,13 @@ public class NovelRecommendModule {
         this.view = view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     NovelRecommendContract.View provideNovelView(){
         return this.view;
     }
 
-    @ActivityScope
+    @FragmentScope
     @Provides
     NovelRecommendContract.Model provideNovelRecommendContract(NovelReCommendModel model){
         return model;

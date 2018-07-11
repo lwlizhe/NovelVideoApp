@@ -130,9 +130,9 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
                 holder = new VideoMainBannerHolder(v);
                 ((VideoMainBannerHolder)holder).setBannerClickListener(new VideoMainBannerHolder.OnBannerClickListener() {
                     @Override
-                    public void OnBannerClick(int position, DilidiliInfo.ScheudleBanner itemData) {
-                        if(mBannerItemClickListener!=null){
-                            mBannerItemClickListener.OnBannerClick(position,itemData);
+                    public void OnBannerClick(View view, DilidiliInfo.ScheudleBanner itemData, int position) {
+                        if(mOnItemClickListener!=null){
+                            mOnItemClickListener.onItemClick(view,TYPE_BANNER,itemData,position);
                         }
                     }
                 });
