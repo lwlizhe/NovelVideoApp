@@ -4,12 +4,12 @@ import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
 import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.common.api.video.entity.jsoup.ScheduleWeek;
 import com.lwlizhe.video.base.CommonSubscriber;
 import com.lwlizhe.video.mvp.contract.VideoMainContract;
 import com.lwlizhe.video.mvp.ui.activity.VideoPlayerActivity;
@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo.TYPE_BANNER;
+import static com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo.TYPE_WEEK;
 
 /**
  * Created by Administrator on 2018/7/2 0002.
@@ -50,9 +51,12 @@ public class VideoMainPresenter extends BasePresenter<VideoMainContract.Model, V
                     case TYPE_BANNER:
                         animUrl = ((DilidiliInfo.ScheudleBanner) data).getAnimeLink().contains(GlobeConstance.DILIDILI_URL) ? ((DilidiliInfo.ScheudleBanner) data).getAnimeLink() : GlobeConstance.DILIDILI_URL + ((DilidiliInfo.ScheudleBanner) data).getAnimeLink();
                         break;
+                    case TYPE_WEEK:
+                        animUrl = ((ScheduleWeek.ScheduleItem) data).getEpisodeLink().contains(GlobeConstance.DILIDILI_URL) ? ((ScheduleWeek.ScheduleItem) data).getEpisodeLink() : GlobeConstance.DILIDILI_URL + ((ScheduleWeek.ScheduleItem) data).getEpisodeLink();
+                        break;
                 }
 
-                if(TextUtils.isEmpty(animUrl)){
+                if (TextUtils.isEmpty(animUrl)) {
                     return;
                 }
 

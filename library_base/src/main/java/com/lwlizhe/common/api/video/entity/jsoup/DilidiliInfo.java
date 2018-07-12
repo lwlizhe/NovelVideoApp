@@ -5,6 +5,7 @@ import com.fcannizzaro.jsoup.annotations.interfaces.Attr;
 import com.fcannizzaro.jsoup.annotations.interfaces.Items;
 import com.fcannizzaro.jsoup.annotations.interfaces.Selector;
 import com.fcannizzaro.jsoup.annotations.interfaces.Text;
+import com.lwlizhe.common.api.video.entity.BaseMultiItemData;
 
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class DilidiliInfo {
   }
 
   @Selector("div.swiper-wrapper a.swiper-slide")
-  public static class ScheudleBanner implements BaseMultiItemData{
+  public static class ScheudleBanner extends BaseMultiItemData{
 
     @Attr(query = "img", attr = "src")
     private String imgUrl;
@@ -141,7 +142,7 @@ public class DilidiliInfo {
   }
 
   @Selector("div.edit_list ul li")
-  public static class ScheduleRecommend implements BaseMultiItemData{
+  public static class ScheduleRecommend extends BaseMultiItemData{
 
     @Attr(query = "a div", attr = "style")
     private String imgUrl;
@@ -195,7 +196,7 @@ public class DilidiliInfo {
   }
 
   @Selector("div#newId.new_update_list ul li")
-  public static class ScheduleRecent implements BaseMultiItemData{
+  public static class ScheduleRecent extends BaseMultiItemData{
 
     @Attr(query = "a div", attr = "style")
     private String imgUrl;
@@ -260,8 +261,8 @@ public class DilidiliInfo {
     }
   }
 
-  public interface BaseMultiItemData{
-     public int getType();
-  }
+//  public interface BaseMultiItemData{
+//     public int getType();
+//  }
 
 }

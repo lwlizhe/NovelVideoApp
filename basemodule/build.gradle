@@ -61,9 +61,6 @@ dependencies {
 
     api rootProject.ext.dependencies["greenDao"]
 
-    api rootProject.ext.dependencies["jsoup"]
-    api rootProject.ext.dependencies["jsoup-annotations"]
-
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
 
     implementation rootProject.ext.dependencies["dagger2"]

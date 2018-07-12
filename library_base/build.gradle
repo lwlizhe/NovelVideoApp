@@ -36,6 +36,9 @@ dependencies {
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
+    implementation rootProject.ext.dependencies["jsoup"]
+    implementation rootProject.ext.dependencies["jsoup-annotations"]
+
     api project(':basemodule')
 
 }

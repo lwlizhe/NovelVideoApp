@@ -7,6 +7,7 @@ import com.fcannizzaro.jsoup.annotations.interfaces.Attr;
 import com.fcannizzaro.jsoup.annotations.interfaces.Items;
 import com.fcannizzaro.jsoup.annotations.interfaces.Selector;
 import com.fcannizzaro.jsoup.annotations.interfaces.Text;
+import com.lwlizhe.common.api.video.entity.BaseMultiItemData;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo.TYPE_WEEK;
  * @author Rabtman 追番信息
  */
 @Selector("div.update div.update_list ul[class~=week?]")
-public class ScheduleWeek implements Parcelable,DilidiliInfo.BaseMultiItemData {
+public class ScheduleWeek extends BaseMultiItemData implements Parcelable {
 
   public static final Creator<ScheduleWeek> CREATOR = new Creator<ScheduleWeek>() {
     @Override

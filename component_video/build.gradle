@@ -46,6 +46,9 @@ dependencies {
 
     implementation rootProject.ext.dependencies["magicIndicator"]
 
+    implementation rootProject.ext.dependencies["jsoup"]
+    implementation rootProject.ext.dependencies["jsoup-annotations"]
+
     api project(':library_base')
 
 }

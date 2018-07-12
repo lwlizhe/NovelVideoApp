@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.fcannizzaro.jsoup.annotations.JP;
+//import com.gargoylesoftware.htmlunit.WebClient;
+//import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -142,6 +144,18 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
         Single.create(new SingleOnSubscribe<String>() {
             @Override
             public void subscribe(SingleEmitter<String> e) throws Exception {
+
+//                WebClient wc = new WebClient();
+//                wc.getOptions().setJavaScriptEnabled(true); //启用JS解释器，默认为true
+//                wc.getOptions().setCssEnabled(false); //禁用css支持
+//                wc.getOptions().setThrowExceptionOnScriptError(false); //js运行错误时，是否抛出异常
+//                wc.getOptions().setTimeout(10000); //设置连接超时时间 ，这里是10S。如果为0，则无限期等待
+//                HtmlPage page = wc.getPage(srcVideoPage);
+//                String pageXml = page.asXml(); //以xml的形式获取响应文本
+//
+//
+//
+//                Element html =  Jsoup.parse(pageXml, srcVideoPage);
                 Element html = Jsoup.connect(srcVideoPage).get();
 
                 DilidiliVideo scheduleVideo = JP.from(html, DilidiliVideo.class);

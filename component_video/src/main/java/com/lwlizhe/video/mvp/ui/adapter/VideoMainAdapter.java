@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
+import com.lwlizhe.common.api.video.entity.jsoup.ScheduleWeek;
 import com.lwlizhe.library.video.R;
 import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
 import com.lwlizhe.video.mvp.ui.adapter.holder.VideoMainBannerHolder;
@@ -29,6 +30,8 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
     private final int TYPE_WEEK = 1;
     private final int TYPE_RECENT = 2;
     private final int TYPE_RECOMMEND = 3;
+
+    private int curWeekTagPos=-1;
 
     public void setDilidiliInfo(DilidiliInfo info) {
 
@@ -59,7 +62,7 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
                 holder.setData(info.getScheduleBanners(), position);
                 break;
             case TYPE_WEEK:
-                holder.setData(info.getScheduleWeek(), position);
+                holder.setData(info.getScheduleWeek(), curWeekTagPos);
                 break;
             case TYPE_RECENT:
                 holder.setData(info.getScheduleRecents(), position);
@@ -139,6 +142,20 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
                 break;
             case TYPE_WEEK:
                 holder = new VideoMainWeekHolder(v);
+                ((VideoMainWeekHolder)holder).setOnTagSelectedChangedListener(new VideoMainWeekHolder.OnTagSelectedChangedListener() {
+                    @Override
+                    public void onTagSelectedChanged(int currentPos) {
+                        curWeekTagPos=currentPos;
+                    }
+                });
+                ((VideoMainWeekHolder)holder).setOnWeekItemClickListener(new VideoMainWeekHolder.OnWeekItemClickListener() {
+                    @Override
+                    public void onWeekItemClick(View view, ScheduleWeek.ScheduleItem data, int pos) {
+                        if(mOnItemClickListener!=null){
+                            mOnItemClickListener.onItemClick(view,TYPE_WEEK,data,pos);
+                        }
+                    }
+                });
                 break;
             case TYPE_RECENT:
                 holder = new VideoMainRecentHolder(v);

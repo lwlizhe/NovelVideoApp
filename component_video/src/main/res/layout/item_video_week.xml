@@ -3,8 +3,87 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <RadioGroup
+        android:id="@+id/rgp_week_group"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期一"
+            android:id="@+id/rbt_monday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期二"
+            android:id="@+id/rbt_tuesday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期三"
+            android:id="@+id/rbt_wednesday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期四"
+            android:id="@+id/rbt_thursday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期五"
+            android:id="@+id/rbt_friday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期六"
+            android:id="@+id/rbt_saturday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="星期天"
+            android:id="@+id/rbt_sunday"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcv_week"
+        android:id="@+id/rvw_week"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

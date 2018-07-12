@@ -10,6 +10,7 @@ import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.GlobeConstance;
 
+import com.lwlizhe.common.api.video.entity.BaseMultiItemData;
 import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
 import com.lwlizhe.library.video.R;
 import com.youth.banner.Banner;
@@ -24,12 +25,12 @@ import java.util.List;
  * Created by Administrator on 2018/7/3 0003.
  */
 
-public class VideoMainBannerHolder extends BaseHolder<List<DilidiliInfo.BaseMultiItemData>> {
+public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
 
     private Banner mBanner;
     private Context mContext;
 
-    private List<DilidiliInfo.BaseMultiItemData> mBannerData;
+    private List<BaseMultiItemData> mBannerData;
 
     private GlideImageLoaderStrategy mImageLoader;
 
@@ -46,20 +47,20 @@ public class VideoMainBannerHolder extends BaseHolder<List<DilidiliInfo.BaseMult
     }
 
     @Override
-    public void setData(List<DilidiliInfo.BaseMultiItemData> data, int position) {
+    public void setData(List<BaseMultiItemData> data, int position) {
         mBannerData.clear();
         mBannerData.addAll(data);
 
         setBannerData(mBannerData);
     }
 
-    public void setBannerData(List<DilidiliInfo.BaseMultiItemData> mBannerData) {
+    public void setBannerData(List<BaseMultiItemData> mBannerData) {
 
         ArrayList<String> bannerImages = new ArrayList<>();
         ArrayList<String> bannerTitles = new ArrayList<>();
 
 
-        for (DilidiliInfo.BaseMultiItemData data : mBannerData) {
+        for (BaseMultiItemData data : mBannerData) {
             DilidiliInfo.ScheudleBanner bannerData= (DilidiliInfo.ScheudleBanner) data;
             bannerImages.add(bannerData.getImgUrl());
             bannerTitles.add(bannerData.getName());

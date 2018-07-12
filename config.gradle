@@ -92,6 +92,8 @@ ext {
             //Jsoup
             "jsoup"                     :'org.jsoup:jsoup:1.11.3',
             "jsoup-annotations"         :'com.github.fcannizzaro:jsoup-annotations:1.0.3',
+            //HtmlUnit
+            "htmlUnit"                  :'net.sourceforge.htmlunit:htmlunit:2.31',
 
             // ExoPlayer
             "exoPlayer"                 :'com.google.android.exoplayer:exoplayer:2.8.2',
