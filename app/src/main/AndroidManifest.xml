@@ -31,10 +31,10 @@
             android:name=".main.mvp.ui.activity.AppMainActivity"
             android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
 
         </activity>
 
@@ -46,15 +46,22 @@
 
         </activity>
 
-        <activity
-            android:name=".novel.mvp.ui.activity.NovelChapterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".novel.mvp.ui.activity.NovelReadActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".video.mvp.ui.activity.VideoPlayerActivity"
-            android:screenOrientation="landscape" />
+        <!--<activity android:name="com.lwlizhe.video.mvp.ui.activity.VideoPlayerActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+
+        <!--</activity>-->
+        <activity android:name="com.lwlizhe.video.mvp.ui.activity.VideoWebPlayerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+
+
     </application>
 
 </manifest>

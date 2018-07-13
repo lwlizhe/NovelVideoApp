@@ -16,6 +16,7 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -38,7 +39,6 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
 //    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'//这个多级列表库，可以学下/
-
     api project(':component_comic')
     api project(':component_novel')
     api project(':component_video')

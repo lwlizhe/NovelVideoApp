@@ -114,9 +114,9 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
     protected void initData() {
 
         Intent intent = getIntent();
-        String videoPageUrl = intent.getStringExtra(INTENT_VIDEO_PAGE_URL);
+        String videoUrl = intent.getStringExtra(INTENT_VIDEO_PAGE_URL);
 
-        parsePageInfo(videoPageUrl);
+        initPlayer(videoUrl);
 
     }
 
@@ -139,52 +139,52 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
         player.prepare(videoSource);
     }
 
-    private void parsePageInfo(final String srcVideoPage) {
-
-        Single.create(new SingleOnSubscribe<String>() {
-            @Override
-            public void subscribe(SingleEmitter<String> e) throws Exception {
-
-//                WebClient wc = new WebClient();
-//                wc.getOptions().setJavaScriptEnabled(true); //启用JS解释器，默认为true
-//                wc.getOptions().setCssEnabled(false); //禁用css支持
-//                wc.getOptions().setThrowExceptionOnScriptError(false); //js运行错误时，是否抛出异常
-//                wc.getOptions().setTimeout(10000); //设置连接超时时间 ，这里是10S。如果为0，则无限期等待
-//                HtmlPage page = wc.getPage(srcVideoPage);
-//                String pageXml = page.asXml(); //以xml的形式获取响应文本
+//    private void parsePageInfo(final String srcVideoPage) {
 //
+//        Single.create(new SingleOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(SingleEmitter<String> e) throws Exception {
 //
+////                WebClient wc = new WebClient();
+////                wc.getOptions().setJavaScriptEnabled(true); //启用JS解释器，默认为true
+////                wc.getOptions().setCssEnabled(false); //禁用css支持
+////                wc.getOptions().setThrowExceptionOnScriptError(false); //js运行错误时，是否抛出异常
+////                wc.getOptions().setTimeout(10000); //设置连接超时时间 ，这里是10S。如果为0，则无限期等待
+////                HtmlPage page = wc.getPage(srcVideoPage);
+////                String pageXml = page.asXml(); //以xml的形式获取响应文本
+////
+////
+////
+////                Element html =  Jsoup.parse(pageXml, srcVideoPage);
+//                Element html = Jsoup.connect(srcVideoPage).get();
 //
-//                Element html =  Jsoup.parse(pageXml, srcVideoPage);
-                Element html = Jsoup.connect(srcVideoPage).get();
-
-                DilidiliVideo scheduleVideo = JP.from(html, DilidiliVideo.class);
-
-                String videoUrl = scheduleVideo.getVideoUrl();
-
-                if(videoUrl.contains("url=")){
-                    e.onSuccess(videoUrl.split("url=")[1]);
-                }else{
-                    e.onSuccess(videoUrl);
-                }
-
-            }
-        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<String>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                initPlayer(s);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-        });
-
-    }
+//                DilidiliVideo scheduleVideo = JP.from(html, DilidiliVideo.class);
+//
+//                String videoUrl = scheduleVideo.getVideoUrl();
+//
+//                if(videoUrl.contains("url=")){
+//                    e.onSuccess(videoUrl.split("url=")[1]);
+//                }else{
+//                    e.onSuccess(videoUrl);
+//                }
+//
+//            }
+//        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<String>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(String s) {
+//                initPlayer(s);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//            }
+//        });
+//
+//    }
 
 }

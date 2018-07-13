@@ -1,5 +1,6 @@
 package com.lwlizhe;
 
+
 import com.lwlizhe.basemodule.base.BaseApplication;
 import com.lwlizhe.basemodule.di.module.EventModule;
 import com.lwlizhe.basemodule.di.module.GlobeConfigModule;

@@ -6,6 +6,10 @@
             android:screenOrientation="landscape">
 
         </activity>
+        <activity android:name="com.lwlizhe.video.mvp.ui.activity.VideoWebPlayerActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
     </application>
 
 
