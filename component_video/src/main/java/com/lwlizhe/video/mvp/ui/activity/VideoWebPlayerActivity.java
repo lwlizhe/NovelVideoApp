@@ -13,7 +13,9 @@ import com.lwlizhe.video.di.component.DaggerVideoWebPlayerComponent;
 import com.lwlizhe.video.di.module.VideoWebPlayerModule;
 import com.lwlizhe.video.mvp.contract.VideoWebPlayerContract;
 import com.lwlizhe.video.mvp.presenter.activity.VideoWebPlayerPresenter;
+import com.tencent.smtt.sdk.QbSdk;
 
+import tbsplus.tbs.tencent.com.tbsplus.TbsPlus;
 
 
 /**
@@ -75,7 +77,7 @@ public class VideoWebPlayerActivity extends CommonActivity<VideoWebPlayerPresent
 //                return super.shouldOverrideUrlLoading(view, url);
 //            }
 //        });
-//        QbSdk.initX5Environment(this,null);
+        QbSdk.initX5Environment(this,null);
     }
 
     @Override
@@ -86,7 +88,7 @@ public class VideoWebPlayerActivity extends CommonActivity<VideoWebPlayerPresent
         //http://jx.yylep.com/?url=http://www.iqiyi.com/v_19rrcg9eq4.html
 
 //        mWebView.loadUrl("http://jx.yylep.com/?url=http://www.iqiyi.com/v_19rrcg9eq4.html");
-//        TbsPlus.openUrl(this, "http://jx.yylep.com/?url=http://www.iqiyi.com/v_19rrcg9eq4.html", TbsPlus.eTBSPLUS_SCREENDIR.eTBSPLUS_SCREENDIR_LANDSCAPE);
+        TbsPlus.openUrl(this, videoUrl, TbsPlus.eTBSPLUS_SCREENDIR.eTBSPLUS_SCREENDIR_LANDSCAPE);
 //        mWebView.loadUrl("http://www.baidu.com");
     }
 

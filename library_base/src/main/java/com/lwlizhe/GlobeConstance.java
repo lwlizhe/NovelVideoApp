@@ -23,8 +23,8 @@ public class GlobeConstance {
 
     public static final String BILIBILI_BASE_URL="http://app.bilibili.com/";
 
-    public static final String NOVEL_BASE_URL="http://v2api.dmzj.com/novel/";
-    public static final String COMIC_BASE_URL="http://v2api.dmzj.com/v3/";
+    public static final String NOVEL_BASE_URL="https://v3api.dmzj.com/novel/";
+    public static final String COMIC_BASE_URL="https://v3api.dmzj.com/";
 
     public static final String NOVEL_COMMEND_DYNAMIC_KEY="novel_commend_dynamic_key";
 

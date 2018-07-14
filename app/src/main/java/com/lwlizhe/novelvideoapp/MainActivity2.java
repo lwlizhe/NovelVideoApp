@@ -17,6 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
 import static android.media.AudioManager.STREAM_MUSIC;
 
 /**
@@ -25,12 +29,11 @@ import static android.media.AudioManager.STREAM_MUSIC;
 
 public class MainActivity2 extends AppCompatActivity{
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         final ImageView view = findViewById(R.id.test);
 

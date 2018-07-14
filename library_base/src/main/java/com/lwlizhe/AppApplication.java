@@ -1,6 +1,9 @@
 package com.lwlizhe;
 
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.lwlizhe.basemodule.base.BaseApplication;
 import com.lwlizhe.basemodule.di.module.EventModule;
 import com.lwlizhe.basemodule.di.module.GlobeConfigModule;
@@ -23,10 +26,17 @@ public class AppApplication extends BaseApplication {
     private AppComponent mAppComponent;
 //    private DaoSession mDaoSession;
 
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
         mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(getAppModule())//baseApplication提供

@@ -49,6 +49,9 @@ dependencies {
     implementation rootProject.ext.dependencies["jsoup"]
     implementation rootProject.ext.dependencies["jsoup-annotations"]
 
+
+    compile(name: 'tbsplus', ext: 'aar')
+
     api project(':library_base')
 
 }
