@@ -17,9 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 import static android.media.AudioManager.STREAM_MUSIC;
 
