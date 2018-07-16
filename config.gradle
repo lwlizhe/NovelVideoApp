@@ -19,6 +19,7 @@ ext {
             "androidJUnitRunner"        : "android.support.test.runner.AndroidJUnitRunner",
             "javax.annotation"          : 'javax.annotation:jsr250-api:1.0',
             "appcompat-v7"              : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
+            "appcompat-exifinterface"   : "com.android.support:exifinterface:${android["androidSupportSdkVersion"]}",
             "design"                    : "com.android.support:design:${android["androidSupportSdkVersion"]}",
             "support-v4"                : "com.android.support:support-v4:${android["androidSupportSdkVersion"]}",
             "cardview-v7"               : "com.android.support:cardview-v7:${android["androidSupportSdkVersion"]}",

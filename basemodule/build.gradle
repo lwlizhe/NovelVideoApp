@@ -35,6 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["appcompat-exifinterface"]
     api(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
     }

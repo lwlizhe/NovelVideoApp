@@ -27,9 +27,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation rootProject.ext.dependencies["banner"]
@@ -39,6 +38,9 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
     implementation rootProject.ext.dependencies["magicIndicator"]
+
+    //一个大图长图的加载库，准备学下，能不能改造成想要的
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     api project(':library_base')
 
