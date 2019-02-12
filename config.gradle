@@ -1,9 +1,9 @@
 ext {
 
-    android = [compileSdkVersion       : 27,
-               buildToolsVersion       : "27.1.1",
-               minSdkVersion           : 15,
-               targetSdkVersion        : 27,
+    android = [compileSdkVersion       : 28,
+               buildToolsVersion       : "28.0.2",
+               minSdkVersion           : 19,
+               targetSdkVersion        : 28,
                versionCode             : 1,
                versionName             : "1.0.0",
                androidSupportSdkVersion: "27.1.1",
@@ -88,20 +88,20 @@ ext {
             "DanmakuFlameMaster-x86"    : "com.github.ctiao:ndkbitmap-x86:0.9.16",
 
             //数据库
-            "greenDao"                  :'org.greenrobot:greendao:3.2.2',
+            "greenDao"                  : 'org.greenrobot:greendao:3.2.2',
 
             //Jsoup
-            "jsoup"                     :'org.jsoup:jsoup:1.11.3',
-            "jsoup-annotations"         :'com.github.fcannizzaro:jsoup-annotations:1.0.3',
+            "jsoup"                     : 'org.jsoup:jsoup:1.11.3',
+            "jsoup-annotations"         : 'com.github.fcannizzaro:jsoup-annotations:1.0.3',
             //HtmlUnit
-            "htmlUnit"                  :'net.sourceforge.htmlunit:htmlunit:2.31',
+            "htmlUnit"                  : 'net.sourceforge.htmlunit:htmlunit:2.31',
 
             // ExoPlayer
-            "exoPlayer"                 :'com.google.android.exoplayer:exoplayer:2.8.2',
-            "exoPlayer-core"            :'com.google.android.exoplayer:exoplayer-core:2.8.2',
-            "exoPlayer-dash"            :'com.google.android.exoplayer:exoplayer-dash:2.8.2',
-            "exoPlayer-ui"              :'com.google.android.exoplayer:exoplayer-ui:2.8.2',
-
+            "exoPlayer"                 : 'com.google.android.exoplayer:exoplayer:2.9.3',
+            "exoPlayer-core"            : 'com.google.android.exoplayer:exoplayer-core:2.9.3',
+            "exoPlayer-dash"            : 'com.google.android.exoplayer:exoplayer-dash:2.9.3',
+            "exoPlayer-hls"             : 'com.google.android.exoplayer:exoplayer-hls:2.9.3',
+            "exoPlayer-ui"              : 'com.google.android.exoplayer:exoplayer-ui:2.9.3',
 
 
     ]
