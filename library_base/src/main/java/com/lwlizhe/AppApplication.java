@@ -11,7 +11,6 @@ import com.lwlizhe.basemodule.di.module.ImageModule;
 import com.lwlizhe.basemodule.http.GlobeHttpHandler;
 import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.common.di.component.DaggerAppComponent;
-import com.lwlizhe.common.di.module.service.ServiceModule;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -42,7 +41,6 @@ public class AppApplication extends BaseApplication {
                 .appModule(getAppModule())//baseApplication提供
                 .clientModule(getClientModule())//baseApplication提供
                 .globeConfigModule(getGlobeConfigModule())//全局配置
-                .serviceModule(new ServiceModule())//需自行创建
                 .imageModule(new ImageModule())
                 .eventModule(new EventModule())
                 .build();

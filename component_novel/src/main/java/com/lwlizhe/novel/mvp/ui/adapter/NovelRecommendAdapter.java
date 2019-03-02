@@ -5,7 +5,7 @@ import android.view.View;
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 import com.lwlizhe.library.novel.R;
 import com.lwlizhe.novel.mvp.ui.holder.NovelRecommendIBannerHolder;
 import com.lwlizhe.novel.mvp.ui.holder.NovelRecommendNormalHolder;

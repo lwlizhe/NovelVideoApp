@@ -3,7 +3,7 @@ package com.lwlizhe.comic.mvp.contract.fragment;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.basemodule.mvp.BaseView;
 import com.lwlizhe.basemodule.mvp.IModel;
-import com.lwlizhe.common.api.comic.entity.ComicRecommendResponse;
+import com.lwlizhe.comic.api.entity.ComicRecommendResponse;
 
 import java.util.List;
 

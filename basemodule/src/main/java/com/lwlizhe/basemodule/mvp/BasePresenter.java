@@ -11,18 +11,18 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
 //    protected CompositeSubscription mCompositeSubscription;
 
     protected M mModel;
-    protected V mRootView;
+    protected V mView;
 
     protected RxEventBus mEventBus;
 
     public BasePresenter(M model, V rootView) {
         this.mModel = model;
-        this.mRootView = rootView;
+        this.mView = rootView;
         onStart();
     }
 
     public BasePresenter(V rootView) {
-        this.mRootView = rootView;
+        this.mView = rootView;
         onStart();
     }
 
@@ -42,7 +42,7 @@ public class BasePresenter<M extends IModel, V extends BaseView> implements Pres
             mModel.onDestroy();
             this.mModel = null;
         }
-        this.mRootView = null;
+        this.mView = null;
 //        this.mCompositeSubscription = null;
     }
 

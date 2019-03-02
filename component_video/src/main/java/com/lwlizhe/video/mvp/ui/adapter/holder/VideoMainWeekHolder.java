@@ -8,8 +8,8 @@ import android.widget.RadioGroup;
 
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
-import com.lwlizhe.common.api.video.entity.BaseMultiItemData;
-import com.lwlizhe.common.api.video.entity.jsoup.ScheduleWeek;
+import com.lwlizhe.video.api.entity.BaseMultiItemData;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
 import com.lwlizhe.video.mvp.ui.adapter.ScheduleWeekAdapter;
 
@@ -28,7 +28,7 @@ public class VideoMainWeekHolder extends BaseHolder<List<BaseMultiItemData>> {
 
     private RecyclerView mRvwScheduleWeek;
 
-    private List<ScheduleWeek.ScheduleItem> mScheduleList;
+    private List<DilidiliIndexEntity.DataBean.WeekListBean> mScheduleList;
     private List<BaseMultiItemData> mInfos;
 
     private OnTagSelectedChangedListener tagListener;
@@ -88,9 +88,9 @@ public class VideoMainWeekHolder extends BaseHolder<List<BaseMultiItemData>> {
             }
         });
 
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<ScheduleWeek.ScheduleItem>() {
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<DilidiliIndexEntity.DataBean.WeekListBean>() {
             @Override
-            public void onItemClick(View view, int viewType, ScheduleWeek.ScheduleItem data, int position) {
+            public void onItemClick(View view, int viewType, DilidiliIndexEntity.DataBean.WeekListBean data, int position) {
 
                 if(weekListener!=null){
                     weekListener.onWeekItemClick(view,data,position);
@@ -103,21 +103,23 @@ public class VideoMainWeekHolder extends BaseHolder<List<BaseMultiItemData>> {
 
     @Override
     public void setData(List<BaseMultiItemData> data, int position) {
-
-        mInfos=data;
-
-        int currentTagPos = position == -1 ? calTodayWeekPos() : position;
-
-        List<ScheduleWeek.ScheduleItem> scheduleWeekList;
-
-        ScheduleWeek weekList = (ScheduleWeek) data.get(currentTagPos);
-
-        scheduleWeekList = weekList.getScheduleItems();
-
-        mScheduleList.clear();
-        mScheduleList.addAll(scheduleWeekList);
-
-        adapter.notifyDataSetChanged();
+//
+//        mInfos=data;
+//
+//        int currentTagPos = position == -1 ? calTodayWeekPos() : position;
+//
+//        List<DilidiliIndexEntity.DataBean.WeekListBean> scheduleWeekList=new ArrayList<>();
+//
+//        for(BaseMultiItemData itemData:data){
+//            if(itemData instanceof DilidiliIndexEntity.DataBean.WeekListBean){
+//                scheduleWeekList.add((DilidiliIndexEntity.DataBean.WeekListBean) itemData);
+//            }
+//        }
+//
+//        mScheduleList.clear();
+//        mScheduleList.addAll(scheduleWeekList);
+//
+//        adapter.notifyDataSetChanged();
 
     }
 
@@ -138,7 +140,7 @@ public class VideoMainWeekHolder extends BaseHolder<List<BaseMultiItemData>> {
     }
 
     public interface  OnWeekItemClickListener{
-        void onWeekItemClick(View view,ScheduleWeek.ScheduleItem data,int pos);
+        void onWeekItemClick(View view,DilidiliIndexEntity.DataBean.WeekListBean data,int pos);
     }
 
 

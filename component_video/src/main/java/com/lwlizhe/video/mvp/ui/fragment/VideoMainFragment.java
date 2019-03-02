@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
@@ -96,5 +97,10 @@ public class VideoMainFragment extends CommonFragment<VideoMainPresenter> implem
     @Override
     public void setRecyclerAdapter(RecyclerView.Adapter adapter) {
         mVideoMainList.setAdapter(adapter);
+    }
+
+    @Override
+    public void showMsg(String msg) {
+        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
     }
 }

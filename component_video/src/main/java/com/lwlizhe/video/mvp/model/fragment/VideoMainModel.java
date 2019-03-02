@@ -3,14 +3,15 @@ package com.lwlizhe.video.mvp.model.fragment;
 import android.text.TextUtils;
 
 import com.fcannizzaro.jsoup.annotations.JP;
-import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.di.scope.FragmentScope;
-import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.GlobeConstance;
+import com.lwlizhe.video.api.VideoNetService;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
-import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.video.mvp.contract.VideoMainContract.Model;
+import com.lwlizhe.video.mvp.model.activity.VideoIntroductionModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -29,7 +30,7 @@ import io.reactivex.annotations.NonNull;
  * Created by Administrator on 2018/7/2 0002.
  */
 @FragmentScope
-public class VideoMainModel extends BaseModel<ServiceManager,CacheManager> implements Model {
+public class VideoMainModel extends VideoIntroductionModel implements Model {
 
     @Inject
     public VideoMainModel(ServiceManager serviceManager, CacheManager cacheManager) {
@@ -61,5 +62,10 @@ public class VideoMainModel extends BaseModel<ServiceManager,CacheManager> imple
                 }
             }
         }, BackpressureStrategy.BUFFER);
+    }
+
+    @Override
+    public Flowable<DilidiliIndexEntity> getDilidiliAppInfo() {
+        return mServiceManager.getRetrofitService(VideoNetService.class).getVideoContent();
     }
 }

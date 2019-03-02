@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
 
-import com.lwlizhe.common.api.novel.entity.NovelDetailEntity;
+import com.lwlizhe.novel.api.entity.NovelDetailEntity;
 import com.lwlizhe.novel.mvp.contract.activity.NovelChapterContract;
 import com.orhanobut.logger.Logger;
 
@@ -37,7 +37,7 @@ public class NovelChapterPresenter extends BasePresenter<NovelChapterContract.Mo
         this.mApplication = application;
         this.mActivityManager = activityManager;
 
-        this.mActivity = mRootView.getContext();
+        this.mActivity = mView.getContext();
 
         initRootView();
         setRootView();
@@ -64,7 +64,7 @@ public class NovelChapterPresenter extends BasePresenter<NovelChapterContract.Mo
                     @Override
                     public void onNext(NovelDetailEntity novelDetailEntity) {
 
-                        mRootView.setData(novelDetailEntity);
+                        mView.setData(novelDetailEntity);
 
                     }
 

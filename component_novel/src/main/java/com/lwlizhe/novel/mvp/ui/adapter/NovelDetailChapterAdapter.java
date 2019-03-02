@@ -6,7 +6,7 @@ import com.lwlizhe.basemodule.base.adapter.BaseExpandItemEntity;
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 
-import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
+import com.lwlizhe.novel.api.entity.NovelChapterEntity;
 import com.lwlizhe.library.novel.R;
 import com.lwlizhe.novel.mvp.ui.holder.NovelDetailChapterChildHolder;
 import com.lwlizhe.novel.mvp.ui.holder.NovelDetailChapterParentHolder;

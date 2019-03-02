@@ -9,9 +9,10 @@ import com.google.gson.Gson;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseExpandItemEntity;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
-import com.lwlizhe.basemodule.utils.RxUtils;
 
-import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
+
+import com.lwlizhe.basemodule.utils.RxLifecycleUtils;
+import com.lwlizhe.novel.api.entity.NovelChapterEntity;
 import com.lwlizhe.novel.base.CommonSubscriber;
 import com.lwlizhe.novel.mvp.contract.fragment.NovelDetailChapterContract;
 import com.lwlizhe.novel.mvp.ui.activity.NovelReadActivity;
@@ -68,18 +69,18 @@ public class NovelDetailChapterPresenter extends BasePresenter<NovelDetailChapte
                     return;
                 }
 
-                Intent intent = new Intent(mRootView.getContext(), NovelReadActivity.class);
+                Intent intent = new Intent(mView.getContext(), NovelReadActivity.class);
                 intent.putExtra(NOVEL_ID, mNovelId);
                 intent.putExtra(NOVEL_CHAPTER_ID, (long)childData.getChapter_id());
                 intent.putExtra(NOVEL_VOLUME_ID, (long)parentData.getVolume_id());
                 intent.putExtra(NOVEL_CHAPTER_LIST, (Serializable) mSrcNovelChapterList);
 
-                mRootView.launchActivity(intent);
+                mView.launchActivity(intent);
             }
         });
 
 
-        mRootView.setRecyclerViewAdapter(mChapterAdapter);
+        mView.setRecyclerViewAdapter(mChapterAdapter);
 
     }
 
@@ -89,7 +90,7 @@ public class NovelDetailChapterPresenter extends BasePresenter<NovelDetailChapte
 
         mModel.getNovelChapter(novelId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxUtils.<List<NovelChapterEntity>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .compose(RxLifecycleUtils.<List<NovelChapterEntity>>bindToLifecycle(mView))//使用RXlifecycle,使subscription和activity一起销毁
                 .subscribe(new CommonSubscriber<List<NovelChapterEntity>>() {
                     @Override
                     public void onFailed(Throwable t) {

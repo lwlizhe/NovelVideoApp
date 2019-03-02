@@ -1,9 +1,9 @@
 package com.lwlizhe.novel.mvp.model.fragment;
 
-import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.novel.api.NovelNetService;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
 import com.lwlizhe.novel.mvp.contract.fragment.NovelRecommendContract;
@@ -42,7 +42,7 @@ public class NovelReCommendModel  extends BaseModel<ServiceManager,CacheManager>
 
 //        Logger.d(mServiceManager.getNovelService().getTest());
 
-        return mServiceManager.getNovelService()
+        return mServiceManager.getRetrofitService(NovelNetService.class)
                 .getNovelReCommend();
     }
 }

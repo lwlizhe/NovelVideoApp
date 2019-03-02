@@ -42,7 +42,7 @@ public class AppMainPresenter extends BasePresenter<AppMainContract.Model, AppMa
         this.mApplication = application;
         this.mActivityManager = activityManager;
 
-        this.mActivity = mRootView.getContext();
+        this.mActivity = mView.getContext();
 
         initRootView();
         setRootView();
@@ -69,8 +69,8 @@ public class AppMainPresenter extends BasePresenter<AppMainContract.Model, AppMa
 
     private void setRootView() {
 
-        mRootView.setFragmentPagerAdapter(mViewPagerAdapter);
-//        mRootView.setIndicator(mCommonNavigator);
+        mView.setFragmentPagerAdapter(mViewPagerAdapter);
+//        mView.setIndicator(mCommonNavigator);
 
     }
 

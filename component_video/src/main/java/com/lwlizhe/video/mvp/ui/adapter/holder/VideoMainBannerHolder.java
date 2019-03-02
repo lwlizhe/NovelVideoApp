@@ -10,8 +10,8 @@ import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.GlobeConstance;
 
-import com.lwlizhe.common.api.video.entity.BaseMultiItemData;
-import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.BaseMultiItemData;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -61,7 +61,7 @@ public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
 
 
         for (BaseMultiItemData data : mBannerData) {
-            DilidiliInfo.ScheudleBanner bannerData= (DilidiliInfo.ScheudleBanner) data;
+            DilidiliIndexEntity.DataBean.CarouselBean bannerData= (DilidiliIndexEntity.DataBean.CarouselBean) data;
             bannerImages.add(bannerData.getImgUrl());
             bannerTitles.add(bannerData.getName());
         }
@@ -97,13 +97,13 @@ public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                listener.OnBannerClick(VideoMainBannerHolder.this.itemView,(DilidiliInfo.ScheudleBanner) mBannerData.get(position),position);
+                listener.OnBannerClick(VideoMainBannerHolder.this.itemView,(DilidiliIndexEntity.DataBean.CarouselBean) mBannerData.get(position),position);
             }
         });
     }
 
     public interface OnBannerClickListener {
-        void OnBannerClick(View view, DilidiliInfo.ScheudleBanner itemData,int position);
+        void OnBannerClick(View view, DilidiliIndexEntity.DataBean.CarouselBean itemData, int position);
     }
 
 

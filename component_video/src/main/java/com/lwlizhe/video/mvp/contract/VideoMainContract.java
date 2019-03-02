@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.lwlizhe.basemodule.mvp.BaseView;
-import com.lwlizhe.basemodule.mvp.IModel;
-import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 
 
 import io.reactivex.Flowable;
@@ -20,13 +20,17 @@ public interface VideoMainContract {
 
          void setRecyclerAdapter(RecyclerView.Adapter adapter);
 
+         void showMsg(String msg);
+
          Context getContext();
 
     }
 
-    interface Model extends IModel{
+    interface Model extends VideoIntroductionContract.Model{
 
         Flowable<DilidiliInfo> getDilidiliInfo();
+
+        Flowable<DilidiliIndexEntity> getDilidiliAppInfo();
 
     }
 

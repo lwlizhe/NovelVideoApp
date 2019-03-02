@@ -7,7 +7,7 @@ import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.comic.mvp.ui.adapter.holder.ComicMainBannerHolder;
 import com.lwlizhe.comic.mvp.ui.adapter.holder.ComicMainDefaultHolder;
-import com.lwlizhe.common.api.comic.entity.ComicRecommendResponse;
+import com.lwlizhe.comic.api.entity.ComicRecommendResponse;
 import com.lwlizhe.library.comic.R;
 
 import java.util.List;

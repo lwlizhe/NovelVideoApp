@@ -10,7 +10,7 @@ import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.library.novel.R;
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;

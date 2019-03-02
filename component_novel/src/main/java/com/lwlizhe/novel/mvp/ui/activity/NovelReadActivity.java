@@ -10,7 +10,7 @@ import com.lwlizhe.basemodule.utils.SystemBarUtils;
 
 
 import com.lwlizhe.common.di.component.AppComponent;
-import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
+import com.lwlizhe.novel.api.entity.NovelChapterEntity;
 import com.lwlizhe.library.novel.R;
 import com.lwlizhe.novel.base.CommonActivity;
 import com.lwlizhe.novel.di.component.DaggerNovelReadComponent;

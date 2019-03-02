@@ -4,14 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
-import com.lwlizhe.common.api.video.entity.jsoup.ScheduleWeek;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
 
 /**
  * Created by Administrator on 2018/7/12 0012.
  */
 
-public class ScheduleWeekHolder extends BaseHolder<ScheduleWeek.ScheduleItem> {
+public class ScheduleWeekHolder extends BaseHolder<DilidiliIndexEntity.DataBean.WeekListBean> {
 
     private TextView mVideoName;
     private TextView mVideoLatestEpisode;
@@ -25,13 +25,13 @@ public class ScheduleWeekHolder extends BaseHolder<ScheduleWeek.ScheduleItem> {
     }
 
     @Override
-    public void setData(ScheduleWeek.ScheduleItem data, int position) {
+    public void setData(DilidiliIndexEntity.DataBean.WeekListBean data, int position) {
 
         if(data==null){
             return;
         }
 
         mVideoName.setText(data.getName());
-        mVideoLatestEpisode.setText(data.getEpisode());
+        mVideoLatestEpisode.setText(data.getUpdatedEpisode());
     }
 }

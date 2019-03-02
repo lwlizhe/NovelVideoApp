@@ -8,7 +8,7 @@ import com.lwlizhe.basemodule.mvp.BasePresenter;
 import com.lwlizhe.comic.base.CommonSubscriber;
 import com.lwlizhe.comic.mvp.contract.fragment.ComicMainContract;
 import com.lwlizhe.comic.mvp.ui.adapter.ComicMainAdapter;
-import com.lwlizhe.common.api.comic.entity.ComicRecommendResponse;
+import com.lwlizhe.comic.api.entity.ComicRecommendResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class ComicMainPresenter extends BasePresenter<ComicMainContract.Model, C
     private void initAdapter() {
 
         adapter = new ComicMainAdapter(mRecommendData);
-        mRootView.setRecyclerViewAdapter(adapter);
+        mView.setRecyclerViewAdapter(adapter);
 
     }
 

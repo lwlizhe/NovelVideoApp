@@ -13,7 +13,6 @@ import com.lwlizhe.basemodule.di.module.ImageModule;
 import com.lwlizhe.basemodule.event.RxEventBus;
 import com.lwlizhe.basemodule.imageloader.glide.GlideImageLoaderStrategy;
 import com.lwlizhe.common.di.module.cache.CacheModule;
-import com.lwlizhe.common.di.module.service.ServiceModule;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
 
@@ -26,7 +25,7 @@ import okhttp3.OkHttpClient;
  * Created by jess on 8/4/16.
  */
 @Singleton
-@Component(modules = {AppModule.class, ImageModule.class, ClientModule.class, ServiceModule.class, CacheModule.class,GlobeConfigModule.class, EventModule.class})
+@Component(modules = {AppModule.class, ImageModule.class, ClientModule.class, CacheModule.class,GlobeConfigModule.class, EventModule.class})
 public interface AppComponent {
     Application Application();
 

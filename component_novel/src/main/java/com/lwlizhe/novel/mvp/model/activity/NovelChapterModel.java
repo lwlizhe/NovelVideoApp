@@ -2,7 +2,8 @@ package com.lwlizhe.novel.mvp.model.activity;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
-import com.lwlizhe.common.api.novel.entity.NovelDetailEntity;
+import com.lwlizhe.novel.api.NovelNetService;
+import com.lwlizhe.novel.api.entity.NovelDetailEntity;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
 
@@ -24,6 +25,6 @@ public class NovelChapterModel extends BaseModel<ServiceManager,CacheManager> im
 
     @Override
     public Flowable<NovelDetailEntity> getNovelChapter(long id) {
-        return mServiceManager.getNovelService().getNovelDetail(id);
+        return mServiceManager.getRetrofitService(NovelNetService.class).getNovelDetail(id);
     }
 }

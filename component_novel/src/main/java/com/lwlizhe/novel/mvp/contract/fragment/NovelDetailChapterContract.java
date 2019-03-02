@@ -5,7 +5,7 @@ import android.content.Context;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.basemodule.mvp.BaseView;
 import com.lwlizhe.basemodule.mvp.IModel;
-import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
+import com.lwlizhe.novel.api.entity.NovelChapterEntity;
 
 import java.util.List;
 

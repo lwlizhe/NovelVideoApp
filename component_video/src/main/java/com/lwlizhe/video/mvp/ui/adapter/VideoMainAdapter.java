@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
-import com.lwlizhe.common.api.video.entity.jsoup.ScheduleWeek;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
-import com.lwlizhe.common.api.video.entity.jsoup.DilidiliInfo;
+import com.lwlizhe.video.api.entity.jsoup.DilidiliInfo;
 import com.lwlizhe.video.mvp.ui.adapter.holder.VideoMainBannerHolder;
 import com.lwlizhe.video.mvp.ui.adapter.holder.VideoMainRecentHolder;
 import com.lwlizhe.video.mvp.ui.adapter.holder.VideoMainRecommendHolder;
@@ -133,7 +133,7 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
                 holder = new VideoMainBannerHolder(v);
                 ((VideoMainBannerHolder)holder).setBannerClickListener(new VideoMainBannerHolder.OnBannerClickListener() {
                     @Override
-                    public void OnBannerClick(View view, DilidiliInfo.ScheudleBanner itemData, int position) {
+                    public void OnBannerClick(View view, DilidiliIndexEntity.DataBean.CarouselBean itemData, int position) {
                         if(mOnItemClickListener!=null){
                             mOnItemClickListener.onItemClick(view,TYPE_BANNER,itemData,position);
                         }
@@ -150,7 +150,7 @@ public class VideoMainAdapter extends RecyclerView.Adapter<BaseHolder> {
                 });
                 ((VideoMainWeekHolder)holder).setOnWeekItemClickListener(new VideoMainWeekHolder.OnWeekItemClickListener() {
                     @Override
-                    public void onWeekItemClick(View view, ScheduleWeek.ScheduleItem data, int pos) {
+                    public void onWeekItemClick(View view, DilidiliIndexEntity.DataBean.WeekListBean data, int pos) {
                         if(mOnItemClickListener!=null){
                             mOnItemClickListener.onItemClick(view,TYPE_WEEK,data,pos);
                         }

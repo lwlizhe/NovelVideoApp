@@ -31,6 +31,8 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.gyf.barlibrary.BarHide;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.library.video.R;
 import com.lwlizhe.video.base.CommonActivity;
@@ -64,6 +66,8 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
     private DataSource.Factory dataSourceFactory;
 
     private String targetUrl;
+
+    private ImmersionBar mImmersionBar;
 
     @Override
     public void showLoading() {
@@ -114,6 +118,10 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
 
         playerView.setPlayer(player);
 
+        if (mImmersionBar == null) {
+            mImmersionBar = ImmersionBar.with(this);
+        }
+        mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
     }
 
     @Override
@@ -124,7 +132,8 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
             targetUrl = intent.getStringExtra(INTENT_VIDEO_PAGE_URL);
         }
 
-        targetUrl="https://cdn-3.haku99.com/hls/2019/02/10/y7uiExtI/playlist.m3u8";
+//        targetUrl="https://cdn-3.haku99.com/hls/2019/01/13/x5bz7l7t/playlist.m3u8";
+//        targetUrl="https://cdn-3.haku99.com/hls/2019/02/10/y7uiExtI/playlist.m3u8";
 
         dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this,VideoPlayerActivity.class.getSimpleName()));
@@ -254,5 +263,22 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
     public void preparePlayback() {
         initPlayer(targetUrl);
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(mImmersionBar!=null){
+            mImmersionBar.hideBar(BarHide.FLAG_HIDE_BAR).init();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mImmersionBar != null) {
+            mImmersionBar.destroy();
+        }
     }
 }

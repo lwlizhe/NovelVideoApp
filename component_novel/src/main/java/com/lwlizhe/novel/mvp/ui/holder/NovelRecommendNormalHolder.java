@@ -12,7 +12,7 @@ import com.lwlizhe.basemodule.utils.UiUtils;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.library.novel.R;
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 import com.lwlizhe.common.widget.AutoMultiImageView;
 
 

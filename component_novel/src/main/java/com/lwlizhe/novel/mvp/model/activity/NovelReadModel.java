@@ -2,6 +2,7 @@ package com.lwlizhe.novel.mvp.model.activity;
 
 import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
+import com.lwlizhe.novel.api.NovelNetService;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
 import com.lwlizhe.novel.mvp.contract.activity.NovelReadContract;
@@ -25,7 +26,7 @@ public class NovelReadModel extends BaseModel<ServiceManager,CacheManager> imple
     @Override
     public Flowable<String> getNovelContent(long novelId,long volumeId,long chapterId) {
 
-        Flowable<String> novelFlowable = mServiceManager.getNovelService().getNovel(novelId, volumeId, chapterId);
+        Flowable<String> novelFlowable = mServiceManager.getRetrofitService(NovelNetService.class).getNovel(novelId, volumeId, chapterId);
 
         return novelFlowable;
     }

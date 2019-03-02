@@ -5,7 +5,7 @@ import android.content.Context;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.basemodule.mvp.BaseView;
 import com.lwlizhe.basemodule.mvp.IModel;
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 
 import java.util.List;
 

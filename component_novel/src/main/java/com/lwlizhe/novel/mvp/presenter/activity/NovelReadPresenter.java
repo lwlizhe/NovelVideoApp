@@ -54,13 +54,13 @@ public class NovelReadPresenter extends BasePresenter<NovelReadContract.Model,No
                     }
                 });
 
-//        initReadPage(mRootView.getContext().getString(R.string.test));
+//        initReadPage(mView.getContext().getString(R.string.test));
 
     }
 
     private void initReadPage(long volumeId,long chapterId,String content){
 
-        mRootView.setNovelContent(mBookId,volumeId,chapterId,content);
+        mView.setNovelContent(mBookId,volumeId,chapterId,content);
 
     }
 

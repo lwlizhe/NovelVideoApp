@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.lwlizhe.basemodule.mvp.BaseView;
 import com.lwlizhe.basemodule.mvp.IModel;
-import com.lwlizhe.common.api.novel.entity.NovelDetailEntity;
-//import com.lwlizhe.common.api.novel.entity.NovelDetailEntity;
+import com.lwlizhe.novel.api.entity.NovelDetailEntity;
+//import com.lwlizhe.novel.api.entity.NovelDetailEntity;
 
 import io.reactivex.Flowable;
 

@@ -7,8 +7,9 @@ import android.view.View;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
-import com.lwlizhe.basemodule.utils.RxUtils;
-import com.lwlizhe.common.api.novel.entity.NovelReCommendEntity;
+
+import com.lwlizhe.basemodule.utils.RxLifecycleUtils;
+import com.lwlizhe.novel.api.entity.NovelReCommendEntity;
 import com.lwlizhe.novel.base.CommonSubscriber;
 import com.lwlizhe.novel.mvp.contract.fragment.NovelRecommendContract;
 import com.lwlizhe.novel.mvp.ui.activity.NovelChapterActivity;
@@ -54,15 +55,15 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
         @Override
         public void onItemImageClickListener(NovelReCommendEntity.DataBean itemData, View view, int position) {
 
-            Intent itemImageIntent=new Intent(mRootView.getContext(), NovelChapterActivity.class);
+            Intent itemImageIntent=new Intent(mView.getContext(), NovelChapterActivity.class);
             itemImageIntent.putExtra(NOVEL_DATA_ITEM_OBJ_ID,itemData.getObj_id());
             mEventBus.post(new ActivityMessage<>(ActivityManager.ActivityEventType.START_ACTIVITY_INTENT,itemImageIntent));
 
-//            Intent itemImageIntent=new Intent(mRootView.getContext(), NovelChapterActivity.class);
+//            Intent itemImageIntent=new Intent(mView.getContext(), NovelChapterActivity.class);
 //            itemImageIntent.putExtra(NOVEL_DATA_ITEM_OBJ_ID,itemData.getObj_id());
-//            mRootView.launchActivity(itemImageIntent);
+//            mView.launchActivity(itemImageIntent);
 
-//            mRootView.showMessage("点击了"+itemData.getCover());
+//            mView.showMessage("点击了"+itemData.getCover());
         }
     };
 
@@ -74,12 +75,12 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
         public void OnBannerClick(int position, NovelReCommendEntity.DataBean itemData) {
 
 
-            Intent itemImageIntent=new Intent(mRootView.getContext(), NovelChapterActivity.class);
+            Intent itemImageIntent=new Intent(mView.getContext(), NovelChapterActivity.class);
             itemImageIntent.putExtra(NOVEL_DATA_ITEM_OBJ_ID,itemData.getObj_id());
             mEventBus.post(new ActivityMessage<>(ActivityManager.ActivityEventType.START_ACTIVITY_INTENT,itemImageIntent));
 
 
-//            mRootView.launchActivity(itemImageIntent);
+//            mView.launchActivity(itemImageIntent);
         }
     };
 
@@ -96,7 +97,7 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 
     public void initData(boolean shouldRefresh) {
 
-        mRootView.showLoading();
+        mView.showLoading();
 
         mModel.getNovelReCommend(shouldRefresh)
                 .subscribeOn(Schedulers.io())
@@ -114,14 +115,14 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 //                            @Override
 //                            public void call() {
 //                                if (pullToRefresh)
-//                                    mRootView.hideLoading();//隐藏上拉刷新的进度条
+//                                    mView.hideLoading();//隐藏上拉刷新的进度条
 //                                else
-//                                    mRootView.endLoadMore();//隐藏下拉加载更多的进度条
+//                                    mView.endLoadMore();//隐藏下拉加载更多的进度条
 //                            }
 //                        }
                     }
                 })
-                .compose(RxUtils.<List<NovelReCommendEntity>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .compose(RxLifecycleUtils.<List<NovelReCommendEntity>>bindToLifecycle(mView))//使用RXlifecycle,使subscription和activity一起销毁
                 .subscribe(new CommonSubscriber<List<NovelReCommendEntity>>() {
                     @Override
                     public void onNext(List<NovelReCommendEntity> novelReCommendEntity) {
@@ -134,13 +135,13 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 
                     @Override
                     public void onFailed(Throwable t) {
-                        mRootView.hideLoading();
+                        mView.hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
 
-                        mRootView.hideLoading();
+                        mView.hideLoading();
 
                     }
                 });
@@ -153,7 +154,7 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
         mAdapter.setNormalItemClickListener(normalItemImageClickListener);
         mAdapter.setBannerClickListener(listener);
 
-        mRootView.setRecyclerViewAdapter(mAdapter);
+        mView.setRecyclerViewAdapter(mAdapter);
 
     }
 
@@ -185,14 +186,14 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 //                            @Override
 //                            public void call() {
 //                                if (pullToRefresh)
-//                                    mRootView.hideLoading();//隐藏上拉刷新的进度条
+//                                    mView.hideLoading();//隐藏上拉刷新的进度条
 //                                else
-//                                    mRootView.endLoadMore();//隐藏下拉加载更多的进度条
+//                                    mView.endLoadMore();//隐藏下拉加载更多的进度条
 //                            }
 //                        }
                     }
                 })
-                .compose(RxUtils.<List<NovelReCommendEntity>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .compose(RxLifecycleUtils.<List<NovelReCommendEntity>>bindToLifecycle(mView))//使用RXlifecycle,使subscription和activity一起销毁
                 .subscribe(new Subscriber<List<NovelReCommendEntity>>() {
                     @Override
                     public void onSubscribe(Subscription s) {
@@ -201,17 +202,17 @@ public class NovelRecommendPresenter extends BasePresenter<NovelRecommendContrac
 
                     @Override
                     public void onNext(List<NovelReCommendEntity> novelReCommendEntity) {
-                        mRootView.showMessage(novelReCommendEntity.get(0).getData().get(0).getTitle());
+                        mView.showMessage(novelReCommendEntity.get(0).getData().get(0).getTitle());
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        mRootView.showMessage("causeMessage:" + t.getCause().getMessage() + " LocalizeMessage:" + t.getLocalizedMessage() + " message:" + t.getMessage() + " Cause:" + t.getCause().toString());
+                        mView.showMessage("causeMessage:" + t.getCause().getMessage() + " LocalizeMessage:" + t.getLocalizedMessage() + " message:" + t.getMessage() + " Cause:" + t.getCause().toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        mRootView.showMessage("finish");
+                        mView.showMessage("finish");
                     }
                 });
 

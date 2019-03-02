@@ -54,6 +54,8 @@ dependencies {
     implementation rootProject.ext.dependencies["jsoup"]
     implementation rootProject.ext.dependencies["jsoup-annotations"]
 
+    implementation rootProject.ext.dependencies["smartRefreshLayout"]
+
     compile(name: 'tbsplus', ext: 'aar')
 
     api project(':library_base')

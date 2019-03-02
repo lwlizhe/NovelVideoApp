@@ -1,10 +1,10 @@
 package com.lwlizhe.comic.mvp.model;
 
-import com.lwlizhe.basemodule.di.scope.ActivityScope;
 import com.lwlizhe.basemodule.di.scope.FragmentScope;
 import com.lwlizhe.basemodule.mvp.BaseModel;
 import com.lwlizhe.comic.mvp.contract.fragment.ComicMainContract;
-import com.lwlizhe.common.api.comic.entity.ComicRecommendResponse;
+import com.lwlizhe.comic.api.ComicNetService;
+import com.lwlizhe.comic.api.entity.ComicRecommendResponse;
 import com.lwlizhe.common.cache.manager.CacheManager;
 import com.lwlizhe.common.service.manager.ServiceManager;
 
@@ -27,6 +27,6 @@ public class ComicMainModel extends BaseModel<ServiceManager,CacheManager> imple
 
     @Override
     public Flowable<List<ComicRecommendResponse>> getComicRecommend() {
-        return mServiceManager.getComicService().getRecommend();
+        return mServiceManager.getRetrofitService(ComicNetService.class).getRecommend();
     }
 }

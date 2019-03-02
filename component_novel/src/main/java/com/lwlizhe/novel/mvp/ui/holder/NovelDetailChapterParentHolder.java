@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.lwlizhe.basemodule.base.adapter.BaseExpandItemEntity;
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.library.novel.R;
-import com.lwlizhe.common.api.novel.entity.NovelChapterEntity;
+import com.lwlizhe.novel.api.entity.NovelChapterEntity;
 
 /**
  * Created by Administrator on 2018/6/5 0005.

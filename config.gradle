@@ -103,7 +103,11 @@ ext {
             "exoPlayer-hls"             : 'com.google.android.exoplayer:exoplayer-hls:2.9.3',
             "exoPlayer-ui"              : 'com.google.android.exoplayer:exoplayer-ui:2.9.3',
 
+            //状态栏
+            "immersionbar"              : 'com.gyf.immersionbar:immersionbar:2.3.1',
 
+            //刷新
+            "smartRefreshLayout"        : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.5"
     ]
 
 

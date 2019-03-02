@@ -42,4 +42,6 @@ dependencies {
 
     api project(':basemodule')
 
+    api rootProject.ext.dependencies["immersionbar"]
+
 }
