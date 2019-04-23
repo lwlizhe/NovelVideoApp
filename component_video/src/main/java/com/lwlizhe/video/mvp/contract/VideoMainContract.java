@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.lwlizhe.basemodule.mvp.BaseView;
-import com.lwlizhe.video.api.entity.jsoup.DilidiliInfo;
 import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 
 
@@ -27,8 +26,6 @@ public interface VideoMainContract {
     }
 
     interface Model extends VideoIntroductionContract.Model{
-
-        Flowable<DilidiliInfo> getDilidiliInfo();
 
         Flowable<DilidiliIndexEntity> getDilidiliAppInfo();
 

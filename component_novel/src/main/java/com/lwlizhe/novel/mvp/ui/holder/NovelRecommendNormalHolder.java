@@ -63,7 +63,7 @@ public class NovelRecommendNormalHolder extends BaseHolder<NovelReCommendEntity>
 //                .builder()
 //                .url(data.getData().get(0).getCover())
 //                .imageView(mAtuoImageView)
-//                .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+//                .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
 //                .build()
 //        );
 
@@ -83,7 +83,7 @@ public class NovelRecommendNormalHolder extends BaseHolder<NovelReCommendEntity>
                         .builder()
                         .url(itemDataBean.getCover())
                         .imageView((ImageView) itemView.findViewById(R.id.ivw_item_cover))
-                        .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                        .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                         .build());
 
                 ((TextView)itemView.findViewById(R.id.tvw_item_name)).setText(itemDataBean.getTitle());

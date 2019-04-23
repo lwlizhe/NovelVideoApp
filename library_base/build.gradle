@@ -44,4 +44,8 @@ dependencies {
 
     api rootProject.ext.dependencies["immersionbar"]
 
+    api rootProject.ext.dependencies["arouter"]
+
+
+
 }

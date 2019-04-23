@@ -3,9 +3,8 @@ package com.lwlizhe.video.mvp.ui.activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
 import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.library.video.R;
 import com.lwlizhe.video.base.CommonActivity;
@@ -37,7 +36,7 @@ public class VideoWebPlayerActivity extends CommonActivity<VideoWebPlayerPresent
 
     @Override
     protected View initRootView() {
-        return LayoutInflater.from(VideoWebPlayerActivity.this).inflate(R.layout.activity_web_player, null, false);
+        return LayoutInflater.from(VideoWebPlayerActivity.this).inflate(R.layout.video_activity_web_player, null, false);
     }
 
     @Override

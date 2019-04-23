@@ -1,12 +1,12 @@
 package com.lwlizhe.video.mvp.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackPreparer;
@@ -24,11 +24,8 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.source.smoothstreaming.manifest.SsManifestParser;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.gyf.barlibrary.BarHide;
@@ -40,12 +37,7 @@ import com.lwlizhe.video.di.component.DaggerVideoPlayerComponent;
 import com.lwlizhe.video.di.module.VideoPlayerModule;
 import com.lwlizhe.video.mvp.contract.VideoPlayerContract;
 import com.lwlizhe.video.mvp.presenter.activity.VideoPlayerPresenter;
-
 import java.util.ArrayList;
-
-//import com.gargoylesoftware.htmlunit.WebClient;
-//import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
 
 /**
  * Created by Administrator on 2018/7/5 0005.
@@ -68,6 +60,14 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
     private String targetUrl;
 
     private ImmersionBar mImmersionBar;
+
+    public static Intent getVideoPlayIntent(Context mContext, String playUrl){
+       Intent intent= new Intent(mContext, VideoPlayerActivity.class);
+
+        intent.putExtra(VideoPlayerActivity.INTENT_VIDEO_PAGE_URL, playUrl);
+
+        return intent;
+    }
 
     @Override
     public void showLoading() {
@@ -101,7 +101,7 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
 
     @Override
     protected View initRootView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_video_player, null, false);
+        return LayoutInflater.from(this).inflate(R.layout.video_activity_video_player, null, false);
     }
 
     @Override
@@ -131,9 +131,6 @@ public class VideoPlayerActivity extends CommonActivity<VideoPlayerPresenter> im
         if (intent != null) {
             targetUrl = intent.getStringExtra(INTENT_VIDEO_PAGE_URL);
         }
-
-//        targetUrl="https://cdn-3.haku99.com/hls/2019/01/13/x5bz7l7t/playlist.m3u8";
-//        targetUrl="https://cdn-3.haku99.com/hls/2019/02/10/y7uiExtI/playlist.m3u8";
 
         dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this,VideoPlayerActivity.class.getSimpleName()));

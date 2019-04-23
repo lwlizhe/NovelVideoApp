@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
@@ -27,7 +29,7 @@ import com.lwlizhe.novel.mvp.presenter.fragment.NovelRecommendPresenter;
  * Created by lwlizhe on 2017/6/2.
  * 邮箱：624456662@qq.com
  */
-
+@Route(path = GlobeConstance.CONSTANCE_ROUTER.ROUTER_NOVEL_RECOMMEND)
 public class NovelRecommendFragment extends CommonFragment<NovelRecommendPresenter> implements NovelRecommendContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView mRecommendList;

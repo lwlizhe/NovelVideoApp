@@ -9,6 +9,8 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
     defaultConfig {
         applicationId "com.lwlizhe.novelvideoapp"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -19,6 +21,11 @@ android {
 
         multiDexEnabled true
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -31,6 +38,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
@@ -48,4 +57,11 @@ dependencies {
     api project(':component_comic')
     api project(':component_novel')
     api project(':component_video')
+
+    configurations.all {
+        resolutionStrategy.force rootProject.ext.dependencies["appcompat-v7"]
+    }
+
+//    api project(':library_base')
+
 }

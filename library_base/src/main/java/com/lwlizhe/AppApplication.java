@@ -4,6 +4,7 @@ package com.lwlizhe;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lwlizhe.basemodule.base.BaseApplication;
 import com.lwlizhe.basemodule.di.module.EventModule;
 import com.lwlizhe.basemodule.di.module.GlobeConfigModule;
@@ -11,6 +12,7 @@ import com.lwlizhe.basemodule.di.module.ImageModule;
 import com.lwlizhe.basemodule.http.GlobeHttpHandler;
 import com.lwlizhe.common.di.component.AppComponent;
 import com.lwlizhe.common.di.component.DaggerAppComponent;
+import com.lwlizhe.l.library_base.BuildConfig;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -46,6 +48,11 @@ public class AppApplication extends BaseApplication {
                 .build();
 
         mActivityManager.setRxEventBus(mAppComponent.eventBus());
+        if (BuildConfig.DEBUG) {           // These two lines must be written before init, otherwise these configurations will be invalid in the init process
+            ARouter.openLog();     // Print log
+            ARouter.openDebug();   // Turn on debugging mode (If you are running in InstantRun mode, you must turn on debug mode! Online version needs to be closed, otherwise there is a security risk)
+        }
+        ARouter.init(this); // As early as possible, it is recommended to initialize in the Application
 
     }
 
@@ -102,9 +109,9 @@ public class AppApplication extends BaseApplication {
                             return chain.request().newBuilder()
                                     .headers(request.headers())
                                     .removeHeader("User-Agent")
-                                    .addHeader("User-Agent", GlobeConstance.DMZJ_IMG_REFERER_URL)
+                                    .addHeader("User-Agent", GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                                     .removeHeader("Referer")
-                                    .addHeader("Referer",GlobeConstance.DMZJ_IMG_REFERER_URL)
+                                    .addHeader("Referer",GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                                     .build();
                         }
 

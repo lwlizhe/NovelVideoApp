@@ -4,8 +4,7 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-
-
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -15,6 +14,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: "novel"]
+            }
+        }
     }
 
     buildTypes {
@@ -23,6 +27,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    resourcePrefix("novel_")
 
 }
 
@@ -47,7 +53,9 @@ dependencies {
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
-    implementation rootProject.ext.dependencies["magicIndicator"]
+//    implementation rootProject.ext.dependencies["magicIndicator"]
+
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
 
     api project(':library_base')
 

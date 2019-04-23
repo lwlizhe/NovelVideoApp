@@ -1,5 +1,6 @@
 package com.lwlizhe.basemodule.imageloader.glide;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
@@ -25,6 +26,7 @@ public class GlideImageConfig extends ImageConfig {
     private boolean isClearMemory;//清理内存缓存
     private boolean isClearDiskCache;//清理本地缓存
     private boolean isCenterCrop;
+    private boolean isAsBitmap;
 
     private GlideImageConfig(Builder builder) {
         this.url = builder.url;
@@ -39,6 +41,7 @@ public class GlideImageConfig extends ImageConfig {
         this.isClearMemory = builder.isClearMemory;
         this.isClearDiskCache = builder.isClearDiskCache;
         this.isCenterCrop=builder.isCenterCrop;
+        this.isAsBitmap=builder.isAsBitmap;
     }
 
     public int getCacheStrategy() {
@@ -69,6 +72,10 @@ public class GlideImageConfig extends ImageConfig {
         return isCenterCrop;
     }
 
+    public boolean isAsBitmap(){
+        return isAsBitmap;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -87,12 +94,17 @@ public class GlideImageConfig extends ImageConfig {
         private boolean isClearMemory;//清理内存缓存
         private boolean isClearDiskCache;//清理本地缓存
         private boolean isCenterCrop;//是否采用centerCrop
+        private boolean isAsBitmap=false;
 
         private Builder() {
         }
 
         public Builder url(String url) {
             this.url = url;
+            return this;
+        }
+        public Builder asBitmap() {
+            this.isAsBitmap = true;
             return this;
         }
 

@@ -40,6 +40,8 @@ dependencies {
         exclude module: 'support-annotations'
     }
 
+    api rootProject.ext.dependencies["cardview-v7"]
+
     api rootProject.ext.dependencies["gson"]
 
     api rootProject.ext.dependencies["rxjava"]

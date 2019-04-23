@@ -38,6 +38,31 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <TextView
+                    android:text="简介"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.lwlizhe.basemodule.widget.ExpandLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvw_video_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+
+                    </RelativeLayout>
+
+                </com.lwlizhe.basemodule.widget.ExpandLayout>
+
 
             </LinearLayout>
 

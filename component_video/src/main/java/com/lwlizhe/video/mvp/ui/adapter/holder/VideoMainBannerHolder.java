@@ -13,6 +13,8 @@ import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.video.api.entity.BaseMultiItemData;
 import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
+import com.lwlizhe.video.mvp.ui.adapter.entity.VideoMainAdapterEntity;
+import com.lwlizhe.video.mvp.ui.adapter.entity.VideoMainBannerEntity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -25,7 +27,7 @@ import java.util.List;
  * Created by Administrator on 2018/7/3 0003.
  */
 
-public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
+public class VideoMainBannerHolder extends BaseHolder<VideoMainAdapterEntity> {
 
     private Banner mBanner;
     private Context mContext;
@@ -47,9 +49,14 @@ public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
     }
 
     @Override
-    public void setData(List<BaseMultiItemData> data, int position) {
+    public void setData(VideoMainAdapterEntity data, int position) {
         mBannerData.clear();
-        mBannerData.addAll(data);
+
+        List<DilidiliIndexEntity.DataBean.CarouselBean> carouselBeans = ((VideoMainBannerEntity) data).getData();
+
+        if(carouselBeans!=null){
+            mBannerData.addAll(carouselBeans);
+        }
 
         setBannerData(mBannerData);
     }
@@ -78,7 +85,7 @@ public class VideoMainBannerHolder extends BaseHolder<List<BaseMultiItemData>> {
                         .builder()
                         .url((String) path)
                         .imageView(imageView)
-                        .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                        .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                         .build());
             }
         });

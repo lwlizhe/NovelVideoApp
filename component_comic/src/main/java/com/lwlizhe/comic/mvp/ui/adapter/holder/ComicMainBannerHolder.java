@@ -70,7 +70,7 @@ public class ComicMainBannerHolder extends BaseHolder<ComicRecommendResponse> {
                         .builder()
                         .url((String) path)
                         .imageView(imageView)
-                        .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                        .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                         .build());
             }
         });

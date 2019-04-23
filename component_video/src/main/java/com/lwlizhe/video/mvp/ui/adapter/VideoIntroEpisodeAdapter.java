@@ -24,6 +24,6 @@ public class VideoIntroEpisodeAdapter extends BaseRecyclerViewAdapter<DilidiliAn
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.item_intro_episode_item;
+        return R.layout.video_item_intro_episode_item;
     }
 }

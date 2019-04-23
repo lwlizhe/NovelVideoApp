@@ -1,5 +1,9 @@
 package com.lwlizhe.novel.base;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.basemodule.base.BaseActivity;
 import com.lwlizhe.basemodule.event.RxEventBus;
@@ -35,5 +39,13 @@ public abstract class CommonActivity<P extends Presenter> extends BaseActivity<P
     protected void onDestroy() {
         super.onDestroy();
         this.mApplication = null;
+    }
+
+    @Nullable
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ARouter.getInstance().inject(this);
+
     }
 }

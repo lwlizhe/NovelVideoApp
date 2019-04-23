@@ -2,8 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-
-
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -13,6 +12,12 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME:"comic"]
+            }
+        }
+
     }
 
     buildTypes {
@@ -21,6 +26,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    resourcePrefix("comic_")
 
 }
 
@@ -37,7 +44,9 @@ dependencies {
     implementation rootProject.ext.dependencies["dagger2-android"]
     annotationProcessor rootProject.ext.dependencies["dagger2-apt-compiler"]
 
-    implementation rootProject.ext.dependencies["magicIndicator"]
+//    implementation rootProject.ext.dependencies["magicIndicator"]
+
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
 
     //一个大图长图的加载库，准备学下，能不能改造成想要的
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'

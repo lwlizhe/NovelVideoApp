@@ -74,14 +74,8 @@ public class VideoIntroductionPresenter extends BasePresenter<VideoIntroductionC
 
                     @Override
                     public void onSuccess(DilidiliVideoResourceResponseEntity data) {
-
                         String playUrl = data.getData().getPlayUrl().get(0);
-
-                        Intent videoIntent = new Intent(mView.getContext(), VideoPlayerActivity.class);
-
-                        videoIntent.putExtra(VideoPlayerActivity.INTENT_VIDEO_PAGE_URL, playUrl);
-                        mView.launchActivity(videoIntent);
-
+                        mView.launchActivity(VideoPlayerActivity.getVideoPlayIntent(mView.getContext(),playUrl));
                     }
 
                     @Override

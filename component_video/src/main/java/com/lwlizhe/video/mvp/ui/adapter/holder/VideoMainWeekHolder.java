@@ -1,147 +1,140 @@
 package com.lwlizhe.video.mvp.ui.adapter.holder;
 
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
-import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
-import com.lwlizhe.video.api.entity.BaseMultiItemData;
-import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
+import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.video.mvp.ui.adapter.ScheduleWeekAdapter;
+import com.lwlizhe.video.mvp.ui.adapter.VideoMainAdapter;
+import com.lwlizhe.video.mvp.ui.adapter.entity.VideoMainAdapterEntity;
+import com.lwlizhe.video.mvp.ui.adapter.entity.VideoMainWeekEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 /**
  * Created by Administrator on 2018/7/3 0003.
  */
 
-public class VideoMainWeekHolder extends BaseHolder<List<BaseMultiItemData>> {
+public class VideoMainWeekHolder extends BaseHolder<VideoMainAdapterEntity> {
 
-    private RadioGroup mRgpWeek;
-    private RadioButton mRbtMonday, mRbtTuesday, mRbtWednesday, mRbtThursday, mRbtFriday, mRbtSaturday, mRbtSunday;
+    public static final int FUNCTION_TYPE_ITEM_CLICK = 0;
+    public static final int FUNCTION_TYPE_ITEM_DRAMA_CLICK = 1;
 
-    private RecyclerView mRvwScheduleWeek;
+    private TabLayout mWeekTab;
+    private RecyclerView mRvwWeekData;
 
-    private List<DilidiliIndexEntity.DataBean.WeekListBean> mScheduleList;
-    private List<BaseMultiItemData> mInfos;
+    private ScheduleWeekAdapter currentScheduleAdapter;
 
-    private OnTagSelectedChangedListener tagListener;
-    private OnWeekItemClickListener weekListener;
+    private int currentSelectedPos = 0;
 
-    ScheduleWeekAdapter adapter;
+    private VideoMainWeekEntity mCurrentWeekEntity;
+    private List<DilidiliIndexEntity.DataBean.WeekListBean> currentWeekBeansList;
+
+    private VideoMainAdapter.OnItemFunctionClickListener mFunctionClickListener;
 
     public VideoMainWeekHolder(View itemView) {
         super(itemView);
 
-        mScheduleList = new ArrayList<>();
-        mInfos=new ArrayList<>();
+        currentWeekBeansList = new ArrayList<>();
 
-        adapter = new ScheduleWeekAdapter(mScheduleList);
+        mWeekTab = itemView.findViewById(R.id.tab_week);
+        mRvwWeekData = itemView.findViewById(R.id.rvw_week);
 
-        mRgpWeek = itemView.findViewById(R.id.rgp_week_group);
+        mWeekTab.setTabMode(MODE_SCROLLABLE);
+        mWeekTab.removeAllTabs();
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期一"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期二"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期三"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期四"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期五"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期六"));
+        mWeekTab.addTab(mWeekTab.newTab().setText("星期天"));
 
-        mRbtMonday = itemView.findViewById(R.id.rbt_monday);
-        mRbtTuesday = itemView.findViewById(R.id.rbt_tuesday);
-        mRbtWednesday = itemView.findViewById(R.id.rbt_wednesday);
-        mRbtThursday = itemView.findViewById(R.id.rbt_thursday);
-        mRbtFriday = itemView.findViewById(R.id.rbt_friday);
-        mRbtSaturday = itemView.findViewById(R.id.rbt_saturday);
-        mRbtSunday = itemView.findViewById(R.id.rbt_sunday);
-
-        mRvwScheduleWeek = itemView.findViewById(R.id.rvw_week);
-
-        mRvwScheduleWeek.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-        mRvwScheduleWeek.setAdapter(adapter);
-
-        mRgpWeek.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mRvwWeekData.setLayoutManager(new LinearLayoutManager(itemView.getContext()){
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int checkPos=0;
-
-                if (checkedId == R.id.rbt_monday) {
-                    checkPos=0;
-                } else if (checkedId == R.id.rbt_tuesday) {
-                    checkPos=1;
-                } else if (checkedId == R.id.rbt_wednesday) {
-                    checkPos=2;
-                } else if (checkedId == R.id.rbt_thursday) {
-                    checkPos=3;
-                } else if (checkedId == R.id.rbt_friday) {
-                    checkPos=4;
-                } else if (checkedId == R.id.rbt_saturday) {
-                    checkPos=5;
-                } else if (checkedId == R.id.rbt_sunday) {
-                    checkPos=6;
-                }
-
-                setData(mInfos,checkPos);
-
-                if(tagListener!=null){
-                    tagListener.onTagSelectedChanged(checkPos);
-                }
+            public boolean canScrollVertically() {
+                return false;
             }
         });
 
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener<DilidiliIndexEntity.DataBean.WeekListBean>() {
+        currentScheduleAdapter = new ScheduleWeekAdapter(currentWeekBeansList);
+        mRvwWeekData.setAdapter(currentScheduleAdapter);
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+
+        if (dayOfWeek >= 0){
+            currentSelectedPos=dayOfWeek;
+        }
+
+        mWeekTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onItemClick(View view, int viewType, DilidiliIndexEntity.DataBean.WeekListBean data, int position) {
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() != currentSelectedPos) {
+                    currentSelectedPos = tab.getPosition();
+                    currentWeekBeansList.clear();
+                    currentWeekBeansList.addAll(mCurrentWeekEntity.getData().get(currentSelectedPos));
 
-                if(weekListener!=null){
-                    weekListener.onWeekItemClick(view,data,position);
+                    currentScheduleAdapter.notifyDataSetChanged();
                 }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        currentScheduleAdapter.setFunctionEnableListener((functionType, functionData) -> {
+            switch
+            (functionType) {
+                case FUNCTION_TYPE_ITEM_CLICK:
+                    if (mFunctionClickListener != null) {
+                        mFunctionClickListener.onItemFunctionEnable(FUNCTION_TYPE_ITEM_CLICK, functionData);
+                    }
+                    break;
+                case FUNCTION_TYPE_ITEM_DRAMA_CLICK:
+                    if (mFunctionClickListener != null) {
+                        mFunctionClickListener.onItemFunctionEnable(FUNCTION_TYPE_ITEM_DRAMA_CLICK, functionData);
+                    }
+                    break;
             }
         });
 
     }
 
     @Override
-    public void setData(List<BaseMultiItemData> data, int position) {
-//
-//        mInfos=data;
-//
-//        int currentTagPos = position == -1 ? calTodayWeekPos() : position;
-//
-//        List<DilidiliIndexEntity.DataBean.WeekListBean> scheduleWeekList=new ArrayList<>();
-//
-//        for(BaseMultiItemData itemData:data){
-//            if(itemData instanceof DilidiliIndexEntity.DataBean.WeekListBean){
-//                scheduleWeekList.add((DilidiliIndexEntity.DataBean.WeekListBean) itemData);
-//            }
-//        }
-//
-//        mScheduleList.clear();
-//        mScheduleList.addAll(scheduleWeekList);
-//
-//        adapter.notifyDataSetChanged();
+    public void setData(VideoMainAdapterEntity data, int position) {
+
+        VideoMainWeekEntity weekEntity = (VideoMainWeekEntity) data;
+        mCurrentWeekEntity = weekEntity;
+
+        if (weekEntity.getData() != null && weekEntity.getData().get(currentSelectedPos) != null) {
+            currentWeekBeansList.clear();
+            currentWeekBeansList.addAll(weekEntity.getData().get(currentSelectedPos));
+            currentScheduleAdapter.notifyDataSetChanged();
+        }
 
     }
 
-    private int calTodayWeekPos() {
-        return Calendar.getInstance().get(Calendar.DAY_OF_WEEK) -2;
+    public void setFunctionClickListener(VideoMainAdapter.OnItemFunctionClickListener listener) {
+        this.mFunctionClickListener = listener;
     }
-
-    public void setOnTagSelectedChangedListener(OnTagSelectedChangedListener listener) {
-        this.tagListener=listener;
-    }
-
-    public void setOnWeekItemClickListener(OnWeekItemClickListener listener){
-        this.weekListener=listener;
-    }
-
-    public interface OnTagSelectedChangedListener {
-        void onTagSelectedChanged(int currentPos);
-    }
-
-    public interface  OnWeekItemClickListener{
-        void onWeekItemClick(View view,DilidiliIndexEntity.DataBean.WeekListBean data,int pos);
-    }
-
 
 }

@@ -4,6 +4,10 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@drawable/shape_bg_episode_item"
+        android:layout_margin="10dp"
         android:id="@+id/tvw_episode_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

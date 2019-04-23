@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import com.lwlizhe.novel.base.CommonSubscriber;
 import com.lwlizhe.novel.widget.novelPage.novelPage.entity.NovelCatalogueEntity;
 import com.lwlizhe.novel.widget.novelPage.novelPage.entity.NovelContentEntity;
@@ -208,8 +207,8 @@ public class NovelContentManager {
                             mCurrentChapterPageList = pages;
 
                             // 用于修正改变字体之后，当前页码越界
-                            if(mCurrentChapterPageList.size()-1<=mCurrentPagePos){
-                                mCurrentPagePos=mCurrentChapterPageList.size()-1;
+                            if (mCurrentChapterPageList.size() - 1 <= mCurrentPagePos) {
+                                mCurrentPagePos = mCurrentChapterPageList.size() - 1;
                             }
 
                             mStateObserver.setNovelPageState(STATE_LOADING_FINISH);
@@ -584,7 +583,7 @@ public class NovelContentManager {
         if (mPreLoadDisp != null) {
             mPreLoadDisp.dispose();
         }
-        mPreCacheEntity=entity;
+        mPreCacheEntity = entity;
 
         if (!TextUtils.isEmpty(entity.getNovelContent()) && mContentPaint != null && mPageHeight > 0 && mPageWidth > 0) {
 
@@ -624,7 +623,7 @@ public class NovelContentManager {
      */
     private void loadNextCache(final NovelContentEntity entity) {
 
-        if(entity==null){
+        if (entity == null) {
             return;
         }
 
@@ -632,7 +631,7 @@ public class NovelContentManager {
         if (mNextLoadDisop != null) {
             mNextLoadDisop.dispose();
         }
-        mNextCacheEntity=entity;
+        mNextCacheEntity = entity;
 
         if (!TextUtils.isEmpty(entity.getNovelContent()) && mContentPaint != null && mPageHeight > 0 && mPageWidth > 0) {
 
@@ -680,7 +679,7 @@ public class NovelContentManager {
     }
 
 
-    public void refreshCurrent(){
+    public void refreshCurrent() {
 
         mContentPaint.setTextSize(mContentTextSize);
 
@@ -779,8 +778,8 @@ public class NovelContentManager {
 
             mPreChapterPageList.clear();
 
-            if(mPreCacheEntity!=null){
-                mCurChapterContent=mPreCacheEntity.getNovelContent();
+            if (mPreCacheEntity != null) {
+                mCurChapterContent = mPreCacheEntity.getNovelContent();
             }
 
             if (isPage) {
@@ -888,8 +887,8 @@ public class NovelContentManager {
 
             mNextChapterPageList.clear();
 
-            if(mNextCacheEntity!=null){
-                mCurChapterContent=mNextCacheEntity.getNovelContent();
+            if (mNextCacheEntity != null) {
+                mCurChapterContent = mNextCacheEntity.getNovelContent();
             }
 
             // 章节页码归零
@@ -939,6 +938,9 @@ public class NovelContentManager {
 
     /**
      * 分割单个章节的内容并计算每页的内容.
+     *
+     * 为啥不使用staticLayout
+     * 因为这玩意还是有点限制的……比如说没法设置段落间距，只能自己计算了
      *
      * @param srcContent 目标内容
      * @return 每页的内容列表
@@ -1051,7 +1053,7 @@ public class NovelContentManager {
         NovelCatalogueEntity.NovelContentVolumeEntity volumeEntity = mCatalogue.getVolumeList().get(mCurrentVolumePos);
 
         targetPageEntity.setCurrentPagePos(mCurrentPagePos);
-        targetPageEntity.setMaxPageCount(mCurrentChapterPageList.size() );
+        targetPageEntity.setMaxPageCount(mCurrentChapterPageList.size());
 
         targetPageEntity.setBookId(mBookId);
         targetPageEntity.setVolumeId(volumeEntity.getVolumeId());

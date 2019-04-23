@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
 import com.lwlizhe.common.di.component.AppComponent;
@@ -19,10 +18,8 @@ import com.lwlizhe.video.mvp.contract.VideoIntroductionContract;
 import com.lwlizhe.video.mvp.presenter.activity.VideoIntroductionPresenter;
 import com.lwlizhe.video.mvp.ui.adapter.VideoIntroEpisodeAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
 
 /**
@@ -56,7 +53,7 @@ public class VideoIntroductionActivity extends CommonActivity<VideoIntroductionP
 
     @Override
     protected View initRootView() {
-        return LayoutInflater.from(VideoIntroductionActivity.this).inflate(R.layout.activity_video_introduction, null, false);
+        return LayoutInflater.from(VideoIntroductionActivity.this).inflate(R.layout.video_activity_video_introduction, null, false);
     }
 
     @Override
@@ -98,7 +95,13 @@ public class VideoIntroductionActivity extends CommonActivity<VideoIntroductionP
 
     @Override
     protected void initListener() {
+        mEpisodeAdapter.setOnItemClickListener((view, viewType, data, position) -> {
+            DilidiliAnimationDetailResponseEntity.DataBean.EpisodeListBean currentClickedItem = mEpisodeList.get(position);
 
+            String putUrl = currentClickedItem.getStreams().getPutUrl();
+
+            mPresenter.getAnimationResourceUrl(putUrl);
+        });
     }
 
     @Override
@@ -137,6 +140,12 @@ public class VideoIntroductionActivity extends CommonActivity<VideoIntroductionP
         mRefreshLayout.finishRefresh(isSuccess);
 
         if (isSuccess) {
+
+            if(mEpisodeList==null){
+                mEpisodeList=new ArrayList<>();
+            }
+
+            mEpisodeList.clear();
             mEpisodeList.addAll(entity.getData().get(0).getEpisodeList());
             mEpisodeAdapter.notifyDataSetChanged();
         }

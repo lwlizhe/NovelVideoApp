@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.adapter.BaseRecyclerViewAdapter;
 import com.lwlizhe.comic.base.CommonFragment;
 import com.lwlizhe.comic.di.component.DaggerComicMainComponent;
@@ -28,7 +30,7 @@ import java.math.BigDecimal;
 /**
  * Created by Administrator on 2018/7/10 0010.
  */
-
+@Route(path = GlobeConstance.CONSTANCE_ROUTER.ROUTER_COMIC_MAIN_PAGE)
 public class ComicMainFragment extends CommonFragment<ComicMainPresenter> implements ComicMainContract.View{
 
     RecyclerView mComicRcv;

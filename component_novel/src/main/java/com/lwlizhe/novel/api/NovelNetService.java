@@ -27,28 +27,28 @@ import retrofit2.http.Path;
 
 public interface NovelNetService {
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"recommend.json")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"recommend.json")
     Flowable<List<NovelReCommendEntity>> getNovelReCommend();
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"recentUpdate/{page}.json ")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"recentUpdate/{page}.json ")
     Flowable<List<NovelRecentUpdataEntity>> getNovelRecentUpdata(@Path("page") long page);
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"{id}.json")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"{id}.json")
     Flowable<NovelDetailEntity> getNovelDetail(@Path("id") long novelId);
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"chapter/{id}.json")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"chapter/{id}.json")
     Flowable<List<NovelChapterEntity>> getNovelChapter(@Path("id") long novelId);
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"download/{id}_{volume_id}_{chapter_id}.txt")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"download/{id}_{volume_id}_{chapter_id}.txt")
     Flowable<String> getNovel(@Path("id") long novelId, @Path("volume_id") long volumeId, @Path("chapter_id") long chapterId);
 
     @GET("http://v2api.dmzj.com/1/category.json")
     Flowable<List<NovelCategoryEntity>> getNovelCategory();
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"filter.json")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"filter.json")
     Flowable<NovelFilterEntity> getNovelFilter();
 
-    @GET(GlobeConstance.NOVEL_BASE_URL+"{cat_id}/{status_id}/{order_id}/{page}.json ")
+    @GET(GlobeConstance.CONSTANCE_URL.NOVEL_BASE_URL+"{cat_id}/{status_id}/{order_id}/{page}.json ")
     Flowable<List<NovelListEntity>> getNovelList(@Path("cat_id") long catId, @Path("status_id") long statusId, @Path("order_id") long orderId, @Path("page") long page);
 
     @GET("http://v2.api.dmzj.com/search/show/{big_cat_id}/{keywords}/{page}.json ")

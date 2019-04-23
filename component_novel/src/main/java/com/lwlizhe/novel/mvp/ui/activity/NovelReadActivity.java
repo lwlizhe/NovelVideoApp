@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.utils.SystemBarUtils;
 
 
@@ -28,7 +31,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/5/9 0009.
  */
-
+@Route(path = GlobeConstance.CONSTANCE_ROUTER.ROUTER_NOVEL_READ)
 public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implements NovelReadContract.View {
 
     public static final String NOVEL_QUICK_START = "novel_quick_start";
@@ -45,7 +48,8 @@ public class NovelReadActivity extends CommonActivity<NovelReadPresenter> implem
 
     private int currentNovelPos = 0;
 
-    private long mNovelId;
+    @Autowired
+    public long mNovelId;
     private int mCurrentVolumePos;
     private int mCurrentChapterPos;
 

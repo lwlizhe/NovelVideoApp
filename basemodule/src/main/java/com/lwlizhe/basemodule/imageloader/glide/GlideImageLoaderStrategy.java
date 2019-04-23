@@ -95,6 +95,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<GlideIm
         if(config.isCenterCrop())
             requestOptions.centerCrop();
 
+        if(config.isAsBitmap())
+            manager.asBitmap();
+
         if (config.getTarget() != null) {
             requestBuilder.apply(requestOptions).into(config.getTarget());
         } else {

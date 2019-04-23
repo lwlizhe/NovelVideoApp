@@ -7,6 +7,8 @@ import com.lwlizhe.basemodule.base.adapter.BaseHolder;
 import com.lwlizhe.video.api.entity.DilidiliIndexEntity;
 import com.lwlizhe.library.video.R;
 
+import org.greenrobot.greendao.annotation.NotNull;
+
 /**
  * Created by Administrator on 2018/7/12 0012.
  */
@@ -16,11 +18,20 @@ public class ScheduleWeekHolder extends BaseHolder<DilidiliIndexEntity.DataBean.
     private TextView mVideoName;
     private TextView mVideoLatestEpisode;
 
-    public ScheduleWeekHolder(View itemView) {
+    private DilidiliIndexEntity.DataBean.WeekListBean mData;
+
+    public ScheduleWeekHolder(View itemView,@NotNull HolderFunctionCallback callback) {
         super(itemView);
 
         mVideoName = itemView.findViewById(R.id.tvw_video_name);
         mVideoLatestEpisode = itemView.findViewById(R.id.tvw_video_episode);
+
+        mVideoLatestEpisode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onFunctionCallback(mData);
+            }
+        });
 
     }
 
@@ -31,7 +42,13 @@ public class ScheduleWeekHolder extends BaseHolder<DilidiliIndexEntity.DataBean.
             return;
         }
 
+        mData=data;
+
         mVideoName.setText(data.getName());
         mVideoLatestEpisode.setText(data.getUpdatedEpisode());
+    }
+
+    public interface HolderFunctionCallback{
+        void onFunctionCallback(DilidiliIndexEntity.DataBean.WeekListBean functionData);
     }
 }

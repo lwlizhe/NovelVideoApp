@@ -3,6 +3,9 @@ package com.lwlizhe.novelvideoapp.main.mvp.presenter.activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.base.adapter.BaseFragmentPagerAdapter;
 import com.lwlizhe.basemodule.mvp.BasePresenter;
@@ -49,9 +52,20 @@ public class AppMainPresenter extends BasePresenter<AppMainContract.Model, AppMa
     }
 
     private void initData() {
-        mFragments.add(new NovelRecommendFragment());
-        mFragments.add(new VideoMainFragment());
-        mFragments.add(new ComicMainFragment());
+//        mFragments.add(new NovelRecommendFragment());
+        Fragment recommendFragment = (Fragment) ARouter.getInstance().build(GlobeConstance.CONSTANCE_ROUTER.ROUTER_NOVEL_RECOMMEND).navigation();
+        if(recommendFragment!=null){
+            mFragments.add(recommendFragment);
+        }
+
+        Fragment videoFragment = (Fragment) ARouter.getInstance().build(GlobeConstance.CONSTANCE_ROUTER.ROUTER_VIDEO_MAIN_PAGE).navigation();
+        if(videoFragment!=null){
+            mFragments.add(videoFragment);
+        }
+        Fragment comicFragment = (Fragment) ARouter.getInstance().build(GlobeConstance.CONSTANCE_ROUTER.ROUTER_COMIC_MAIN_PAGE).navigation();
+        if(comicFragment!=null) {
+            mFragments.add(comicFragment);
+        }
 
         mPagerTitles.add("小说");
         mPagerTitles.add("番剧");

@@ -17,10 +17,10 @@ import retrofit2.http.Url;
 
 public interface VideoNetService {
 
-    @GET(GlobeConstance.DILIDILI_BASE_URL+"/api/v1/getIndex")
+    @GET(GlobeConstance.CONSTANCE_URL.DILIDILI_BASE_URL+"/api/v1/getIndex")
     Flowable<DilidiliIndexEntity> getVideoContent();
 
-    @GET(GlobeConstance.DILIDILI_BASE_URL+"/api/v1/getAnimeDetail/{id}")
+    @GET(GlobeConstance.CONSTANCE_URL.DILIDILI_BASE_URL+"/api/v1/getAnimeDetail/{id}")
     Flowable<DilidiliAnimationDetailResponseEntity> getAnimationDetail(@Path("id") int paramInt);
 
     @PUT

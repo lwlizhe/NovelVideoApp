@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.lwlizhe.GlobeConstance;
 import com.lwlizhe.basemodule.base.ActivityManager;
 import com.lwlizhe.basemodule.event.message.ActivityMessage;
 
@@ -26,7 +28,7 @@ import com.lwlizhe.video.mvp.presenter.fragment.VideoMainPresenter;
 /**
  * Created by Administrator on 2018/7/2 0002.
  */
-
+@Route(path = GlobeConstance.CONSTANCE_ROUTER.ROUTER_VIDEO_MAIN_PAGE)
 public class VideoMainFragment extends CommonFragment<VideoMainPresenter> implements VideoMainContract.View,SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -39,7 +41,7 @@ public class VideoMainFragment extends CommonFragment<VideoMainPresenter> implem
 
     @Override
     protected View initRootView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_video_main, container, false);
+        return inflater.inflate(R.layout.video_fragment_video_main, container, false);
     }
 
     @Override

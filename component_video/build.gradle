@@ -2,8 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-
-
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -12,6 +11,12 @@ android {
         versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: "video"]
+            }
+        }
 
     }
 
@@ -26,6 +31,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    resourcePrefix("video_")
 
 }
 
@@ -51,13 +58,18 @@ dependencies {
 
     implementation rootProject.ext.dependencies["magicIndicator"]
 
-    implementation rootProject.ext.dependencies["jsoup"]
-    implementation rootProject.ext.dependencies["jsoup-annotations"]
+//    implementation rootProject.ext.dependencies["jsoup"]
+//    implementation rootProject.ext.dependencies["jsoup-annotations"]
 
     implementation rootProject.ext.dependencies["smartRefreshLayout"]
 
-    compile(name: 'tbsplus', ext: 'aar')
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+
+    compile(name: 'tbsplus', ext: 'aar'){
+        exclude group: 'com.android.support'
+    }
 
     api project(':library_base')
+
 
 }

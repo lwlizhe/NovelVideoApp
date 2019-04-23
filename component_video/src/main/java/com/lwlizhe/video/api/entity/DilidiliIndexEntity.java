@@ -8,6 +8,10 @@ import java.util.List;
 
 public class DilidiliIndexEntity extends DilidiliBaseData{
 
+    public static final int TYPE_BANNER = 0;
+    public static final int TYPE_WEEK = 1;
+    public static final int TYPE_RECENT = 2;
+    public static final int TYPE_RECOMMEND = 3;
 
     /**
      * errorCode : 0

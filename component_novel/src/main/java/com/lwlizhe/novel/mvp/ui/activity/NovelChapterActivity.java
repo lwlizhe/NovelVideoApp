@@ -2,6 +2,7 @@ package com.lwlizhe.novel.mvp.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -134,19 +136,19 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
         mImageLoader.loadImage(this,GlideImageConfig
                 .builder()
                 .url(data.getCover())
-                .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                 .imageView(mIvwAvatar)
                 .build());
 
         mImageLoader.loadImage(this,GlideImageConfig
                 .builder()
                 .url(data.getCover())
-                .refererUrl(GlobeConstance.DMZJ_IMG_REFERER_URL)
+                .refererUrl(GlobeConstance.CONSTANCE_URL.DMZJ_IMG_REFERER_URL)
                 .transformation(RequestOptions.bitmapTransform(new BlurTransformation(10)))
                 .target(new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        mRltHeader.setBackgroundDrawable(resource);
+                        mRltHeader.setBackground(resource);
                     }
                 })
                 .build());
@@ -205,12 +207,19 @@ public class NovelChapterActivity extends CommonActivity<NovelChapterPresenter> 
                     return;
                 }
 
-                Intent intent=new Intent(NovelChapterActivity.this,NovelReadActivity.class);
-                intent.putExtra(NOVEL_ID,novelId);
-                intent.putExtra(NOVEL_QUICK_START,true);
-                intent.putExtra(NOVEL_CHAPTER_LIST, (Serializable) chapterList);
+//                Intent intent=new Intent(NovelChapterActivity.this,NovelReadActivity.class);
+//                intent.putExtra(NOVEL_ID,novelId);
+//                intent.putExtra(NOVEL_QUICK_START,true);
+//                intent.putExtra(NOVEL_CHAPTER_LIST, (Serializable) chapterList);
 
-                launchActivity(intent);
+                Bundle params = new Bundle();
+                params.putLong(NOVEL_ID,novelId);
+                params.putBoolean(NOVEL_QUICK_START,true);
+                params.putSerializable(NOVEL_CHAPTER_LIST, (Serializable) chapterList);
+
+                ARouter.getInstance().build(GlobeConstance.CONSTANCE_ROUTER.ROUTER_NOVEL_READ).with(params).navigation();
+
+//                launchActivity(intent);
             }
         });
     }
