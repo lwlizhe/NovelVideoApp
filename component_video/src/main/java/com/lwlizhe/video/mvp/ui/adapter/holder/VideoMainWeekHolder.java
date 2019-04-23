@@ -59,12 +59,8 @@ public class VideoMainWeekHolder extends BaseHolder<VideoMainAdapterEntity> {
         mWeekTab.addTab(mWeekTab.newTab().setText("星期六"));
         mWeekTab.addTab(mWeekTab.newTab().setText("星期天"));
 
-        mRvwWeekData.setLayoutManager(new LinearLayoutManager(itemView.getContext()){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
+        mRvwWeekData.setNestedScrollingEnabled(false);
+        mRvwWeekData.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
 
         currentScheduleAdapter = new ScheduleWeekAdapter(currentWeekBeansList);
         mRvwWeekData.setAdapter(currentScheduleAdapter);
