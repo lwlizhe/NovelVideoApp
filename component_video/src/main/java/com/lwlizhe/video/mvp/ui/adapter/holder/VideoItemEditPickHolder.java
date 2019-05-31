@@ -7,10 +7,17 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.lwlizhe.AppApplication;
 import com.lwlizhe.basemodule.base.adapter.BaseHolder;
@@ -43,26 +50,19 @@ public class VideoItemEditPickHolder extends BaseHolder<DilidiliIndexEntity.Data
 
     @Override
     public void setData(DilidiliIndexEntity.DataBean.EditorPickBean data, int position) {
-        mImageLoader.loadImage(mContext, GlideImageConfig.builder()
-                .url(data.getImgUrl())
-                .centerCrop()
-                .target(new CustomTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
-                        Bitmap targetBitmap=( (BitmapDrawable) resource).getBitmap();
-
-                        mIvwCover.setImageBitmap(targetBitmap);
-
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-                })
-                .build());
+//        mImageLoader.loadImage(mContext, GlideImageConfig.builder()
+//                .url(data.getImgUrl())
+//                .centerCrop()
+//                .imageView(mIvwCover)
+//                .build());
 //
+        Glide.with(itemView).asBitmap().load(data.getImgUrl()).into(mIvwCover).waitForLayout();
+
+        mIvwCover.post(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
         mTvwName.setText(data.getName());
 
     }

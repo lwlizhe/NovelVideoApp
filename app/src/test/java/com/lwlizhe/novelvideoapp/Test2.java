@@ -5,6 +5,7 @@ import android.text.Html;
 
 import org.junit.Test;
 
+import java.io.PrintStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -16,49 +17,38 @@ public class Test2 {
     @Test
    public void test(){
 
-        printN(5,7);
+        a(3,"fSDRQgpusmIbrzyc");
 
 
     }
 
 
-    private static void printN(int x,int y) {
-        int[][] arr = new int[x][y];
-        int count = 1;
-        int minTurns=Math.max(x,y);
-        for (int i = 0; i < minTurns / 2; i++) {
-            for (int j = i,k =i; k <y-i-1 ; k++) {
-                if(arr[j][k]!=0){
-                    continue;
-                }
-                arr[j][k] = count++;
-            }
-            for (int j = i,k =y-i-1 ; j <x-i-1 ; j++) {
-                if(arr[j][k]!=0){
-                    continue;
-                }
-                arr[j][k] = count++;
-            }
-            for (int j =x-i-1 ,k=y-i-1; k> i ; k--) {
-                if(arr[j][k]!=0){
-                    continue;
-                }
-                arr[j][k] = count++;
-            }
-            for (int j = x-i-1,k=i; j >i ; j--) {
-                if(arr[j][k]!=0){
-                    continue;
-                }
-                arr[j][k] = count++;
-            }
-        }
+    public static String a(int paramInt, String paramString)
+    {
+        StringBuilder localStringBuilder = new StringBuilder();
+        byte[] arrayOfByte = paramString.getBytes();
+        int i = arrayOfByte.length;
+        int j = paramInt;
+        for (paramInt = 0; paramInt < i; paramInt++)
+        {
+            int k = arrayOfByte[paramInt];
+            int m = (k + j - 65) % 57 + 65;
+            int n = 0;
+            while ((m > 90) && (m < 97))
+            {
+                j += n * j;
+                n++;
+                m = (k + j - 65) % 57 + 65;
+                PrintStream localPrintStream = System.out;
 
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                System.out.print (arr[i][j] + " ");
+                StringBuilder sb=new StringBuilder(paramString);
+                sb.append("t");
+                sb.append(j);
+                localPrintStream.println(sb.toString());
             }
-            System.out.println ();
+            localStringBuilder.append((char)m);
         }
+        return localStringBuilder.toString();
     }
 
 }

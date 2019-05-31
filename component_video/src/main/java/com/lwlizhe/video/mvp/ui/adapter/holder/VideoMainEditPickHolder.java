@@ -42,6 +42,7 @@ public class VideoMainEditPickHolder extends BaseHolder<VideoMainAdapterEntity> 
 //                return 2;
 //            }
 //        });
+        mRvwEditPick.setNestedScrollingEnabled(false);
 
         mRvwEditPick.setLayoutManager(layoutManager);
         mEditPickItemAdapter=new VideoItemEditPickAdapter(mItemData);
